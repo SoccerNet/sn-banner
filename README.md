@@ -1,3 +1,1 @@
 # banner-replacement
-
-test
