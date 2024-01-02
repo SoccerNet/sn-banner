@@ -8,7 +8,13 @@ train_pipeline = [
     dict(type="LoadImageFromFile"),
     dict(type="LoadAnnotations"),
     dict(
-        type="RandomResize", scale=(1920, 1080), ratio_range=(0.5, 2.0), keep_ratio=True
+        type="RandomResize",
+        scale=(1920, 1080),
+        ratio_range=(
+            1.0,
+            2.0,
+        ),  # Maybe no scale down, to avoid losing details, so keep ratio_range=(1.0, a) where a > 1.0
+        keep_ratio=True,
     ),
     dict(type="RandomCrop", crop_size=crop_size, cat_max_ratio=0.75),
     dict(type="RandomFlip", prob=0.5),

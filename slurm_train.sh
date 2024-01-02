@@ -20,4 +20,4 @@ srun -p ${PARTITION} \
     --cpus-per-task=${CPUS_PER_TASK} \
     -t 48:00:00 \
     ${SRUN_ARGS} \
-    python train.py ${CONFIG} --launcher="slurm" --work-dir work_dir/${JOB_NAME}_${CONFIG} ${PY_ARGS} &
+    python train.py ${CONFIG} --launcher="slurm" --work-dir work_dir/${JOB_NAME}_${CONFIG} ${PY_ARGS} > work_dir/${JOB_NAME}_${CONFIG}/train.log 2>&1 &
