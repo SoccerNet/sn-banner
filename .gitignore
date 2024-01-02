@@ -1,2 +1,4 @@
 Dataset/
 *.pth
+**/vis_data/
+What to test

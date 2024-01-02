@@ -13,12 +13,11 @@ PY_ARGS=${@:4}
 
 PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
 srun -p ${PARTITION} \
-    --job-name=${JOB_NAME} \
+    --job-name=${JOB_NAME}_${CONFIG} \
     --gres=gpu:${GPUS_PER_NODE} \
     --ntasks=${GPUS} \
     --ntasks-per-node=${GPUS_PER_NODE} \
     --cpus-per-task=${CPUS_PER_TASK} \
-    --kill-on-bad-exit=1 \
     -t 48:00:00 \
     ${SRUN_ARGS} \
-    python train.py ${CONFIG} --launcher="slurm" ${PY_ARGS} > ${JOB_NAME}.log 2>&1 &
+    python train.py ${CONFIG} --launcher="slurm" --work-dir work_dir/${JOB_NAME}_${CONFIG} ${PY_ARGS} &
