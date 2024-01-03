@@ -2,9 +2,9 @@ test loop, or the 'test.py' file to test the model ?
 
 RandomResize with crop versus just a Resize
 
-the val and test dataloader with a batch size > 1 - From bard, it seems that the val and test dataloader should have a batch size of 1.
+the val and test dataloader with a batch size > 1 - From bard, it seems that the val and test dataloader should have a batch size of 1. But from testing it seems that it is not the case. A batch size of 2 is ok.
 
-The performance in fp32 and fp16 (with and without amp) of every gpu in the cluster - In fp16 : tesla>a5000>quadro>2080ti, but preferably use a5000 and quadro seems there are more of them in the cluster.
+The performance in fp32 and fp16 (with and without amp) of every gpu in the cluster - In fp16 : tesla>a5000>quadro>2080ti, but preferably use a5000 and quadro since there are more of them in the cluster.
 
 the hidden index or remove index in dataset configs
 
@@ -19,3 +19,5 @@ In the transform pipelines, what is the infiniteSampler ?
 randomness - Normally setting 'randomness = dict(seed=seed, deterministic=True)' in the cfg should work, but got : RuntimeError: Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#cublasApi_reproducibility
 
 gpus memory size - To confirm, but it seems that 2080ti has 11GB~12GB, a5000 and quadro have 24GB, and tesla has more than 24GB, maybe 48GB or 32GB.
+
+Attention! When a model stops training (by accident or not), the last checkpoint might not have gone through validation. Thus the best thing is probably to use the second last checkpoint.

@@ -25,7 +25,12 @@ data_preprocessor = dict(
 data_root = 'Dataset'
 dataset_type = 'SoccerNet'
 default_hooks = dict(
-    checkpoint=dict(by_epoch=False, interval=8000, type='CheckpointHook'),
+    checkpoint=dict(
+        by_epoch=False,
+        interval=700,
+        max_keep_ckpts=2,
+        save_best='mIoU',
+        type='CheckpointHook'),
     logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
@@ -146,7 +151,7 @@ param_scheduler = [
         power=0.9,
         type='PolyLR'),
 ]
-resume = False
+resume = True
 test_cfg = dict(type='TestLoop')
 test_dataloader = dict(
     batch_size=1,
@@ -171,7 +176,7 @@ test_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
-train_cfg = dict(max_iters=80000, type='IterBasedTrainLoop', val_interval=8000)
+train_cfg = dict(max_iters=80000, type='IterBasedTrainLoop', val_interval=700)
 train_dataloader = dict(
     batch_size=2,
     dataset=dict(
@@ -184,7 +189,7 @@ train_dataloader = dict(
             dict(
                 keep_ratio=True,
                 ratio_range=(
-                    0.5,
+                    1.0,
                     2.0,
                 ),
                 scale=(
@@ -212,7 +217,7 @@ train_pipeline = [
     dict(
         keep_ratio=True,
         ratio_range=(
-            0.5,
+            1.0,
             2.0,
         ),
         scale=(
@@ -277,6 +282,7 @@ val_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
+val_interval = 700
 val_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(keep_ratio=True, scale=(

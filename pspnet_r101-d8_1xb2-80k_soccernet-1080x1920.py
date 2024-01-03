@@ -17,8 +17,17 @@ model = dict(
     pretrained="open-mmlab://resnet101_v1c",
 )
 
-train_cfg = dict(val_interval=300)
-default_hooks = dict(checkpoint=dict(interval=300, save_best="mIoU"))
+val_interval = 700
+train_cfg = dict(val_interval=val_interval)
+default_hooks = dict(
+    checkpoint=dict(
+        type="CheckpointHook",
+        by_epoch=False,
+        save_best="mIoU",
+        interval=val_interval,
+        max_keep_ckpts=2,
+    ),
+)
 
 # We can use the pre-trained model to obtain higher performance
 # load_from = "checkpoints/pspnet_r50-d8_512x1024_40k_cityscapes_20200605_094027-2a90a4a3.pth"

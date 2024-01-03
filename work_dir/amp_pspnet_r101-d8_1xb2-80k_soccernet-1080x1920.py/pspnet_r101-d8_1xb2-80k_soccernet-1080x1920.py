@@ -25,7 +25,12 @@ data_preprocessor = dict(
 data_root = 'Dataset'
 dataset_type = 'SoccerNet'
 default_hooks = dict(
-    checkpoint=dict(by_epoch=False, interval=8000, type='CheckpointHook'),
+    checkpoint=dict(
+        by_epoch=False,
+        interval=700,
+        max_keep_ckpts=2,
+        save_best='mIoU',
+        type='CheckpointHook'),
     logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
     param_scheduler=dict(type='ParamSchedulerHook'),
     sampler_seed=dict(type='DistSamplerSeedHook'),
@@ -146,20 +151,16 @@ param_scheduler = [
         power=0.9,
         type='PolyLR'),
 ]
-resume = False
+resume = True
 test_cfg = dict(type='TestLoop')
 test_dataloader = dict(
-    batch_size=1,
+    batch_size=2,
     dataset=dict(
         ann_file='splits/val.txt',
         data_prefix=dict(img_path='Images', seg_map_path='Labels'),
         data_root='Dataset',
         pipeline=[
             dict(type='LoadImageFromFile'),
-            dict(keep_ratio=True, scale=(
-                1920,
-                1080,
-            ), type='Resize'),
             dict(type='LoadAnnotations'),
             dict(type='PackSegInputs'),
         ],
@@ -171,7 +172,12 @@ test_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
-train_cfg = dict(max_iters=80000, type='IterBasedTrainLoop', val_interval=8000)
+test_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='LoadAnnotations'),
+    dict(type='PackSegInputs'),
+]
+train_cfg = dict(max_iters=80000, type='IterBasedTrainLoop', val_interval=700)
 train_dataloader = dict(
     batch_size=2,
     dataset=dict(
@@ -181,10 +187,6 @@ train_dataloader = dict(
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations'),
-            dict(keep_ratio=True, scale=(
-                1920,
-                1080,
-            ), type='Resize'),
             dict(prob=0.5, type='RandomFlip'),
             dict(type='PackSegInputs'),
         ],
@@ -195,10 +197,6 @@ train_dataloader = dict(
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations'),
-    dict(keep_ratio=True, scale=(
-        1920,
-        1080,
-    ), type='Resize'),
     dict(prob=0.5, type='RandomFlip'),
     dict(type='PackSegInputs'),
 ]
@@ -230,17 +228,13 @@ tta_pipeline = [
 ]
 val_cfg = dict(type='ValLoop')
 val_dataloader = dict(
-    batch_size=1,
+    batch_size=2,
     dataset=dict(
         ann_file='splits/val.txt',
         data_prefix=dict(img_path='Images', seg_map_path='Labels'),
         data_root='Dataset',
         pipeline=[
             dict(type='LoadImageFromFile'),
-            dict(keep_ratio=True, scale=(
-                1920,
-                1080,
-            ), type='Resize'),
             dict(type='LoadAnnotations'),
             dict(type='PackSegInputs'),
         ],
@@ -252,12 +246,9 @@ val_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
+val_interval = 700
 val_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(keep_ratio=True, scale=(
-        1920,
-        1080,
-    ), type='Resize'),
     dict(type='LoadAnnotations'),
     dict(type='PackSegInputs'),
 ]
