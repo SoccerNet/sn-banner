@@ -71,7 +71,19 @@ val_dataloader = dict(
         ann_file="splits/val.txt",
     ),
 )
-test_dataloader = val_dataloader
+test_dataloader = dict(
+    batch_size=2,
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(type="DefaultSampler", shuffle=False),
+    dataset=dict(
+        type=dataset_type,
+        data_root=data_root,
+        data_prefix=dict(img_path=img_dir, seg_map_path=ann_dir),
+        pipeline=val_pipeline,
+        ann_file="splits/test.txt",
+    ),
+)
 
 val_evaluator = dict(type="IoUMetric", iou_metrics=["mIoU"])
 test_evaluator = val_evaluator
