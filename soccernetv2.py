@@ -12,7 +12,7 @@ train_pipeline = [
         scale=(1920, 1080),
         ratio_range=(
             1.0,
-            2.0,
+            4.0,
         ),  # Maybe no scale down, to avoid losing details, so keep ratio_range=(1.0, a) where a > 1.0
         keep_ratio=True,
     ),
