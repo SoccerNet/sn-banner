@@ -1,4 +1,4 @@
-_base_ = ["configs/_base_/default_runtime.py", "soccernet.py"]
+_base_ = ["configs/_base_/default_runtime.py", "soccernetv2.py"]
 
 # work_dir = './work_dirs/mask2former_r50_4xb2-90k_soccernet-1080x1920'
 
