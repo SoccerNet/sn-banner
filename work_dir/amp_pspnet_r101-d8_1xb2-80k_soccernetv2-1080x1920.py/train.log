@@ -2,16 +2,16 @@
   warnings.warn(
 /home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/utils/dl_utils/setup_env.py:56: UserWarning: Setting MKL_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
   warnings.warn(
-01/03 02:50:29 - mmengine - INFO - 
+01/03 02:26:03 - mmengine - INFO - 
 ------------------------------------------------------------
 System environment:
     sys.platform: linux
     Python: 3.11.5 (main, Sep 11 2023, 13:54:46) [GCC 11.2.0]
     CUDA available: True
-    numpy_random_seed: 23319308
-    GPU 0: Quadro RTX 6000
+    numpy_random_seed: 887670084
+    GPU 0: NVIDIA RTX A5000
     CUDA_HOME: None
-    GCC: gcc (GCC) 8.3.1 20191121 (Red Hat 8.3.1-5)
+    GCC: gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-18)
     PyTorch: 2.1.2+cu118
     PyTorch compiling details: PyTorch built with:
   - GCC 9.3
@@ -21,7 +21,7 @@ System environment:
   - OpenMP 201511 (a.k.a. OpenMP 4.5)
   - LAPACK is enabled (usually provided by MKL)
   - NNPACK is enabled
-  - CPU capability usage: AVX512
+  - CPU capability usage: AVX2
   - CUDA Runtime 11.8
   - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_90,code=sm_90
   - CuDNN 8.7
@@ -36,13 +36,13 @@ Runtime environment:
     cudnn_benchmark: True
     mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
     dist_cfg: {'backend': 'nccl'}
-    seed: 23319308
+    seed: 887670084
     Distributed launcher: slurm
     Distributed training: True
     GPU number: 1
 ------------------------------------------------------------
 
-01/03 02:50:30 - mmengine - INFO - Config:
+01/03 02:26:03 - mmengine - INFO - Config:
 ann_dir = 'Labels'
 crop_size = (
     1080,
@@ -199,13 +199,17 @@ param_scheduler = [
 resume = True
 test_cfg = dict(type='TestLoop')
 test_dataloader = dict(
-    batch_size=2,
+    batch_size=1,
     dataset=dict(
         ann_file='splits/val.txt',
         data_prefix=dict(img_path='Images', seg_map_path='Labels'),
         data_root='Dataset',
         pipeline=[
             dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
             dict(type='LoadAnnotations'),
             dict(type='PackSegInputs'),
         ],
@@ -217,11 +221,6 @@ test_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
-test_pipeline = [
-    dict(type='LoadImageFromFile'),
-    dict(type='LoadAnnotations'),
-    dict(type='PackSegInputs'),
-]
 train_cfg = dict(max_iters=80000, type='IterBasedTrainLoop', val_interval=700)
 train_dataloader = dict(
     batch_size=2,
@@ -232,6 +231,24 @@ train_dataloader = dict(
         pipeline=[
             dict(type='LoadImageFromFile'),
             dict(type='LoadAnnotations'),
+            dict(
+                keep_ratio=True,
+                ratio_range=(
+                    1.0,
+                    2.0,
+                ),
+                scale=(
+                    1920,
+                    1080,
+                ),
+                type='RandomResize'),
+            dict(
+                cat_max_ratio=0.75,
+                crop_size=(
+                    1080,
+                    1920,
+                ),
+                type='RandomCrop'),
             dict(prob=0.5, type='RandomFlip'),
             dict(type='PackSegInputs'),
         ],
@@ -242,6 +259,21 @@ train_dataloader = dict(
 train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='LoadAnnotations'),
+    dict(
+        keep_ratio=True,
+        ratio_range=(
+            1.0,
+            2.0,
+        ),
+        scale=(
+            1920,
+            1080,
+        ),
+        type='RandomResize'),
+    dict(cat_max_ratio=0.75, crop_size=(
+        1080,
+        1920,
+    ), type='RandomCrop'),
     dict(prob=0.5, type='RandomFlip'),
     dict(type='PackSegInputs'),
 ]
@@ -273,13 +305,17 @@ tta_pipeline = [
 ]
 val_cfg = dict(type='ValLoop')
 val_dataloader = dict(
-    batch_size=2,
+    batch_size=1,
     dataset=dict(
         ann_file='splits/val.txt',
         data_prefix=dict(img_path='Images', seg_map_path='Labels'),
         data_root='Dataset',
         pipeline=[
             dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
             dict(type='LoadAnnotations'),
             dict(type='PackSegInputs'),
         ],
@@ -294,6 +330,10 @@ val_evaluator = dict(
 val_interval = 700
 val_pipeline = [
     dict(type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1920,
+        1080,
+    ), type='Resize'),
     dict(type='LoadAnnotations'),
     dict(type='PackSegInputs'),
 ]
@@ -306,7 +346,7 @@ visualizer = dict(
     vis_backends=[
         dict(type='LocalVisBackend'),
     ])
-work_dir = 'work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernet-1080x1920.py'
+work_dir = 'work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernetv2-1080x1920.py'
 
 /home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmseg/models/backbones/resnet.py:431: UserWarning: DeprecationWarning: pretrained is a deprecated, please use "init_cfg" instead
   warnings.warn('DeprecationWarning: pretrained is a deprecated, '
@@ -316,7 +356,7 @@ work_dir = 'work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernet-1080x1920.py'
   warnings.warn(
 /home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmseg/engine/hooks/visualization_hook.py:60: UserWarning: The draw is False, it means that the hook for visualization will not take effect. The results will NOT be visualized or stored.
   warnings.warn('The draw is False, it means that the '
-01/03 02:50:34 - mmengine - INFO - Hooks will be executed in the following order:
+01/03 02:26:07 - mmengine - INFO - Hooks will be executed in the following order:
 before_run:
 (VERY_HIGH   ) RuntimeInfoHook                    
 (BELOW_NORMAL) LoggerHook                         
@@ -401,19 +441,62 @@ after_test:
 after_run:
 (BELOW_NORMAL) LoggerHook                         
  -------------------- 
-01/03 02:50:35 - mmengine - WARNING - The prefix is not set in metric class IoUMetric.
-01/03 02:50:35 - mmengine - INFO - load model from: open-mmlab://resnet101_v1c
-01/03 02:50:35 - mmengine - INFO - Loads checkpoint by openmmlab backend from path: open-mmlab://resnet101_v1c
-01/03 02:50:36 - mmengine - WARNING - The model and loaded state dict do not match exactly
+01/03 02:26:09 - mmengine - WARNING - The prefix is not set in metric class IoUMetric.
+01/03 02:26:09 - mmengine - INFO - load model from: open-mmlab://resnet101_v1c
+01/03 02:26:09 - mmengine - INFO - Loads checkpoint by openmmlab backend from path: open-mmlab://resnet101_v1c
+01/03 02:26:11 - mmengine - WARNING - The model and loaded state dict do not match exactly
 
 unexpected key in source state_dict: fc.weight, fc.bias
 
-01/03 02:50:36 - mmengine - INFO - Auto resumed from the latest checkpoint /scratch/users/vgaspar/work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernet-1080x1920.py/iter_14700.pth.
-Loads checkpoint by local backend from path: /scratch/users/vgaspar/work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernet-1080x1920.py/iter_14700.pth
-01/03 02:50:37 - mmengine - INFO - Load checkpoint from /scratch/users/vgaspar/work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernet-1080x1920.py/iter_14700.pth
-01/03 02:50:37 - mmengine - INFO - resumed epoch: 0, iter: 14700
-01/03 02:50:37 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
-01/03 02:50:37 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
-01/03 02:50:37 - mmengine - INFO - Checkpoints will be saved to /scratch/users/vgaspar/work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernet-1080x1920.py.
-01/03 02:51:59 - mmengine - INFO - Iter(train) [14750/80000]  lr: 8.3410e-03  eta: 1 day, 5:53:01  time: 1.4789  data_time: 0.0085  memory: 22011  loss: 0.0068  decode.loss_ce: 0.0044  decode.acc_seg: 99.9006  aux.loss_ce: 0.0024  aux.acc_seg: 99.8910
-01/03 02:53:13 - mmengine - INFO - Iter(train) [14800/80000]  lr: 8.3353e-03  eta: 1 day, 4:22:36  time: 1.4858  data_time: 0.0086  memory: 17271  loss: 0.0052  decode.loss_ce: 0.0034  decode.acc_seg: 99.8460  aux.loss_ce: 0.0018  aux.acc_seg: 99.8471
+01/03 02:26:11 - mmengine - INFO - Auto resumed from the latest checkpoint /scratch/users/vgaspar/work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernetv2-1080x1920.py/iter_24000.pth.
+Loads checkpoint by local backend from path: /scratch/users/vgaspar/work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernetv2-1080x1920.py/iter_24000.pth
+01/03 02:26:12 - mmengine - INFO - Load checkpoint from /scratch/users/vgaspar/work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernetv2-1080x1920.py/iter_24000.pth
+01/03 02:26:12 - mmengine - INFO - resumed epoch: 0, iter: 24000
+01/03 02:26:12 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+01/03 02:26:12 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+01/03 02:26:12 - mmengine - INFO - Checkpoints will be saved to /scratch/users/vgaspar/work_dir/amp_pspnet_r101-d8_1xb2-80k_soccernetv2-1080x1920.py.
+/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/conv.py:456: UserWarning: Applied workaround for CuDNN issue, install nvrtc.so (Triggered internally at ../aten/src/ATen/native/cudnn/Conv_v8.cpp:80.)
+  return F.conv2d(input, weight, bias, self.stride,
+01/03 02:27:36 - mmengine - INFO - Iter(train) [24050/80000]  lr: 7.2759e-03  eta: 1 day, 1:54:03  time: 1.3620  data_time: 0.0074  memory: 19414  loss: 0.0109  decode.loss_ce: 0.0071  decode.acc_seg: 99.8156  aux.loss_ce: 0.0039  aux.acc_seg: 99.8176
+01/03 02:28:44 - mmengine - INFO - Iter(train) [24100/80000]  lr: 7.2702e-03  eta: 23:33:10  time: 1.3696  data_time: 0.0077  memory: 17141  loss: 0.0098  decode.loss_ce: 0.0061  decode.acc_seg: 99.8633  aux.loss_ce: 0.0037  aux.acc_seg: 99.8565
+01/03 02:29:53 - mmengine - INFO - Iter(train) [24150/80000]  lr: 7.2644e-03  eta: 22:48:12  time: 1.3765  data_time: 0.0076  memory: 17141  loss: 0.0102  decode.loss_ce: 0.0068  decode.acc_seg: 99.9416  aux.loss_ce: 0.0033  aux.acc_seg: 99.9427
+01/03 02:31:02 - mmengine - INFO - Iter(train) [24200/80000]  lr: 7.2586e-03  eta: 22:25:22  time: 1.3768  data_time: 0.0077  memory: 17141  loss: 0.0088  decode.loss_ce: 0.0058  decode.acc_seg: 99.8879  aux.loss_ce: 0.0030  aux.acc_seg: 99.8792
+01/03 02:32:11 - mmengine - INFO - Iter(train) [24250/80000]  lr: 7.2529e-03  eta: 22:11:07  time: 1.3770  data_time: 0.0076  memory: 17141  loss: 0.0097  decode.loss_ce: 0.0060  decode.acc_seg: 99.5091  aux.loss_ce: 0.0037  aux.acc_seg: 99.5416
+01/03 02:33:19 - mmengine - INFO - Iter(train) [24300/80000]  lr: 7.2471e-03  eta: 22:01:14  time: 1.3762  data_time: 0.0076  memory: 17141  loss: 0.0063  decode.loss_ce: 0.0040  decode.acc_seg: 99.9484  aux.loss_ce: 0.0023  aux.acc_seg: 99.9388
+01/03 02:34:28 - mmengine - INFO - Iter(train) [24350/80000]  lr: 7.2413e-03  eta: 21:53:53  time: 1.3767  data_time: 0.0074  memory: 17141  loss: 0.0091  decode.loss_ce: 0.0060  decode.acc_seg: 99.7976  aux.loss_ce: 0.0031  aux.acc_seg: 99.7904
+01/03 02:35:37 - mmengine - INFO - Iter(train) [24400/80000]  lr: 7.2355e-03  eta: 21:48:01  time: 1.3756  data_time: 0.0077  memory: 17141  loss: 0.0089  decode.loss_ce: 0.0057  decode.acc_seg: 99.8815  aux.loss_ce: 0.0033  aux.acc_seg: 99.8507
+01/03 02:36:46 - mmengine - INFO - Iter(train) [24450/80000]  lr: 7.2298e-03  eta: 21:43:07  time: 1.3750  data_time: 0.0077  memory: 17141  loss: 0.0072  decode.loss_ce: 0.0047  decode.acc_seg: 99.7751  aux.loss_ce: 0.0026  aux.acc_seg: 99.7636
+01/03 02:37:55 - mmengine - INFO - Iter(train) [24500/80000]  lr: 7.2240e-03  eta: 21:39:00  time: 1.3754  data_time: 0.0077  memory: 17141  loss: 0.0089  decode.loss_ce: 0.0058  decode.acc_seg: 99.7976  aux.loss_ce: 0.0031  aux.acc_seg: 99.7874
+01/03 02:37:55 - mmengine - INFO - Saving checkpoint at 24500 iterations
+01/03 02:38:08 - mmengine - INFO - Iter(val) [ 50/370]    eta: 0:01:19  time: 0.1812  data_time: 0.0031  memory: 10701  
+01/03 02:38:17 - mmengine - INFO - Iter(val) [100/370]    eta: 0:00:57  time: 0.1812  data_time: 0.0032  memory: 2601  
+01/03 02:38:26 - mmengine - INFO - Iter(val) [150/370]    eta: 0:00:44  time: 0.1815  data_time: 0.0032  memory: 2601  
+01/03 02:38:36 - mmengine - INFO - Iter(val) [200/370]    eta: 0:00:33  time: 0.1826  data_time: 0.0037  memory: 2601  
+01/03 02:38:45 - mmengine - INFO - Iter(val) [250/370]    eta: 0:00:23  time: 0.1826  data_time: 0.0035  memory: 2601  
+01/03 02:38:54 - mmengine - INFO - Iter(val) [300/370]    eta: 0:00:13  time: 0.1824  data_time: 0.0035  memory: 2601  
+01/03 02:39:03 - mmengine - INFO - Iter(val) [350/370]    eta: 0:00:03  time: 0.1827  data_time: 0.0036  memory: 2601  
+01/03 02:39:07 - mmengine - INFO - per class results:
+01/03 02:39:07 - mmengine - INFO - 
++--------------------+-------+-------+
+|       Class        |  IoU  |  Acc  |
++--------------------+-------+-------+
+| Outside billboards | 99.41 | 99.91 |
+|     Billboard      | 83.15 | 84.49 |
+|      Goal net      | 72.24 | 88.29 |
++--------------------+-------+-------+
+01/03 02:39:07 - mmengine - INFO - Iter(val) [370/370]    aAcc: 99.3900  mIoU: 84.9300  mAcc: 90.8900  data_time: 0.0068  time: 0.1911
+01/03 02:39:07 - mmengine - INFO - The best checkpoint with 84.9300 mIoU at 24500 iter is saved to best_mIoU_iter_24500.pth.
+01/03 02:40:17 - mmengine - INFO - Iter(train) [24550/80000]  lr: 7.2182e-03  eta: 21:38:54  time: 1.3757  data_time: 0.0082  memory: 17144  loss: 0.0069  decode.loss_ce: 0.0043  decode.acc_seg: 99.8894  aux.loss_ce: 0.0026  aux.acc_seg: 99.8969
+01/03 02:41:26 - mmengine - INFO - Iter(train) [24600/80000]  lr: 7.2124e-03  eta: 21:35:29  time: 1.3775  data_time: 0.0086  memory: 17144  loss: 0.0109  decode.loss_ce: 0.0067  decode.acc_seg: 99.8085  aux.loss_ce: 0.0041  aux.acc_seg: 99.7898
+01/03 02:42:35 - mmengine - INFO - Iter(train) [24650/80000]  lr: 7.2067e-03  eta: 21:32:24  time: 1.3763  data_time: 0.0086  memory: 17144  loss: 0.0090  decode.loss_ce: 0.0059  decode.acc_seg: 100.0000  aux.loss_ce: 0.0031  aux.acc_seg: 99.9982
+01/03 02:43:44 - mmengine - INFO - Iter(train) [24700/80000]  lr: 7.2009e-03  eta: 21:29:36  time: 1.3757  data_time: 0.0079  memory: 17144  loss: 0.0091  decode.loss_ce: 0.0059  decode.acc_seg: 99.9125  aux.loss_ce: 0.0032  aux.acc_seg: 99.8998
+01/03 02:44:53 - mmengine - INFO - Iter(train) [24750/80000]  lr: 7.1951e-03  eta: 21:27:01  time: 1.3761  data_time: 0.0078  memory: 17144  loss: 0.0077  decode.loss_ce: 0.0050  decode.acc_seg: 99.8259  aux.loss_ce: 0.0027  aux.acc_seg: 99.8301
+01/03 02:46:02 - mmengine - INFO - Iter(train) [24800/80000]  lr: 7.1893e-03  eta: 21:24:39  time: 1.3773  data_time: 0.0079  memory: 17144  loss: 0.0095  decode.loss_ce: 0.0062  decode.acc_seg: 99.8222  aux.loss_ce: 0.0033  aux.acc_seg: 99.8153
+01/03 02:47:10 - mmengine - INFO - Iter(train) [24850/80000]  lr: 7.1835e-03  eta: 21:22:27  time: 1.3770  data_time: 0.0077  memory: 17144  loss: 0.0127  decode.loss_ce: 0.0083  decode.acc_seg: 99.8682  aux.loss_ce: 0.0044  aux.acc_seg: 99.8620
+01/03 02:48:19 - mmengine - INFO - Iter(train) [24900/80000]  lr: 7.1778e-03  eta: 21:20:20  time: 1.3758  data_time: 0.0076  memory: 17144  loss: 0.0083  decode.loss_ce: 0.0053  decode.acc_seg: 99.8184  aux.loss_ce: 0.0030  aux.acc_seg: 99.8094
+01/03 02:49:28 - mmengine - INFO - Iter(train) [24950/80000]  lr: 7.1720e-03  eta: 21:18:19  time: 1.3755  data_time: 0.0076  memory: 17144  loss: 0.0084  decode.loss_ce: 0.0054  decode.acc_seg: 99.8148  aux.loss_ce: 0.0030  aux.acc_seg: 99.8084
+01/03 02:50:37 - mmengine - INFO - Exp name: pspnet_r101-d8_1xb2-80k_soccernetv2-1080x1920_20240103_022601
+01/03 02:50:37 - mmengine - INFO - Iter(train) [25000/80000]  lr: 7.1662e-03  eta: 21:16:22  time: 1.3748  data_time: 0.0078  memory: 17144  loss: 0.0077  decode.loss_ce: 0.0050  decode.acc_seg: 99.9211  aux.loss_ce: 0.0027  aux.acc_seg: 99.9047
+01/03 02:51:46 - mmengine - INFO - Iter(train) [25050/80000]  lr: 7.1604e-03  eta: 21:14:32  time: 1.3789  data_time: 0.0094  memory: 17144  loss: 0.0068  decode.loss_ce: 0.0045  decode.acc_seg: 99.8960  aux.loss_ce: 0.0023  aux.acc_seg: 99.9044
+01/03 02:52:55 - mmengine - INFO - Iter(train) [25100/80000]  lr: 7.1546e-03  eta: 21:12:49  time: 1.3788  data_time: 0.0097  memory: 17144  loss: 0.0074  decode.loss_ce: 0.0048  decode.acc_seg: 99.7965  aux.loss_ce: 0.0026  aux.acc_seg: 99.7752
+01/03 02:54:04 - mmengine - INFO - Iter(train) [25150/80000]  lr: 7.1488e-03  eta: 21:11:09  time: 1.3791  data_time: 0.0100  memory: 17144  loss: 0.0067  decode.loss_ce: 0.0043  decode.acc_seg: 99.8868  aux.loss_ce: 0.0024  aux.acc_seg: 99.8861
