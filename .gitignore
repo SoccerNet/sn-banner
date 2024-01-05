@@ -1,4 +1,5 @@
 Dataset/
 *.pth
 **/vis_data/
+*.png
 # What to test
