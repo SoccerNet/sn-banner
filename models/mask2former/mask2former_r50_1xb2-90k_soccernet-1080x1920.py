@@ -1,4 +1,4 @@
-_base_ = ["configs/_base_/default_runtime.py", "soccernetv2.py"]
+_base_ = ["../default_runtime.py", "../soccernet.py"]
 
 # work_dir = './work_dirs/mask2former_r50_4xb2-90k_soccernet-1080x1920'
 
@@ -192,13 +192,13 @@ param_scheduler = [
 ]
 
 # training schedule for 90k
-val_interval = 700
+val_interval = 100
 train_cfg = dict(type="IterBasedTrainLoop", max_iters=90000, val_interval=val_interval)
 val_cfg = dict(type="ValLoop")
 test_cfg = dict(type="TestLoop")
 default_hooks = dict(
     timer=dict(type="IterTimerHook"),
-    logger=dict(type="LoggerHook", interval=50, log_metric_by_epoch=False),
+    logger=dict(type="LoggerHook", interval=10, log_metric_by_epoch=False),
     param_scheduler=dict(type="ParamSchedulerHook"),
     checkpoint=dict(
         type="CheckpointHook",
