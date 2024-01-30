@@ -54,48 +54,7 @@ old_palette = [
     [192, 192, 192],
     [128, 128, 128],
 ]
-old_classes = [
-    "Outside billboards",
-    "Billboard",
-    "Field player",
-    "Goalkeeper",
-    "Referee",
-    "Assistant referee",
-    "Other human",
-    "Ball",
-    "Goal post",
-    "Goal net",
-    "Net post",
-    "Cross-bar",
-    "Corner flag",
-    "Assistant flag",
-    "Microphone",
-    "Camera",
-    "Other object",
-    "Don't care",
-]
-old_palette = [
-    [0, 0, 0],
-    [255, 255, 255],
-    [255, 0, 0],
-    [0, 255, 0],
-    [0, 0, 255],
-    [255, 255, 0],
-    [255, 0, 255],
-    [0, 255, 255],
-    [128, 0, 0],
-    [0, 128, 0],
-    [0, 0, 128],
-    [64, 64, 64],
-    [128, 128, 0],
-    [128, 0, 128],
-    [0, 128, 128],
-    [255, 128, 0],
-    [192, 192, 192],
-    [128, 128, 128],
-]
 
-new_classes = ["Outside billboards", "Billboard", "Goal net"]
 new_classes = ["Outside billboards", "Billboard", "Goal net"]
 new_palette = [old_palette[old_classes.index(c)] for c in new_classes]
 
@@ -114,37 +73,22 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Train a segmentor")
     parser.add_argument("config", help="train config file path")
     parser.add_argument("--work-dir", help="the dir to save logs and models")
-    parser = argparse.ArgumentParser(description="Train a segmentor")
-    parser.add_argument("config", help="train config file path")
-    parser.add_argument("--work-dir", help="the dir to save logs and models")
     parser.add_argument(
-        "--resume",
-        action="store_true",
         "--resume",
         action="store_true",
         default=False,
         help="resume from the latest checkpoint in the work_dir automatically",
     )
-        help="resume from the latest checkpoint in the work_dir automatically",
-    )
     parser.add_argument(
-        "--amp",
-        action="store_true",
         "--amp",
         action="store_true",
         default=False,
         help="enable automatic-mixed-precision training",
     )
-        help="enable automatic-mixed-precision training",
-    )
     parser.add_argument(
-        "--cfg-options",
-        nargs="+",
         "--cfg-options",
         nargs="+",
         action=DictAction,
-        help="override some settings in the used config, the key-value pair "
-        "in xxx=yyy format will be merged into config file. If the value to "
         help="override some settings in the used config, the key-value pair "
         "in xxx=yyy format will be merged into config file. If the value to "
         'be overwritten is a list, it should be like key="[a,b]" or key=a,b '
@@ -152,15 +96,7 @@ def parse_args():
         "Note that the quotation marks are necessary and that no white space "
         "is allowed.",
     )
-        "Note that the quotation marks are necessary and that no white space "
-        "is allowed.",
-    )
     parser.add_argument(
-        "--launcher",
-        choices=["none", "pytorch", "slurm", "mpi"],
-        default="none",
-        help="job launcher",
-    )
         "--launcher",
         choices=["none", "pytorch", "slurm", "mpi"],
         default="none",
@@ -170,10 +106,7 @@ def parse_args():
     # will pass the `--local-rank` parameter to `tools/train.py` instead
     # of `--local_rank`.
     parser.add_argument("--local_rank", "--local-rank", type=int, default=0)
-    parser.add_argument("--local_rank", "--local-rank", type=int, default=0)
     args = parser.parse_args()
-    if "LOCAL_RANK" not in os.environ:
-        os.environ["LOCAL_RANK"] = str(args.local_rank)
     if "LOCAL_RANK" not in os.environ:
         os.environ["LOCAL_RANK"] = str(args.local_rank)
 
@@ -194,11 +127,7 @@ def main():
         # update configs according to CLI args if args.work_dir is not None
         cfg.work_dir = args.work_dir
     elif cfg.get("work_dir", None) is None:
-    elif cfg.get("work_dir", None) is None:
         # use config filename as default work_dir if cfg.work_dir is None
-        cfg.work_dir = osp.join(
-            "./work_dirs", osp.splitext(osp.basename(args.config))[0]
-        )
         cfg.work_dir = osp.join(
             "./work_dirs", osp.splitext(osp.basename(args.config))[0]
         )
@@ -227,7 +156,6 @@ def main():
         print("Resume training")
     else:
         # Print directories in alphebetical descending order
-
         dirEntries = os.listdir(cfg.work_dir)
         files, dirs = [], []
         for entry in dirEntries:
@@ -235,23 +163,12 @@ def main():
                 files.append(entry)
             else:
                 dirs.append(entry)
-
         dirs.sort(reverse=True)
         lastDir = dirs[0] if len(dirs) > 0 else None
         if lastDir is not None:
             # Move all the files in the last directory to the work_dir
             for f in files:
                 os.rename(osp.join(cfg.work_dir, f), osp.join(cfg.work_dir, lastDir, f))
-
-        # # Get all directories in the work_dir
-        # dirs = os.listdir(cfg.work_dir)
-        # # Filter out files
-        # dirs = [d for d in dirs if os.path.isdir(os.path.join(cfg.work_dir, d))]
-        # # Sort directories in descending order
-        # dirs.sort(reverse=True)
-        # # Get the first directory
-        # last_dir = dirs[0] if len(dirs) > 0 else None
-        # print("Last directory:", last_dir)
 
     # build the runner from config
     if "runner_type" not in cfg:
