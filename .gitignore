@@ -1,5 +1,10 @@
-Dataset/
+soccernet-tracking/
 *.pth
 **/vis_data/
-*.png
+**/*.png
 # What to test
+mmsegmentation/
+work_dirs/
+__pycache__/
+example.py
+out.txt

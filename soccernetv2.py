@@ -3,13 +3,17 @@ dataset_type = "SoccerNet"
 data_root = "Dataset"
 img_dir = "Images"
 ann_dir = "Labels"
+# i = 50
+# crop_size = (1080 - i, 1920 - i)
+# scale = (1920 - i, 1080 - i)
 crop_size = (1080, 1920)
+scale = (1920, 1080)
 train_pipeline = [
     dict(type="LoadImageFromFile"),
     dict(type="LoadAnnotations"),
     dict(
         type="RandomResize",
-        scale=(1920, 1080),
+        scale=scale,
         ratio_range=(
             1.0,
             4.0,
@@ -23,7 +27,7 @@ train_pipeline = [
 ]
 val_pipeline = [
     dict(type="LoadImageFromFile"),
-    dict(type="Resize", scale=(1920, 1080), keep_ratio=True),
+    dict(type="Resize", scale=scale, keep_ratio=True),
     # add loading annotation after ``Resize`` because ground truth
     # does not need to do resize data transform
     dict(type="LoadAnnotations"),
@@ -47,7 +51,7 @@ tta_pipeline = [
 ]
 train_dataloader = dict(
     batch_size=2,
-    num_workers=2,
+    num_workers=1,
     persistent_workers=True,
     sampler=dict(type="InfiniteSampler", shuffle=True),
     dataset=dict(
