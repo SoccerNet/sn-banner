@@ -12,7 +12,7 @@ The customized loss per class
 
 The vizualization hook
 
-What is tta, or test time augmentation ?
+What is tta, or test time augmentation ? Checkout how to make a tta model by viewing differences between tta and non tta testing in the test reps.
 
 In the transform pipelines, what is the infiniteSampler ?
 
