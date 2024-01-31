@@ -1,6 +1,6 @@
 soccernet-tracking/
+configs/
 *.pth
-**/vis_data/
 **/*.png
 # What to test
 mmsegmentation/
