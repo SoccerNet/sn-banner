@@ -1,0 +1,9 @@
+srun: job 2882539 queued and waiting for resources
+srun: job 2882539 has been allocated resources
+Traceback (most recent call last):
+  File "/scratch/users/vgaspar/train.py", line 187, in <module>
+    main()
+  File "/scratch/users/vgaspar/train.py", line 171, in main
+    os.rename(osp.join(cfg.work_dir, f), osp.join(cfg.work_dir, lastDir, f))
+OSError: [Errno 16] Device or resource busy: 'work_dir/split_models/mask2former/mask2former_r50_1xb2-90k_soccernet-1080x1920.py/train.log' -> 'work_dir/split_models/mask2former/mask2former_r50_1xb2-90k_soccernet-1080x1920.py/20240130_212705/train.log'
+srun: error: compute-14: task 0: Exited with exit code 1

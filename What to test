@@ -1,3 +1,5 @@
+change the 'mean' and 'std' values in the data preprocessor
+
 test loop, or the 'test.py' file to test the model ?
 
 RandomResize with crop versus just a Resize
