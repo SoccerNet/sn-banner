@@ -14,7 +14,7 @@ data_preprocessor = dict(
     pad_val=0,
     seg_pad_val=255,
 )
-norm_cfg = dict(type="SyncBN", requires_grad=True)
+norm_cfg = dict(type="BN", requires_grad=True)
 num_classes = 3
 model = dict(
     type="EncoderDecoder",
