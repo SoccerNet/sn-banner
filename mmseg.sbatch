@@ -12,9 +12,10 @@
 #
 
 # Activate your Anaconda environment
-conda activate mmseg
+conda activate mmseg2
 
 # Run your Python script
 cd /scratch/users/vgaspar
-python train.py configs/mask2former/mask2former_r50_4xb2-90k_soccernet-1080x1920.py --launcher=slurm
+nvcc --version
+# python train.py configs/mask2former/mask2former_r50_4xb2-90k_soccernet-1080x1920.py --launcher=slurm
 # python test_pytorch.py

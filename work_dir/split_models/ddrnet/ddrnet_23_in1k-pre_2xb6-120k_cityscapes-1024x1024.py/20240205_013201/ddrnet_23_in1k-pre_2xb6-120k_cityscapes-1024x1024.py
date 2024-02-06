@@ -28,7 +28,7 @@ dataset_type = 'SoccerNet'
 default_hooks = dict(
     checkpoint=dict(
         by_epoch=False,
-        interval=150,
+        interval=100,
         max_keep_ckpts=2,
         save_best='mIoU',
         type='CheckpointHook'),
@@ -165,7 +165,7 @@ test_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
-train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=150)
+train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=100)
 train_dataloader = dict(
     batch_size=6,
     dataset=dict(
@@ -271,7 +271,7 @@ val_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
-val_interval = 150
+val_interval = 100
 val_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(keep_ratio=True, scale=(

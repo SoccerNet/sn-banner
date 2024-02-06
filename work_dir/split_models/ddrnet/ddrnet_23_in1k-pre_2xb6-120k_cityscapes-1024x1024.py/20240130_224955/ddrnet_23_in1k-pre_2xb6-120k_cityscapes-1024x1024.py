@@ -28,7 +28,7 @@ dataset_type = 'SoccerNet'
 default_hooks = dict(
     checkpoint=dict(
         by_epoch=False,
-        interval=150,
+        interval=100,
         max_keep_ckpts=2,
         save_best='mIoU',
         type='CheckpointHook'),
@@ -65,7 +65,7 @@ model = dict(
             checkpoint=
             'https://download.openmmlab.com/mmsegmentation/v0.5/ddrnet/pretrain/ddrnet23-in1kpre_3rdparty-9ca29f62.pth',
             type='Pretrained'),
-        norm_cfg=dict(requires_grad=True, type='BN'),
+        norm_cfg=dict(requires_grad=True, type='SyncBN'),
         ppm_channels=128,
         type='DDRNet'),
     data_preprocessor=dict(
@@ -114,13 +114,13 @@ model = dict(
                 thres=0.9,
                 type='OhemCrossEntropy'),
         ],
-        norm_cfg=dict(requires_grad=True, type='BN'),
+        norm_cfg=dict(requires_grad=True, type='SyncBN'),
         num_classes=3,
         type='DDRHead'),
     test_cfg=dict(mode='whole'),
     train_cfg=dict(),
     type='EncoderDecoder')
-norm_cfg = dict(requires_grad=True, type='BN')
+norm_cfg = dict(requires_grad=True, type='SyncBN')
 num_classes = 3
 optim_wrapper = dict(
     clip_grad=None,
@@ -165,7 +165,7 @@ test_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
-train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=150)
+train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=100)
 train_dataloader = dict(
     batch_size=6,
     dataset=dict(
@@ -271,7 +271,7 @@ val_evaluator = dict(
     iou_metrics=[
         'mIoU',
     ], type='IoUMetric')
-val_interval = 150
+val_interval = 100
 val_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(keep_ratio=True, scale=(

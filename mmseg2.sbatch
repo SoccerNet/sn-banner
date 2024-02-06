@@ -11,12 +11,12 @@
 #SBATCH --time=1:00:00              # Max execution time
 #
 
-echo "Starting sbatch script myscript.sh at:`date`"
+# echo "Starting sbatch script myscript.sh at:`date`"
 
 # Activate your Anaconda environment
-conda activate mmseg
+conda activate mmseg3
 
 # Run your Python script
 cd /scratch/users/vgaspar
-python soccerNetSegVic2.py
+python train.py models/mask2former/mask2former_swin-s_1xb2-90k_soccernet.py
 # python test_pytorch.py

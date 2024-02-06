@@ -1,4 +1,1589 @@
-srun: job 2882538 queued and waiting for resources
-srun: Force Terminated job 2882538
-srun: Job has been cancelled
-srun: error: Unable to allocate resources: Job/step already completing or completed
+srun: job 2885840 queued and waiting for resources
+srun: job 2885840 has been allocated resources
+/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/utils/dl_utils/setup_env.py:46: UserWarning: Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
+  warnings.warn(
+/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/utils/dl_utils/setup_env.py:56: UserWarning: Setting MKL_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
+  warnings.warn(
+02/05 10:50:46 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.11.7 (main, Dec 15 2023, 18:12:31) [GCC 11.2.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 1240463064
+    GPU 0: Tesla V100-SXM2-32GB
+    CUDA_HOME: None
+    GCC: gcc (GCC) 8.3.1 20191121 (Red Hat 8.3.1-5)
+    PyTorch: 2.2.0+cu118
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.3.2 (Git Hash 2dc95a2ad0841e29db8b22fbccaf3e5da7992b01)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.7
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.2.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+    TorchVision: 0.17.0+cu118
+    OpenCV: 4.9.0
+    MMEngine: 0.10.3
+
+Runtime environment:
+    cudnn_benchmark: True
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 1240463064
+    Distributed launcher: slurm
+    Distributed training: True
+    GPU number: 1
+------------------------------------------------------------
+
+02/05 10:50:47 - mmengine - INFO - Config:
+ann_dir = 'Labels'
+auto_scale_lr = dict(base_batch_size=2, enable=False)
+backbone_embed_multi = dict(decay_mult=0.0, lr_mult=0.1)
+backbone_norm_multi = dict(decay_mult=0.0, lr_mult=0.1)
+crop_size = (
+    1080,
+    1920,
+)
+custom_keys = dict({
+    'absolute_pos_embed':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone':
+    dict(decay_mult=1.0, lr_mult=0.1),
+    'backbone.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.patch_embed.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.0.blocks.0.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.0.blocks.1.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.0.downsample.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.1.blocks.0.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.1.blocks.1.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.1.downsample.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.2.blocks.0.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.2.blocks.1.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.2.blocks.2.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.2.blocks.3.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.2.blocks.4.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.2.blocks.5.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.2.downsample.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.3.blocks.0.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'backbone.stages.3.blocks.1.norm':
+    dict(decay_mult=0.0, lr_mult=0.1),
+    'level_embed':
+    dict(decay_mult=0.0, lr_mult=1.0),
+    'query_embed':
+    dict(decay_mult=0.0, lr_mult=1.0),
+    'query_feat':
+    dict(decay_mult=0.0, lr_mult=1.0),
+    'relative_position_bias_table':
+    dict(decay_mult=0.0, lr_mult=0.1)
+})
+data_preprocessor = dict(
+    bgr_to_rgb=True,
+    mean=[
+        123.675,
+        116.28,
+        103.53,
+    ],
+    pad_val=0,
+    seg_pad_val=255,
+    size=(
+        1080,
+        1920,
+    ),
+    std=[
+        58.395,
+        57.12,
+        57.375,
+    ],
+    test_cfg=dict(size_divisor=32),
+    type='SegDataPreProcessor')
+data_root = 'Dataset'
+dataset_type = 'SoccerNet'
+default_hooks = dict(
+    checkpoint=dict(
+        by_epoch=False,
+        interval=150,
+        max_keep_ckpts=2,
+        save_best='mIoU',
+        type='CheckpointHook'),
+    logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='SegVisualizationHook'))
+default_scope = 'mmseg'
+depths = [
+    2,
+    2,
+    6,
+    2,
+]
+embed_multi = dict(decay_mult=0.0, lr_mult=1.0)
+env_cfg = dict(
+    cudnn_benchmark=True,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_dir = 'Images'
+img_ratios = [
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+]
+launcher = 'slurm'
+load_from = None
+log_level = 'INFO'
+log_processor = dict(by_epoch=False)
+model = dict(
+    backbone=dict(
+        attn_drop_rate=0.0,
+        depths=[
+            2,
+            2,
+            6,
+            2,
+        ],
+        drop_path_rate=0.3,
+        drop_rate=0.0,
+        embed_dims=96,
+        frozen_stages=-1,
+        init_cfg=dict(
+            checkpoint=
+            'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_tiny_patch4_window7_224_20220317-1cdeb081.pth',
+            type='Pretrained'),
+        mlp_ratio=4,
+        num_heads=[
+            3,
+            6,
+            12,
+            24,
+        ],
+        out_indices=(
+            0,
+            1,
+            2,
+            3,
+        ),
+        patch_norm=True,
+        qk_scale=None,
+        qkv_bias=True,
+        type='SwinTransformer',
+        window_size=7,
+        with_cp=False),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_val=0,
+        seg_pad_val=255,
+        size=(
+            1080,
+            1920,
+        ),
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        test_cfg=dict(size_divisor=32),
+        type='SegDataPreProcessor'),
+    decode_head=dict(
+        align_corners=False,
+        enforce_decoder_input_project=False,
+        feat_channels=256,
+        in_channels=[
+            96,
+            192,
+            384,
+            768,
+        ],
+        loss_cls=dict(
+            class_weight=[
+                1.0,
+                1.0,
+                1.0,
+                0.1,
+            ],
+            loss_weight=2.0,
+            reduction='mean',
+            type='mmdet.CrossEntropyLoss',
+            use_sigmoid=False),
+        loss_dice=dict(
+            activate=True,
+            eps=1.0,
+            loss_weight=5.0,
+            naive_dice=True,
+            reduction='mean',
+            type='mmdet.DiceLoss',
+            use_sigmoid=True),
+        loss_mask=dict(
+            loss_weight=5.0,
+            reduction='mean',
+            type='mmdet.CrossEntropyLoss',
+            use_sigmoid=True),
+        num_classes=3,
+        num_queries=100,
+        num_transformer_feat_level=3,
+        out_channels=256,
+        pixel_decoder=dict(
+            act_cfg=dict(type='ReLU'),
+            encoder=dict(
+                init_cfg=None,
+                layer_cfg=dict(
+                    ffn_cfg=dict(
+                        act_cfg=dict(inplace=True, type='ReLU'),
+                        embed_dims=256,
+                        feedforward_channels=1024,
+                        ffn_drop=0.0,
+                        num_fcs=2),
+                    self_attn_cfg=dict(
+                        batch_first=True,
+                        dropout=0.0,
+                        embed_dims=256,
+                        im2col_step=64,
+                        init_cfg=None,
+                        norm_cfg=None,
+                        num_heads=8,
+                        num_levels=3,
+                        num_points=4)),
+                num_layers=6),
+            init_cfg=None,
+            norm_cfg=dict(num_groups=32, type='GN'),
+            num_outs=3,
+            positional_encoding=dict(normalize=True, num_feats=128),
+            type='mmdet.MSDeformAttnPixelDecoder'),
+        positional_encoding=dict(normalize=True, num_feats=128),
+        strides=[
+            4,
+            8,
+            16,
+            32,
+        ],
+        train_cfg=dict(
+            assigner=dict(
+                match_costs=[
+                    dict(type='mmdet.ClassificationCost', weight=2.0),
+                    dict(
+                        type='mmdet.CrossEntropyLossCost',
+                        use_sigmoid=True,
+                        weight=5.0),
+                    dict(
+                        eps=1.0,
+                        pred_act=True,
+                        type='mmdet.DiceCost',
+                        weight=5.0),
+                ],
+                type='mmdet.HungarianAssigner'),
+            importance_sample_ratio=0.75,
+            num_points=12544,
+            oversample_ratio=3.0,
+            sampler=dict(type='mmdet.MaskPseudoSampler')),
+        transformer_decoder=dict(
+            init_cfg=None,
+            layer_cfg=dict(
+                cross_attn_cfg=dict(
+                    attn_drop=0.0,
+                    batch_first=True,
+                    dropout_layer=None,
+                    embed_dims=256,
+                    num_heads=8,
+                    proj_drop=0.0),
+                ffn_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    add_identity=True,
+                    dropout_layer=None,
+                    embed_dims=256,
+                    feedforward_channels=2048,
+                    ffn_drop=0.0,
+                    num_fcs=2),
+                self_attn_cfg=dict(
+                    attn_drop=0.0,
+                    batch_first=True,
+                    dropout_layer=None,
+                    embed_dims=256,
+                    num_heads=8,
+                    proj_drop=0.0)),
+            num_layers=9,
+            return_intermediate=True),
+        type='Mask2FormerHead'),
+    test_cfg=dict(mode='whole'),
+    train_cfg=dict(),
+    type='EncoderDecoder')
+num_classes = 3
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=0.01, norm_type=2),
+    optimizer=dict(
+        betas=(
+            0.9,
+            0.999,
+        ),
+        eps=1e-08,
+        lr=0.0001,
+        type='AdamW',
+        weight_decay=0.05),
+    paramwise_cfg=dict(
+        custom_keys=dict({
+            'absolute_pos_embed':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone':
+            dict(decay_mult=1.0, lr_mult=0.1),
+            'backbone.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.patch_embed.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.0.blocks.0.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.0.blocks.1.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.0.downsample.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.1.blocks.0.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.1.blocks.1.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.1.downsample.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.2.blocks.0.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.2.blocks.1.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.2.blocks.2.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.2.blocks.3.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.2.blocks.4.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.2.blocks.5.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.2.downsample.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.3.blocks.0.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'backbone.stages.3.blocks.1.norm':
+            dict(decay_mult=0.0, lr_mult=0.1),
+            'level_embed':
+            dict(decay_mult=0.0, lr_mult=1.0),
+            'query_embed':
+            dict(decay_mult=0.0, lr_mult=1.0),
+            'query_feat':
+            dict(decay_mult=0.0, lr_mult=1.0),
+            'relative_position_bias_table':
+            dict(decay_mult=0.0, lr_mult=0.1)
+        }),
+        norm_decay_mult=0.0),
+    type='OptimWrapper')
+optimizer = dict(
+    betas=(
+        0.9,
+        0.999,
+    ),
+    eps=1e-08,
+    lr=0.0001,
+    type='AdamW',
+    weight_decay=0.05)
+param_scheduler = [
+    dict(
+        begin=0,
+        by_epoch=False,
+        end=40000,
+        eta_min=0,
+        power=0.9,
+        type='PolyLR'),
+]
+pretrained = 'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_tiny_patch4_window7_224_20220317-1cdeb081.pth'
+resume = False
+scale = (
+    1920,
+    1080,
+)
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='splits/test.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
+            dict(type='LoadAnnotations'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    iou_metrics=[
+        'mIoU',
+    ], type='IoUMetric')
+train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=150)
+train_dataloader = dict(
+    batch_size=2,
+    dataset=dict(
+        ann_file='splits/train.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(type='LoadAnnotations'),
+            dict(
+                keep_ratio=True,
+                ratio_range=(
+                    1.0,
+                    4.0,
+                ),
+                scale=(
+                    1920,
+                    1080,
+                ),
+                type='RandomResize'),
+            dict(
+                cat_max_ratio=0.75,
+                crop_size=(
+                    1080,
+                    1920,
+                ),
+                type='RandomCrop'),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='InfiniteSampler'))
+train_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='LoadAnnotations'),
+    dict(
+        keep_ratio=True,
+        ratio_range=(
+            1.0,
+            4.0,
+        ),
+        scale=(
+            1920,
+            1080,
+        ),
+        type='RandomResize'),
+    dict(cat_max_ratio=0.75, crop_size=(
+        1080,
+        1920,
+    ), type='RandomCrop'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(type='PackSegInputs'),
+]
+tta_model = dict(type='SegTTAModel')
+tta_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        transforms=[
+            [
+                dict(keep_ratio=True, scale_factor=0.5, type='Resize'),
+                dict(keep_ratio=True, scale_factor=0.75, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.0, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.25, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.5, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.75, type='Resize'),
+            ],
+            [
+                dict(direction='horizontal', prob=0.0, type='RandomFlip'),
+                dict(direction='horizontal', prob=1.0, type='RandomFlip'),
+            ],
+            [
+                dict(type='LoadAnnotations'),
+            ],
+            [
+                dict(type='PackSegInputs'),
+            ],
+        ],
+        type='TestTimeAug'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=2,
+    dataset=dict(
+        ann_file='splits/val.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
+            dict(type='LoadAnnotations'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    iou_metrics=[
+        'mIoU',
+    ], type='IoUMetric')
+val_interval = 150
+val_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1920,
+        1080,
+    ), type='Resize'),
+    dict(type='LoadAnnotations'),
+    dict(type='PackSegInputs'),
+]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='SegLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = 'work_dir/split_models/mask2former/mask2former_swin-t_1xb2-90k_soccernet.py'
+
+/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmseg/engine/hooks/visualization_hook.py:60: UserWarning: The draw is False, it means that the hook for visualization will not take effect. The results will NOT be visualized or stored.
+  warnings.warn('The draw is False, it means that the '
+02/05 10:50:57 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.projection.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.projection.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.projection.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.projection.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.projection.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.projection.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.projection.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.projection.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.reduction.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.reduction.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.reduction.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.reduction.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.reduction.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.reduction.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.reduction.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.reduction.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:decay_mult=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:lr=1e-05
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:weight_decay=0.0
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:lr_mult=0.1
+02/05 10:50:58 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.reduction.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.reduction.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.reduction.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.reduction.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.qkv.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.qkv.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.qkv.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.qkv.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.qkv.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.qkv.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.qkv.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.qkv.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.proj.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.proj.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.proj.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.proj.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.proj.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.proj.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.proj.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.proj.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.0.0.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.0.0.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.0.0.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.0.0.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.0.0.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.0.0.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.0.0.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.0.0.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.1.weight:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.1.weight:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.1.bias:weight_decay=0.05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.ffn.layers.1.bias:decay_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:lr=1e-05
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:lr_mult=0.1
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.input_convs.0.gn.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.input_convs.0.gn.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.input_convs.1.gn.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.input_convs.1.gn.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.input_convs.2.gn.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.input_convs.2.gn.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.0.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.0.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.0.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.0.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.1.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.1.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.1.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.1.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.2.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.2.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.2.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.2.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.3.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.3.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.3.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.3.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.4.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.4.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.4.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.4.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.5.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.5.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.5.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.encoder.layers.5.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.lateral_convs.0.gn.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.lateral_convs.0.gn.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.output_convs.0.gn.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.pixel_decoder.output_convs.0.gn.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.0.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.0.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.0.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.0.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.0.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.0.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.1.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.1.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.1.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.1.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.1.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.1.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.2.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.2.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.2.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.2.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.2.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.2.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.3.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.3.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.3.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.3.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.3.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.3.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.4.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.4.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.4.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.4.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.4.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.4.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.5.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.5.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.5.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.5.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.5.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.5.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.6.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.6.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.6.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.6.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.6.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.6.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.7.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.7.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.7.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.7.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.7.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.7.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.8.norms.0.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.8.norms.0.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.8.norms.1.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.8.norms.1.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.8.norms.2.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.layers.8.norms.2.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.post_norm.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.transformer_decoder.post_norm.bias:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.query_embed.weight:lr=0.0001
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.query_embed.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.query_embed.weight:lr_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.query_embed.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.query_feat.weight:lr=0.0001
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.query_feat.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.query_feat.weight:lr_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.query_feat.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.level_embed.weight:lr=0.0001
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.level_embed.weight:weight_decay=0.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.level_embed.weight:lr_mult=1.0
+02/05 10:50:59 - mmengine - INFO - paramwise_options -- decode_head.level_embed.weight:decay_mult=0.0
+02/05 10:50:59 - mmengine - WARNING - The prefix is not set in metric class IoUMetric.
+Loads checkpoint by http backend from path: https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_tiny_patch4_window7_224_20220317-1cdeb081.pth
+02/05 10:51:00 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+02/05 10:51:00 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+02/05 10:51:00 - mmengine - INFO - Checkpoints will be saved to /scratch/users/vgaspar/work_dir/split_models/mask2former/mask2former_swin-t_1xb2-90k_soccernet.py.
+/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/functional.py:507: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at ../aten/src/ATen/native/TensorShape.cpp:3549.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Traceback (most recent call last):
+  File "/scratch/users/vgaspar/train.py", line 198, in <module>
+    main()
+  File "/scratch/users/vgaspar/train.py", line 194, in main
+    runner.train()
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/runner/runner.py", line 1777, in train
+    model = self.train_loop.run()  # type: ignore
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/runner/loops.py", line 286, in run
+    self.run_iter(data_batch)
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/runner/loops.py", line 309, in run_iter
+    outputs = self.runner.model.train_step(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/model/wrappers/distributed.py", line 121, in train_step
+    losses = self._run_forward(data, mode='loss')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/model/wrappers/distributed.py", line 161, in _run_forward
+    results = self(**data, mode=mode)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/parallel/distributed.py", line 1523, in forward
+    else self._run_ddp_forward(*inputs, **kwargs)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/parallel/distributed.py", line 1359, in _run_ddp_forward
+    return self.module(*inputs, **kwargs)  # type: ignore[index]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmseg/models/segmentors/base.py", line 94, in forward
+    return self.loss(inputs, data_samples)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmseg/models/segmentors/encoder_decoder.py", line 178, in loss
+    loss_decode = self._decode_head_forward_train(x, data_samples)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmseg/models/segmentors/encoder_decoder.py", line 139, in _decode_head_forward_train
+    loss_decode = self.decode_head.loss(inputs, data_samples,
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmseg/models/decode_heads/mask2former_head.py", line 123, in loss
+    all_cls_scores, all_mask_preds = self(x, batch_data_samples)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmdet/models/dense_heads/mask2former_head.py", line 402, in forward
+    mask_features, multi_scale_memorys = self.pixel_decoder(x)
+                                         ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmdet/models/layers/msdeformattn_pixel_decoder.py", line 214, in forward
+    memory = self.encoder(
+             ^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmdet/models/layers/transformer/mask2former_layers.py", line 44, in forward
+    query = layer(
+            ^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmdet/models/layers/transformer/detr_layers.py", line 226, in forward
+    query = self.self_attn(
+            ^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmengine/utils/misc.py", line 395, in new_func
+    output = old_func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmcv/ops/multi_scale_deform_attn.py", line 368, in forward
+    output = MultiScaleDeformableAttnFunction.apply(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/torch/autograd/function.py", line 553, in apply
+    return super().apply(*args, **kwargs)  # type: ignore[misc]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgaspar/anaconda3/envs/mmseg/lib/python3.11/site-packages/mmcv/ops/multi_scale_deform_attn.py", line 64, in forward
+    output = ext_module.ms_deform_attn_forward(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ms_deform_attn_impl_forward: implementation for device cuda:0 not found.
+
+srun: error: compute-13: task 0: Exited with exit code 1
