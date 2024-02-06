@@ -1,3 +1,5 @@
+# GPU memory size: less than 24GB
+
 _base_ = [
     "../soccernet.py",
     "../default_runtime.py",
@@ -70,7 +72,7 @@ param_scheduler = [
 ]
 
 # training schedule for 40k
-val_interval = 100
+val_interval = 150
 train_cfg = dict(type="IterBasedTrainLoop", max_iters=iters, val_interval=val_interval)
 val_cfg = dict(type="ValLoop")
 test_cfg = dict(type="TestLoop")
