@@ -1,3 +1,5 @@
+# GPU memory size: less than 24GB
+
 _base_ = [
     "../soccernet.py",
     "../default_runtime.py",
