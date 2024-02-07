@@ -1,6 +1,8 @@
 _base_ = ["./mask2former_swin-t_1xb2-90k_soccernet.py"]
 pretrained = "https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_small_patch4_window7_224_20220317-7ba6d6dd.pth"  # noqa
 
+train_dataloader = dict(batch_size=1)
+
 depths = [2, 2, 18, 2]
 model = dict(
     backbone=dict(

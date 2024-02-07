@@ -186,14 +186,17 @@ optim_wrapper = dict(
         norm_decay_mult=0.0,
     ),
 )
+
+iters = 80000
+
 # learning policy
 param_scheduler = [
-    dict(type="PolyLR", eta_min=0, power=0.9, begin=0, end=40000, by_epoch=False)
+    dict(type="PolyLR", eta_min=0, power=0.9, begin=0, end=iters, by_epoch=False)
 ]
 
 # training schedule for 90k
-val_interval = 150
-train_cfg = dict(type="IterBasedTrainLoop", max_iters=40000, val_interval=val_interval)
+val_interval = 150 * 2
+train_cfg = dict(type="IterBasedTrainLoop", max_iters=iters, val_interval=val_interval)
 val_cfg = dict(type="ValLoop")
 test_cfg = dict(type="TestLoop")
 default_hooks = dict(
