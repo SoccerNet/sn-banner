@@ -1,13 +1,21 @@
 _base_ = ["./mask2former_swin-t_8xb2-90k_cityscapes-512x1024.py"]
-pretrained = "https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_small_patch4_window7_224_20220317-7ba6d6dd.pth"  # noqa
 
-train_dataloader = dict(batch_size=1)
+val_batch_size = 4
+val_dataloader = dict(batch_size=val_batch_size, num_workers=val_batch_size)
+
+pretrained = "https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window12_384_22k_20220412-6580f57d.pth"  # noqa
 
 depths = [2, 2, 18, 2]
 model = dict(
     backbone=dict(
-        depths=depths, init_cfg=dict(type="Pretrained", checkpoint=pretrained)
-    )
+        pretrain_img_size=384,
+        embed_dims=192,
+        depths=depths,
+        num_heads=[6, 12, 24, 48],
+        window_size=12,
+        init_cfg=dict(type="Pretrained", checkpoint=pretrained),
+    ),
+    decode_head=dict(in_channels=[192, 384, 768, 1536]),
 )
 
 # set all layers in backbone to lr_mult=0.1

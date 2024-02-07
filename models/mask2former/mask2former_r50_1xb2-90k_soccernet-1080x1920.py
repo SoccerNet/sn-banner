@@ -195,13 +195,13 @@ param_scheduler = [
 ]
 
 # training schedule for 90k
-val_interval = 150 * 2
+val_interval = 300
 train_cfg = dict(type="IterBasedTrainLoop", max_iters=iters, val_interval=val_interval)
 val_cfg = dict(type="ValLoop")
 test_cfg = dict(type="TestLoop")
 default_hooks = dict(
     timer=dict(type="IterTimerHook"),
-    logger=dict(type="LoggerHook", interval=50, log_metric_by_epoch=False),
+    logger=dict(type="LoggerHook", interval=150, log_metric_by_epoch=False),
     param_scheduler=dict(type="ParamSchedulerHook"),
     checkpoint=dict(
         type="CheckpointHook",
