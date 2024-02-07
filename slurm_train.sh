@@ -15,6 +15,13 @@ PY_ARGS=${@:4}
 
 mkdir -p work_dir/${JOB_NAME}_${CONFIG}
 
+# conda env list
+
+# Rename work_dir/${JOB_NAME}_${CONFIG}/train.log to work_dir/${JOB_NAME}_${CONFIG}/trainn.log
+if [ -f work_dir/${JOB_NAME}_${CONFIG}/train.log ]; then
+    mv work_dir/${JOB_NAME}_${CONFIG}/train.log work_dir/${JOB_NAME}_${CONFIG}/trainn.log
+fi
+
 PYTHONPATH="$(dirname $0)/..":$PYTHONPATH \
 srun -p ${PARTITION} \
     --job-name=${JOB_NAME}_${CONFIG} \
