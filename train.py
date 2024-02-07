@@ -155,20 +155,34 @@ def main():
     if args.resume:
         print("Resume training")
     else:
-        # Print directories in alphebetical descending order
-        dirEntries = os.listdir(cfg.work_dir)
-        files, dirs = [], []
-        for entry in dirEntries:
-            if osp.isfile(osp.join(cfg.work_dir, entry)):
-                files.append(entry)
-            else:
-                dirs.append(entry)
-        dirs.sort(reverse=True)
-        lastDir = dirs[0] if len(dirs) > 0 else None
-        if lastDir is not None:
-            # Move all the files in the last directory to the work_dir
-            for f in files:
-                os.rename(osp.join(cfg.work_dir, f), osp.join(cfg.work_dir, lastDir, f))
+        # Check if the work_dir exists
+        if osp.exists(cfg.work_dir):
+            # Print directories in alphebetical descending order
+            dirEntries = os.listdir(cfg.work_dir)
+            files, dirs = [], []
+            for entry in dirEntries:
+                if osp.isfile(osp.join(cfg.work_dir, entry)):
+                    files.append(entry)
+                else:
+                    dirs.append(entry)
+            dirs.sort(reverse=True)
+            lastDir = dirs[0] if len(dirs) > 0 else None
+            if lastDir is not None:
+                # Move all the files in the last directory to the work_dir
+                # Except for the 'train.log' file
+                for f in files:
+                    if f == "train.log":
+                        continue
+                    if f == "trainn.log":
+                        os.rename(
+                            osp.join(cfg.work_dir, f),
+                            osp.join(cfg.work_dir, lastDir, "train.log"),
+                        )
+                    else:
+                        os.rename(
+                            osp.join(cfg.work_dir, f),
+                            osp.join(cfg.work_dir, lastDir, f),
+                        )
 
     # build the runner from config
     if "runner_type" not in cfg:
