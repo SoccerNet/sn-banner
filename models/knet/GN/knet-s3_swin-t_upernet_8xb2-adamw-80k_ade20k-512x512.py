@@ -1,4 +1,4 @@
-# GPU memory size: 20.450GB
+# GPU memory size:
 
 _base_ = "knet-s3_r50-d8_upernet_8xb2-adamw-80k_ade20k-512x512.py"
 

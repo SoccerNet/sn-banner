@@ -1,6 +1,6 @@
-# GPU memory size: 20.143GB
+# GPU memory size:
 
-_base_ = ["../soccernet.py", "../default_runtime.py", "../schedule_40k.py"]
+_base_ = ["../../soccernet.py", "../../default_runtime.py", "../../schedule_40k.py"]
 crop_size = (1080, 1920)
 data_preprocessor = dict(
     type="SegDataPreProcessor",
