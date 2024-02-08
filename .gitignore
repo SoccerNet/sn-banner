@@ -8,3 +8,4 @@ work_dirs/
 __pycache__/
 example.py
 out.txt
+out/

@@ -8,7 +8,7 @@ _base_ = [
 ]
 
 norm_cfg = dict(type="BN", requires_grad=True)
-crop_size_height = int(9 * 1)
+crop_size_height = int(9 * 100)
 crop_size = (crop_size_height, crop_size_height * 16 // 9)
 scale = (crop_size[1], crop_size[0])
 data_preprocessor = dict(size=crop_size)
@@ -46,7 +46,7 @@ test_dataloader = val_dataloader
 val_interval = 50
 train_cfg = dict(val_interval=val_interval)
 default_hooks = dict(
-    logger=dict(type="LoggerHook", interval=50, log_metric_by_epoch=False),
+    logger=dict(type="LoggerHook", interval=1, log_metric_by_epoch=False),
     checkpoint=dict(
         type="CheckpointHook",
         by_epoch=False,

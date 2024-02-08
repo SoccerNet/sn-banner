@@ -148,6 +148,7 @@ def main():
     # load config
     cfg = Config.fromfile(args.config)
     cfg.launcher = args.launcher
+    cfg.default_hooks.logger.interval = 15
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
 
