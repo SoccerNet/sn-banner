@@ -1,4 +1,4 @@
-# GPU memory size: Maybe less than 32.9GB ? (It cannot even do an it on my gpu so I don't know)
+# GPU memory size: Maybe less than 32.9GB ?
 
 _base_ = "knet-s3_swin-t_upernet_8xb2-adamw-80k_ade20k-512x512.py"
 

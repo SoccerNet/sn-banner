@@ -1,7 +1,6 @@
-_base_ = ["../soccernet.py", "../default_runtime.py", "../schedule_40k.py"]
 # GPU memory size: 20.143GB
-train_dataloader = dict(batch_size=2)
 
+_base_ = ["../soccernet.py", "../default_runtime.py", "../schedule_40k.py"]
 crop_size = (1080, 1920)
 data_preprocessor = dict(
     type="SegDataPreProcessor",
@@ -13,7 +12,7 @@ data_preprocessor = dict(
     seg_pad_val=255,
 )
 # model settings
-norm_cfg = dict(type="BN", requires_grad=True)
+norm_cfg = dict(type="GN", num_groups=32)
 num_stages = 3
 conv_kernel_size = 1
 num_classes = 3
