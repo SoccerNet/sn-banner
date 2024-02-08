@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+export MKL_NUM_THREADS=2
+export OMP_NUM_THREADS=2
+
 # Example of command : sh slurm_train.sh a5000 amp pspnet_r101-d8_1xb2-80k_soccernetv2-1080x1920.py --amp --resume
 
 set -x
@@ -29,6 +32,7 @@ srun -p ${PARTITION} \
     --ntasks=${GPUS} \
     --ntasks-per-node=${GPUS_PER_NODE} \
     --cpus-per-task=${CPUS_PER_TASK} \
+    --mem=24G \
     -t 9-00:00:00 \
     ${SRUN_ARGS} \
     python train.py ${CONFIG} --launcher="slurm" --work-dir work_dir/${JOB_NAME}_${CONFIG} ${PY_ARGS} > work_dir/${JOB_NAME}_${CONFIG}/train.log 2>&1 &
