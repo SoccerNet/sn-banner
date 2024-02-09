@@ -1,4 +1,4 @@
-iters = 40000
+iters = 80000
 
 # optimizer
 optimizer = dict(type="SGD", lr=0.01, momentum=0.9, weight_decay=0.0005)
@@ -8,13 +8,13 @@ param_scheduler = [
     dict(type="PolyLR", eta_min=1e-4, power=0.9, begin=0, end=iters, by_epoch=False)
 ]
 # training schedule for 40k
-val_interval = 150
+val_interval = 300
 train_cfg = dict(type="IterBasedTrainLoop", max_iters=iters, val_interval=val_interval)
 val_cfg = dict(type="ValLoop")
 test_cfg = dict(type="TestLoop")
 default_hooks = dict(
     timer=dict(type="IterTimerHook"),
-    logger=dict(type="LoggerHook", interval=75, log_metric_by_epoch=False),
+    logger=dict(type="LoggerHook", interval=150, log_metric_by_epoch=False),
     param_scheduler=dict(type="ParamSchedulerHook"),
     checkpoint=dict(
         type="CheckpointHook",

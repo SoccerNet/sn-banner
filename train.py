@@ -106,6 +106,14 @@ def parse_args():
     # will pass the `--local-rank` parameter to `tools/train.py` instead
     # of `--local_rank`.
     parser.add_argument("--local_rank", "--local-rank", type=int, default=0)
+    # Add an option '--log' to specify after how many iterations the log
+    # should be printed
+    parser.add_argument(
+        "--log",
+        type=int,
+        default=0,
+        help="the interval of iterations to log the training status",
+    )
     args = parser.parse_args()
     if "LOCAL_RANK" not in os.environ:
         os.environ["LOCAL_RANK"] = str(args.local_rank)
@@ -119,6 +127,8 @@ def main():
     # load config
     cfg = Config.fromfile(args.config)
     cfg.launcher = args.launcher
+    if args.log > 0:
+        cfg.default_hooks.logger.interval = args.log
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
 

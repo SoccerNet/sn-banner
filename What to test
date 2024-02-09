@@ -1,3 +1,5 @@
+Some models do not accept batch size of one, maybe because it is using batch normalization. One workaround is to use group normalization (GN), but there are models such as segformer that acceps batch size of one, even with batch normalization. Maybe it depends on 'where' in the model the batch normalization is used (like the backbone or the head).
+
 In 'test.py', there is an argument 'local rank', what is it ? - (answer from copilot:) It is the rank of the gpu in the node. It is used to set the device of the model. It is set by the 'torch.distributed.launch' command.
 
 I think I have seen some 'resize' in the traain pipeline that have a parameter 'divisor' (or sg like that) that is set to 32. What is it ? Maybe it is such that the size the image will be resized to is a multiple of 32 ? May
