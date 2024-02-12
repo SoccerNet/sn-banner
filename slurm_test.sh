@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+export MKL_NUM_THREADS=2
+export OMP_NUM_THREADS=2
+
 # Example of command : sh slurm_test.sh a5000 n mask2former_swin-t_1xb2-90k_soccernet.py work_dir/n_mask2former_swin-t_1xb2-90k_soccernet.py/best_mIoU_iter_7000.pth --tta
 
 set -x
@@ -23,6 +26,8 @@ srun -p ${PARTITION} \
     --ntasks=${GPUS} \
     --ntasks-per-node=${GPUS_PER_NODE} \
     --cpus-per-task=${CPUS_PER_TASK} \
+    --mem=24G \
     -t 9-00:00:00 \
     ${SRUN_ARGS} \
-    python test.py ${CONFIG} ${CHECKPOINT} --launcher="slurm" --work-dir work_dir/${JOB_NAME}_${CONFIG}/test ${PY_ARGS} > work_dir/${JOB_NAME}_${CONFIG}/test.log 2>&1 & 
+    python test.py ${CONFIG} ${CHECKPOINT} --launcher="slurm" --work-dir work_dir/${JOB_NAME}_${CONFIG}/test --out out_${CONFIG}/ ${PY_ARGS} > work_dir/${JOB_NAME}_${CONFIG}/test.log 2>&1 &
+                                             # I think it should be --lancher=slurm 
