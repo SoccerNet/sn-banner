@@ -174,6 +174,11 @@ def main():
 
     # add output_dir in metric
     if args.out is not None:
+        # If tta is enabled, add the directory 'tta/' to out, else add 'non-tta/'
+        if args.tta:
+            args.out = osp.join(args.out, "tta")
+        else:
+            args.out = osp.join(args.out, "non-tta")
         cfg.test_evaluator["output_dir"] = args.out
         cfg.test_evaluator["keep_results"] = True
 

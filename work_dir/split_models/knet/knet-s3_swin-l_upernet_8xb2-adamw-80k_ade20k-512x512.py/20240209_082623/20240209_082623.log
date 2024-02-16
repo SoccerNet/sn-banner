@@ -1,0 +1,2554 @@
+2024/02/09 08:26:28 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.11.7 (main, Dec 15 2023, 18:12:31) [GCC 11.2.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 988844250
+    GPU 0: Tesla V100-SXM2-32GB
+    CUDA_HOME: None
+    GCC: gcc (GCC) 8.3.1 20191121 (Red Hat 8.3.1-5)
+    PyTorch: 2.2.0+cu118
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2022.2-Product Build 20220804 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.3.2 (Git Hash 2dc95a2ad0841e29db8b22fbccaf3e5da7992b01)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.7
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wsuggest-override -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=2.2.0, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=1, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, USE_ROCM_KERNEL_ASSERT=OFF, 
+
+    TorchVision: 0.17.0+cu118
+    OpenCV: 4.9.0
+    MMEngine: 0.10.3
+
+Runtime environment:
+    cudnn_benchmark: True
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    dist_cfg: {'backend': 'nccl'}
+    seed: 988844250
+    Distributed launcher: slurm
+    Distributed training: True
+    GPU number: 1
+------------------------------------------------------------
+
+2024/02/09 08:26:28 - mmengine - INFO - Config:
+ann_dir = 'Labels'
+checkpoint_file = 'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220308-d5bdebaf.pth'
+conv_kernel_size = 1
+crop_size = (
+    1080,
+    1920,
+)
+data_preprocessor = dict(
+    bgr_to_rgb=True,
+    mean=[
+        123.675,
+        116.28,
+        103.53,
+    ],
+    pad_val=0,
+    seg_pad_val=255,
+    size=(
+        1080,
+        1920,
+    ),
+    std=[
+        58.395,
+        57.12,
+        57.375,
+    ],
+    type='SegDataPreProcessor')
+data_root = 'Dataset'
+dataset_type = 'SoccerNet'
+default_hooks = dict(
+    checkpoint=dict(
+        by_epoch=False,
+        interval=150,
+        max_keep_ckpts=2,
+        save_best='mIoU',
+        type='CheckpointHook'),
+    logger=dict(interval=50, log_metric_by_epoch=False, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='SegVisualizationHook'))
+default_scope = 'mmseg'
+env_cfg = dict(
+    cudnn_benchmark=True,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_dir = 'Images'
+img_ratios = [
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+]
+iters = 40000
+launcher = 'slurm'
+load_from = None
+log_level = 'INFO'
+log_processor = dict(by_epoch=False)
+model = dict(
+    auxiliary_head=dict(
+        align_corners=False,
+        channels=256,
+        concat_input=False,
+        dropout_ratio=0.1,
+        in_channels=768,
+        in_index=2,
+        loss_decode=dict(
+            loss_weight=0.4, type='CrossEntropyLoss', use_sigmoid=False),
+        norm_cfg=dict(requires_grad=True, type='BN'),
+        num_classes=3,
+        num_convs=1,
+        type='FCNHead'),
+    backbone=dict(
+        attn_drop_rate=0.0,
+        depths=[
+            2,
+            2,
+            18,
+            2,
+        ],
+        drop_path_rate=0.3,
+        drop_rate=0.0,
+        embed_dims=192,
+        mlp_ratio=4,
+        num_heads=[
+            6,
+            12,
+            24,
+            48,
+        ],
+        out_indices=(
+            0,
+            1,
+            2,
+            3,
+        ),
+        patch_norm=True,
+        qk_scale=None,
+        qkv_bias=True,
+        type='SwinTransformer',
+        use_abs_pos_embed=False,
+        window_size=7),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_val=0,
+        seg_pad_val=255,
+        size=(
+            1080,
+            1920,
+        ),
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='SegDataPreProcessor'),
+    decode_head=dict(
+        kernel_generate_head=dict(
+            align_corners=False,
+            channels=512,
+            dropout_ratio=0.1,
+            in_channels=[
+                192,
+                384,
+                768,
+                1536,
+            ],
+            in_index=[
+                0,
+                1,
+                2,
+                3,
+            ],
+            loss_decode=dict(
+                loss_weight=1.0, type='CrossEntropyLoss', use_sigmoid=False),
+            norm_cfg=dict(requires_grad=True, type='BN'),
+            num_classes=3,
+            pool_scales=(
+                1,
+                2,
+                3,
+                6,
+            ),
+            type='UPerHead'),
+        kernel_update_head=[
+            dict(
+                conv_kernel_size=1,
+                dropout=0.0,
+                feat_transform_cfg=dict(
+                    act_cfg=None, conv_cfg=dict(type='Conv2d')),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=512,
+                kernel_updator_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=256,
+                    in_channels=256,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='KernelUpdator'),
+                num_classes=3,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_mask_fcs=1,
+                out_channels=512,
+                type='KernelUpdateHead',
+                with_ffn=True),
+            dict(
+                conv_kernel_size=1,
+                dropout=0.0,
+                feat_transform_cfg=dict(
+                    act_cfg=None, conv_cfg=dict(type='Conv2d')),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=512,
+                kernel_updator_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=256,
+                    in_channels=256,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='KernelUpdator'),
+                num_classes=3,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_mask_fcs=1,
+                out_channels=512,
+                type='KernelUpdateHead',
+                with_ffn=True),
+            dict(
+                conv_kernel_size=1,
+                dropout=0.0,
+                feat_transform_cfg=dict(
+                    act_cfg=None, conv_cfg=dict(type='Conv2d')),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=512,
+                kernel_updator_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=256,
+                    in_channels=256,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='KernelUpdator'),
+                num_classes=3,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_mask_fcs=1,
+                out_channels=512,
+                type='KernelUpdateHead',
+                with_ffn=True),
+        ],
+        num_stages=3,
+        type='IterativeDecodeHead'),
+    pretrained=
+    'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220308-d5bdebaf.pth',
+    test_cfg=dict(mode='whole'),
+    train_cfg=dict(),
+    type='EncoderDecoder')
+norm_cfg = dict(requires_grad=True, type='BN')
+num_classes = 3
+num_stages = 3
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=1, norm_type=2),
+    optimizer=dict(
+        betas=(
+            0.9,
+            0.999,
+        ), lr=6e-05, type='AdamW', weight_decay=0.0005),
+    paramwise_cfg=dict(
+        custom_keys=dict(
+            absolute_pos_embed=dict(decay_mult=0.0),
+            norm=dict(decay_mult=0.0),
+            relative_position_bias_table=dict(decay_mult=0.0))),
+    type='OptimWrapper')
+optimizer = dict(lr=0.01, momentum=0.9, type='SGD', weight_decay=0.0005)
+param_scheduler = [
+    dict(
+        begin=0, by_epoch=False, end=500, start_factor=0.001, type='LinearLR'),
+    dict(
+        begin=500,
+        by_epoch=False,
+        end=40000,
+        milestones=[
+            30000,
+            36000,
+        ],
+        type='MultiStepLR'),
+]
+resume = False
+scale = (
+    1920,
+    1080,
+)
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='splits/test.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
+            dict(type='LoadAnnotations'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    iou_metrics=[
+        'mIoU',
+    ], type='IoUMetric')
+train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=150)
+train_dataloader = dict(
+    batch_size=2,
+    dataset=dict(
+        ann_file='splits/train.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(type='LoadAnnotations'),
+            dict(
+                keep_ratio=True,
+                ratio_range=(
+                    1.0,
+                    4.0,
+                ),
+                scale=(
+                    1920,
+                    1080,
+                ),
+                type='RandomResize'),
+            dict(
+                cat_max_ratio=0.75,
+                crop_size=(
+                    1080,
+                    1920,
+                ),
+                type='RandomCrop'),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='InfiniteSampler'))
+train_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='LoadAnnotations'),
+    dict(
+        keep_ratio=True,
+        ratio_range=(
+            1.0,
+            4.0,
+        ),
+        scale=(
+            1920,
+            1080,
+        ),
+        type='RandomResize'),
+    dict(cat_max_ratio=0.75, crop_size=(
+        1080,
+        1920,
+    ), type='RandomCrop'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(type='PackSegInputs'),
+]
+tta_model = dict(type='SegTTAModel')
+tta_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        transforms=[
+            [
+                dict(keep_ratio=True, scale_factor=0.5, type='Resize'),
+                dict(keep_ratio=True, scale_factor=0.75, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.0, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.25, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.5, type='Resize'),
+            ],
+            [
+                dict(direction='horizontal', prob=0.0, type='RandomFlip'),
+                dict(direction='horizontal', prob=1.0, type='RandomFlip'),
+            ],
+            [
+                dict(type='LoadAnnotations'),
+            ],
+            [
+                dict(type='PackSegInputs'),
+            ],
+        ],
+        type='TestTimeAug'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='splits/val.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
+            dict(type='LoadAnnotations'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    iou_metrics=[
+        'mIoU',
+    ], type='IoUMetric')
+val_interval = 150
+val_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1920,
+        1080,
+    ), type='Resize'),
+    dict(type='LoadAnnotations'),
+    dict(type='PackSegInputs'),
+]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='SegLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = 'work_dir/split_models/knet/knet-s3_swin-l_upernet_8xb2-adamw-80k_ade20k-512x512.py'
+
+2024/02/09 08:26:46 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.patch_embed.norm.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.0.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.blocks.1.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.0.downsample.norm.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.0.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.blocks.1.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.1.downsample.norm.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.0.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.1.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.2.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.3.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.4.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.5.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.6.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.7.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.8.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm2.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm2.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.9.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm1.weight:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm1.bias:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:47 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm2.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm2.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.10.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm1.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm1.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm2.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm2.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.11.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm1.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm1.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm2.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm2.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.12.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm1.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm1.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm2.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm2.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.13.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm1.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm1.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm2.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm2.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.14.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm1.weight:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm1.bias:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:48 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm2.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm2.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.15.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm1.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm1.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm2.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm2.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.16.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm1.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm1.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm2.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm2.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.blocks.17.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.2.downsample.norm.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.0.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.stages.3.blocks.1.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm0.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm0.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm1.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm1.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm2.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm2.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm3.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- backbone.norm3.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.attention_norm.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.attention_norm.weight:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.attention_norm.weight:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.attention_norm.bias:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.attention_norm.bias:weight_decay=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.attention_norm.bias:decay_mult=0.0
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_in.weight:lr=6e-05
+2024/02/09 08:26:49 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_in.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_in.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_in.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_in.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_in.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_out.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_out.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_out.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_out.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_out.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.norm_out.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_in.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_in.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_in.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_in.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_in.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_in.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_out.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_out.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_out.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_out.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_out.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.input_norm_out.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.fc_norm.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.fc_norm.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.fc_norm.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.fc_norm.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.fc_norm.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.kernel_update_conv.fc_norm.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.ffn_norm.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.ffn_norm.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.ffn_norm.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.ffn_norm.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.ffn_norm.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.0.ffn_norm.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.attention_norm.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.attention_norm.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.attention_norm.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.attention_norm.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.attention_norm.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.attention_norm.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_in.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_in.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_in.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_in.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_in.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_in.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_out.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_out.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_out.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_out.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_out.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.norm_out.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_in.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_in.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_in.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_in.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_in.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_in.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_out.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_out.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_out.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_out.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_out.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.input_norm_out.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.fc_norm.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.fc_norm.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.fc_norm.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.fc_norm.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.fc_norm.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.kernel_update_conv.fc_norm.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.ffn_norm.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.ffn_norm.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.ffn_norm.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.ffn_norm.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.ffn_norm.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.1.ffn_norm.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.attention_norm.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.attention_norm.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.attention_norm.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.attention_norm.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.attention_norm.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.attention_norm.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_in.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_in.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_in.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_in.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_in.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_in.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_out.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_out.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_out.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_out.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_out.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.norm_out.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_in.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_in.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_in.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_in.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_in.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_in.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_out.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_out.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_out.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_out.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_out.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.input_norm_out.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.fc_norm.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.fc_norm.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.fc_norm.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.fc_norm.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.fc_norm.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.kernel_update_conv.fc_norm.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.ffn_norm.weight:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.ffn_norm.weight:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.ffn_norm.weight:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.ffn_norm.bias:lr=6e-05
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.ffn_norm.bias:weight_decay=0.0
+2024/02/09 08:26:50 - mmengine - INFO - paramwise_options -- decode_head.kernel_update_head.2.ffn_norm.bias:decay_mult=0.0
+2024/02/09 08:26:50 - mmengine - WARNING - The prefix is not set in metric class IoUMetric.
+Name of parameter - Initialization information
+
+backbone.patch_embed.projection.weight - torch.Size([192, 3, 4, 4]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.patch_embed.projection.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.patch_embed.norm.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.patch_embed.norm.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.norm1.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.norm1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.attn.w_msa.relative_position_bias_table - torch.Size([169, 6]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.attn.w_msa.qkv.weight - torch.Size([576, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.attn.w_msa.qkv.bias - torch.Size([576]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.attn.w_msa.proj.weight - torch.Size([192, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.attn.w_msa.proj.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.norm2.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.norm2.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.ffn.layers.0.0.weight - torch.Size([768, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.ffn.layers.0.0.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.ffn.layers.1.weight - torch.Size([192, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.0.ffn.layers.1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.norm1.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.norm1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.attn.w_msa.relative_position_bias_table - torch.Size([169, 6]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.attn.w_msa.qkv.weight - torch.Size([576, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.attn.w_msa.qkv.bias - torch.Size([576]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.attn.w_msa.proj.weight - torch.Size([192, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.attn.w_msa.proj.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.norm2.weight - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.norm2.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.ffn.layers.0.0.weight - torch.Size([768, 192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.ffn.layers.0.0.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.ffn.layers.1.weight - torch.Size([192, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.blocks.1.ffn.layers.1.bias - torch.Size([192]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.downsample.norm.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.downsample.norm.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.0.downsample.reduction.weight - torch.Size([384, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.norm1.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.norm1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.attn.w_msa.relative_position_bias_table - torch.Size([169, 12]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.attn.w_msa.qkv.weight - torch.Size([1152, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.attn.w_msa.qkv.bias - torch.Size([1152]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.attn.w_msa.proj.weight - torch.Size([384, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.attn.w_msa.proj.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.ffn.layers.0.0.weight - torch.Size([1536, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.ffn.layers.0.0.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.ffn.layers.1.weight - torch.Size([384, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.0.ffn.layers.1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.norm1.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.norm1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.attn.w_msa.relative_position_bias_table - torch.Size([169, 12]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.attn.w_msa.qkv.weight - torch.Size([1152, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.attn.w_msa.qkv.bias - torch.Size([1152]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.attn.w_msa.proj.weight - torch.Size([384, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.attn.w_msa.proj.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.norm2.weight - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.norm2.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.ffn.layers.0.0.weight - torch.Size([1536, 384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.ffn.layers.0.0.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.ffn.layers.1.weight - torch.Size([384, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.blocks.1.ffn.layers.1.bias - torch.Size([384]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.downsample.norm.weight - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.downsample.norm.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.1.downsample.reduction.weight - torch.Size([768, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.0.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.1.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.2.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.3.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.4.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.5.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.6.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.7.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.8.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.9.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.10.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.11.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.12.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.13.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.14.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.15.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.16.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.norm1.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.norm1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.attn.w_msa.relative_position_bias_table - torch.Size([169, 24]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.attn.w_msa.qkv.weight - torch.Size([2304, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.attn.w_msa.qkv.bias - torch.Size([2304]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.attn.w_msa.proj.weight - torch.Size([768, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.attn.w_msa.proj.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.norm2.weight - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.norm2.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.ffn.layers.0.0.weight - torch.Size([3072, 768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.ffn.layers.0.0.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.ffn.layers.1.weight - torch.Size([768, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.blocks.17.ffn.layers.1.bias - torch.Size([768]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.downsample.norm.weight - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.downsample.norm.bias - torch.Size([3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.2.downsample.reduction.weight - torch.Size([1536, 3072]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.norm1.weight - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.norm1.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.attn.w_msa.relative_position_bias_table - torch.Size([169, 48]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.attn.w_msa.qkv.weight - torch.Size([4608, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.attn.w_msa.qkv.bias - torch.Size([4608]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.attn.w_msa.proj.weight - torch.Size([1536, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.attn.w_msa.proj.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.norm2.weight - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.norm2.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.ffn.layers.0.0.weight - torch.Size([6144, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.ffn.layers.0.0.bias - torch.Size([6144]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.ffn.layers.1.weight - torch.Size([1536, 6144]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.0.ffn.layers.1.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.norm1.weight - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.norm1.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.attn.w_msa.relative_position_bias_table - torch.Size([169, 48]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.attn.w_msa.qkv.weight - torch.Size([4608, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.attn.w_msa.qkv.bias - torch.Size([4608]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.attn.w_msa.proj.weight - torch.Size([1536, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.attn.w_msa.proj.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.norm2.weight - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.norm2.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.ffn.layers.0.0.weight - torch.Size([6144, 1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.ffn.layers.0.0.bias - torch.Size([6144]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.ffn.layers.1.weight - torch.Size([1536, 6144]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.stages.3.blocks.1.ffn.layers.1.bias - torch.Size([1536]): 
+Initialized by user-defined `init_weights` in SwinTransformer  
+
+backbone.norm0.weight - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+backbone.norm0.bias - torch.Size([192]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+backbone.norm1.weight - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+backbone.norm1.bias - torch.Size([384]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+backbone.norm2.weight - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+backbone.norm2.bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+backbone.norm3.weight - torch.Size([1536]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+backbone.norm3.bias - torch.Size([1536]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.conv_seg.weight - torch.Size([3, 512, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+decode_head.kernel_generate_head.conv_seg.bias - torch.Size([3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+decode_head.kernel_generate_head.psp_modules.0.1.conv.weight - torch.Size([512, 1536, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.0.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.0.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.1.1.conv.weight - torch.Size([512, 1536, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.1.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.1.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.2.1.conv.weight - torch.Size([512, 1536, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.2.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.2.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.3.1.conv.weight - torch.Size([512, 1536, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.3.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.psp_modules.3.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.bottleneck.conv.weight - torch.Size([512, 3584, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+decode_head.kernel_generate_head.bottleneck.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.bottleneck.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.0.conv.weight - torch.Size([512, 192, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.0.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.0.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.1.conv.weight - torch.Size([512, 384, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.2.conv.weight - torch.Size([512, 768, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.2.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.lateral_convs.2.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.0.conv.weight - torch.Size([512, 512, 3, 3]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.0.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.0.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.1.conv.weight - torch.Size([512, 512, 3, 3]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.1.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.1.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.2.conv.weight - torch.Size([512, 512, 3, 3]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.2.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_convs.2.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_bottleneck.conv.weight - torch.Size([512, 2048, 3, 3]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+decode_head.kernel_generate_head.fpn_bottleneck.bn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_generate_head.fpn_bottleneck.bn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.attention.attn.in_proj_weight - torch.Size([1536, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.attention.attn.in_proj_bias - torch.Size([1536]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.attention.attn.out_proj.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.attention.attn.out_proj.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.attention_norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.attention_norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.dynamic_layer.weight - torch.Size([512, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.dynamic_layer.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.input_layer.weight - torch.Size([512, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.input_layer.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.input_gate.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.input_gate.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.update_gate.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.update_gate.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.norm_in.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.norm_in.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.input_norm_in.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.input_norm_in.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.input_norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.input_norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.fc_layer.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.kernel_update_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.feat_transform.conv.weight - torch.Size([512, 512, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.feat_transform.conv.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.ffn.layers.0.0.weight - torch.Size([2048, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.ffn.layers.1.weight - torch.Size([512, 2048]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.ffn.layers.1.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.ffn_norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.ffn_norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.mask_fcs.0.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.mask_fcs.1.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.mask_fcs.1.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.fc_mask.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.0.fc_mask.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.attention.attn.in_proj_weight - torch.Size([1536, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.attention.attn.in_proj_bias - torch.Size([1536]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.attention.attn.out_proj.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.attention.attn.out_proj.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.attention_norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.attention_norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.dynamic_layer.weight - torch.Size([512, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.dynamic_layer.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.input_layer.weight - torch.Size([512, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.input_layer.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.input_gate.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.input_gate.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.update_gate.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.update_gate.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.norm_in.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.norm_in.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.input_norm_in.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.input_norm_in.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.input_norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.input_norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.fc_layer.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.kernel_update_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.feat_transform.conv.weight - torch.Size([512, 512, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.feat_transform.conv.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.ffn.layers.0.0.weight - torch.Size([2048, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.ffn.layers.1.weight - torch.Size([512, 2048]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.ffn.layers.1.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.ffn_norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.ffn_norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.mask_fcs.0.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.mask_fcs.1.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.mask_fcs.1.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.fc_mask.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.1.fc_mask.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.attention.attn.in_proj_weight - torch.Size([1536, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.attention.attn.in_proj_bias - torch.Size([1536]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.attention.attn.out_proj.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.attention.attn.out_proj.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.attention_norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.attention_norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.dynamic_layer.weight - torch.Size([512, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.dynamic_layer.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.input_layer.weight - torch.Size([512, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.input_layer.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.input_gate.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.input_gate.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.update_gate.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.update_gate.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.norm_in.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.norm_in.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.input_norm_in.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.input_norm_in.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.input_norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.input_norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.fc_layer.weight - torch.Size([256, 256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.kernel_update_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.feat_transform.conv.weight - torch.Size([512, 512, 1, 1]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.feat_transform.conv.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.ffn.layers.0.0.weight - torch.Size([2048, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.ffn.layers.1.weight - torch.Size([512, 2048]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.ffn.layers.1.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.ffn_norm.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.ffn_norm.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.mask_fcs.0.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.mask_fcs.1.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.mask_fcs.1.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.fc_mask.weight - torch.Size([512, 512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+decode_head.kernel_update_head.2.fc_mask.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+auxiliary_head.conv_seg.weight - torch.Size([3, 256, 1, 1]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+auxiliary_head.conv_seg.bias - torch.Size([3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+auxiliary_head.convs.0.conv.weight - torch.Size([256, 768, 3, 3]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+auxiliary_head.convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+
+auxiliary_head.convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of EncoderDecoder  
+2024/02/09 08:26:53 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2024/02/09 08:26:53 - mmengine - WARNING - "HardDiskBackend" is the alias of "LocalBackend" and the former will be deprecated in future.
+2024/02/09 08:26:53 - mmengine - INFO - Checkpoints will be saved to /scratch/users/vgaspar/work_dir/split_models/knet/knet-s3_swin-l_upernet_8xb2-adamw-80k_ade20k-512x512.py.

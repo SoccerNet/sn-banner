@@ -33,7 +33,7 @@ val_pipeline = [
     dict(type="LoadAnnotations"),
     dict(type="PackSegInputs"),
 ]
-img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
+img_ratios = [0.5, 0.75, 1.0, 1.25, 1.5]
 tta_pipeline = [
     dict(type="LoadImageFromFile", backend_args=None),
     dict(
@@ -63,7 +63,7 @@ train_dataloader = dict(
     ),
 )
 val_dataloader = dict(
-    batch_size=1,
+    batch_size=2,
     num_workers=2,
     persistent_workers=True,
     sampler=dict(type="DefaultSampler", shuffle=False),

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+!/usr/bin/env bash
 
 export MKL_NUM_THREADS=2
 export OMP_NUM_THREADS=2
@@ -36,3 +36,4 @@ srun -p ${PARTITION} \
     -t 9-00:00:00 \
     ${SRUN_ARGS} \
     python train.py ${CONFIG} --launcher="slurm" --work-dir work_dir/${JOB_NAME}_${CONFIG} ${PY_ARGS} > work_dir/${JOB_NAME}_${CONFIG}/train.log 2>&1 &
+                                             # I think it should be --lancher=slurm 
