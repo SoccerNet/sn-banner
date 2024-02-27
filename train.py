@@ -9,10 +9,13 @@ from mmengine.logging import print_log
 from mmengine.runner import Runner
 
 from mmseg.registry import RUNNERS
-
+from mmseg.registry import TRANSFORMS
 from mmseg.registry import DATASETS
+from mmcv.transforms.base import BaseTransform
 from mmseg.datasets import BaseSegDataset
-from numpy import partition
+from mmcv.transforms.utils import cache_randomness
+from typing import Tuple, Union
+import numpy as np
 
 old_classes = [
     "Outside billboards",
@@ -67,6 +70,177 @@ if "SoccerNet" not in DATASETS:
 
         def __init__(self, **kwargs):
             super().__init__(img_suffix=".png", seg_map_suffix=".png", **kwargs)
+
+
+new_classes = ["Outside billboards", "Goal net"]
+new_palette = [old_palette[old_classes.index(c)] for c in new_classes]
+
+# Check if the dataset SoccerNetv2Gl is already registered
+if "SoccerNetv2Gl" not in DATASETS:
+
+    @DATASETS.register_module()
+    class SoccerNetv2Gl(BaseSegDataset):
+        METAINFO = dict(classes=new_classes, palette=new_palette)
+
+        def __init__(self, **kwargs):
+            super().__init__(img_suffix=".png", seg_map_suffix=".png", **kwargs)
+
+
+new_classes = ["Outside billboards", "Billboard"]
+new_palette = [old_palette[old_classes.index(c)] for c in new_classes]
+
+# Check if the dataset SoccerNetv2Bb is already registered
+if "SoccerNetv2Bb" not in DATASETS:
+
+    @DATASETS.register_module()
+    class SoccerNetv2Bb(BaseSegDataset):
+        METAINFO = dict(classes=new_classes, palette=new_palette)
+
+        def __init__(self, **kwargs):
+            super().__init__(img_suffix=".png", seg_map_suffix=".png", **kwargs)
+
+
+@TRANSFORMS.register_module()
+class CustomTransform(BaseTransform):
+    """Random crop the image & seg.
+
+    Required Keys:
+
+    - img
+    - gt_seg_map
+
+    Modified Keys:
+
+    - img
+    - img_shape
+    - gt_seg_map
+
+
+    Args:
+        crop_size (Union[int, Tuple[int, int]]):  Expected size after cropping
+            with the format of (h, w). If set to an integer, then cropping
+            width and height are equal to this integer.
+        cat_max_ratio (float): The maximum ratio that single category could
+            occupy.
+        ignore_index (int): The label index to be ignored. Default: 255
+    """
+
+    def __init__(
+        self,
+        crop_size: Union[int, Tuple[int, int]],
+        cat_max_ratio: float = 1.0,
+        ignore_index: int = 255,
+    ):
+        super().__init__()
+        assert isinstance(crop_size, int) or (
+            isinstance(crop_size, tuple) and len(crop_size) == 2
+        ), "The expected crop_size is an integer, or a tuple containing two "
+        "intergers"
+
+        if isinstance(crop_size, int):
+            crop_size = (crop_size, crop_size)
+        assert crop_size[0] > 0 and crop_size[1] > 0
+        self.crop_size = crop_size
+        self.cat_max_ratio = cat_max_ratio
+        self.ignore_index = ignore_index
+
+    @cache_randomness
+    def crop_bbox(self, results: dict) -> tuple:
+        """get a crop bounding box.
+
+        Args:
+            results (dict): Result dict from loading pipeline.
+
+        Returns:
+            tuple: Coordinates of the cropped image.
+        """
+
+        def generate_crop_bbox(img: np.ndarray) -> tuple:
+            """Randomly get a crop bounding box.
+
+            Args:
+                img (np.ndarray): Original input image.
+
+            Returns:
+                tuple: Coordinates of the cropped image.
+            """
+
+            margin_h = max(img.shape[0] - self.crop_size[0], 0)
+            margin_w = max(img.shape[1] - self.crop_size[1], 0)
+            offset_h = np.random.randint(0, margin_h + 1)
+            offset_w = np.random.randint(0, margin_w + 1)
+            crop_y1, crop_y2 = offset_h, offset_h + self.crop_size[0]
+            crop_x1, crop_x2 = offset_w, offset_w + self.crop_size[1]
+
+            return crop_y1, crop_y2, crop_x1, crop_x2
+
+        img = results["img"]
+        crop_bbox = generate_crop_bbox(img)
+        if self.cat_max_ratio < 1.0:
+            # Repeat 10 times
+            for i in range(100):
+                seg_temp = self.crop(results["gt_seg_map"], crop_bbox)
+                labels, cnt = np.unique(seg_temp, return_counts=True)
+                cnt = cnt[labels != self.ignore_index]
+                if len(cnt) > 1 and np.max(cnt) / np.sum(cnt) < self.cat_max_ratio:
+                    print_log(
+                        "RandomCrop: cat_max_ratio is satisfied after {} trials.".format(
+                            i + 1
+                        ),
+                    )
+                    break
+                crop_bbox = generate_crop_bbox(img)
+                # If this is the last trial, print a warning
+                if i == 99:
+                    print_log(
+                        "RandomCrop: cat_max_ratio is too small to be satisfied.",
+                    )
+
+        return crop_bbox
+
+    def crop(self, img: np.ndarray, crop_bbox: tuple) -> np.ndarray:
+        """Crop from ``img``
+
+        Args:
+            img (np.ndarray): Original input image.
+            crop_bbox (tuple): Coordinates of the cropped image.
+
+        Returns:
+            np.ndarray: The cropped image.
+        """
+
+        crop_y1, crop_y2, crop_x1, crop_x2 = crop_bbox
+        img = img[crop_y1:crop_y2, crop_x1:crop_x2, ...]
+        return img
+
+    def transform(self, results: dict) -> dict:
+        """Transform function to randomly crop images, semantic segmentation
+        maps.
+
+        Args:
+            results (dict): Result dict from loading pipeline.
+
+        Returns:
+            dict: Randomly cropped results, 'img_shape' key in result dict is
+                updated according to crop size.
+        """
+
+        img = results["img"]
+        crop_bbox = self.crop_bbox(results)
+
+        # crop the image
+        img = self.crop(img, crop_bbox)
+
+        # crop semantic seg
+        for key in results.get("seg_fields", []):
+            results[key] = self.crop(results[key], crop_bbox)
+
+        results["img"] = img
+        results["img_shape"] = img.shape[:2]
+        return results
+
+    def __repr__(self):
+        return self.__class__.__name__ + f"(crop_size={self.crop_size})"
 
 
 def parse_args():
