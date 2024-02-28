@@ -64,6 +64,16 @@ if "SoccerNet" not in DATASETS:
             super().__init__(img_suffix=".png", seg_map_suffix=".png", **kwargs)
 
 
+if "Video" not in DATASETS:
+
+    @DATASETS.register_module()
+    class Video(BaseSegDataset):
+        METAINFO = dict(classes=new_classes, palette=new_palette)
+
+        def __init__(self, **kwargs):
+            super().__init__(img_suffix=".jpg", seg_map_suffix=".png", **kwargs)
+
+
 # TODO: support fuse_conv_bn, visualization, and format_only
 def parse_args():
     parser = argparse.ArgumentParser(description="MMSeg test (and eval) a model")
@@ -113,6 +123,7 @@ def parse_args():
     # will pass the `--local-rank` parameter to `tools/train.py` instead
     # of `--local_rank`.
     parser.add_argument("--local_rank", "--local-rank", type=int, default=0)
+    parser.add_argument("--video", action="store_true", help="Inference on video")
     args = parser.parse_args()
     if "LOCAL_RANK" not in os.environ:
         os.environ["LOCAL_RANK"] = str(args.local_rank)
@@ -149,6 +160,10 @@ def main():
     cfg = Config.fromfile(args.config)
     cfg.launcher = args.launcher
     cfg.default_hooks.logger.interval = 15
+    if args.video:
+        cfg.test_dataloader.dataset.ann_file = "test.txt"
+        cfg.test_dataloader.dataset.type = "Video"
+        cfg.test_dataloader.dataset.data_root = "video"
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
 
