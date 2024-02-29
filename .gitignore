@@ -9,3 +9,5 @@ __pycache__/
 example.py
 out.txt
 out/
+*.jpg
+*.mp4
