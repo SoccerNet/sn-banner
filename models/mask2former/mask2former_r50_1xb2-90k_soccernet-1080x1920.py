@@ -13,7 +13,7 @@ data_preprocessor = dict(
     size=crop_size,
     test_cfg=dict(size_divisor=32),
 )
-num_classes = 3
+num_classes = 4
 model = dict(
     type="EncoderDecoder",
     data_preprocessor=data_preprocessor,
@@ -187,7 +187,7 @@ optim_wrapper = dict(
     ),
 )
 
-iters = 80000
+iters = 40000
 
 # learning policy
 param_scheduler = [
@@ -201,7 +201,7 @@ val_cfg = dict(type="ValLoop")
 test_cfg = dict(type="TestLoop")
 default_hooks = dict(
     timer=dict(type="IterTimerHook"),
-    logger=dict(type="LoggerHook", interval=300, log_metric_by_epoch=False),
+    logger=dict(type="LoggerHook", interval=100, log_metric_by_epoch=False),
     param_scheduler=dict(type="ParamSchedulerHook"),
     checkpoint=dict(
         type="CheckpointHook",
@@ -211,7 +211,7 @@ default_hooks = dict(
         max_keep_ckpts=2,
     ),
     sampler_seed=dict(type="DistSamplerSeedHook"),
-    visualization=dict(type="SegVisualizationHook"),
+    visualization=dict(type="SegVisualizationHook", draw=True, interval=100),
 )
 
 # Default setting for scaling LR automatically
