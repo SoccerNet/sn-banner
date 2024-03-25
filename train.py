@@ -72,6 +72,20 @@ if "SoccerNet" not in DATASETS:
             super().__init__(img_suffix=".png", seg_map_suffix=".png", **kwargs)
 
 
+new_classes = ["Outside billboards", "Billboard", "Goal net", "Occlusion"]
+new_palette = [[0, 0, 0], [255, 255, 255], [0, 255, 0], [255, 0, 0]]
+
+# Check if the dataset SoccerNet is already registered
+if "SoccerNetv3" not in DATASETS:
+
+    @DATASETS.register_module()
+    class SoccerNetv3(BaseSegDataset):
+        METAINFO = dict(classes=new_classes, palette=new_palette)
+
+        def __init__(self, **kwargs):
+            super().__init__(img_suffix=".png", seg_map_suffix=".png", **kwargs)
+
+
 new_classes = ["Outside billboards", "Goal net"]
 new_palette = [old_palette[old_classes.index(c)] for c in new_classes]
 
