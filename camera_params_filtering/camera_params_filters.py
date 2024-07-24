@@ -89,7 +89,9 @@ def linear_interpolation(camParamsPerType, isErroneousParams, ErroneousParamsPos
     return camParamsPerType
 
 
-def outliers_remover(camParamsPerType, isErroneousParams, ErroneousParamsPos):
+def outliers_remover(
+    camParamsPerType, isErroneousParams, ErroneousParamsPos, windowLength
+):
     """Removes outliers from camera parameters. Outliers are detected by
     comparing the absolute difference between the camera parameters and their
     median filtered version with the mean absolute difference. If the absolute
@@ -105,7 +107,7 @@ def outliers_remover(camParamsPerType, isErroneousParams, ErroneousParamsPos):
             paramValues2d = paramValues2d.T
 
         for paramValues1d in paramValues2d:
-            median_filtered_param_values = medfilt(paramValues1d, 25)
+            median_filtered_param_values = medfilt(paramValues1d, windowLength)
             abs_diff_param_values = np.abs(paramValues1d - median_filtered_param_values)
             mean_abs_diff_param_values = np.mean(abs_diff_param_values)
             newErroneousParamsPos = np.where(
@@ -122,9 +124,11 @@ def outliers_remover(camParamsPerType, isErroneousParams, ErroneousParamsPos):
     return camParamsPerType
 
 
-def camParamsSmoothing(camParamsPerType):
+def camParamsSmoothing(camParamsPerType, windowLength):
     for key in camParamsPerType.keys():
-        camParamsPerType[key] = savgol_filter(camParamsPerType[key], 25, 2, axis=0)
+        camParamsPerType[key] = savgol_filter(
+            camParamsPerType[key], windowLength, 2, axis=0
+        )
     # clamp values of radial_distortion, tangential_distortion and thin_prism_distortion btw 0 and +inf
     for key in ["radial_distortion", "tangential_distortion", "thin_prism_distortion"]:
         camParamsPerType[key] = np.maximum(camParamsPerType[key], 0)
