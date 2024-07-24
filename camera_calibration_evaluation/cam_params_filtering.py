@@ -20,6 +20,7 @@ from camera_params_filters import (  # type: ignore
     camParamsPerImage_to_camParamsPerType,
     camParamsPerType_to_camParamsPerImage,
     outliers_remover,
+    camParamsSmoothing,
 )
 
 
@@ -54,12 +55,13 @@ def filter_zip_dir(zip_dir, zip_name_in, zip_name_out, length, n_layers):
             camParamsPerType, isErroneousParams, ErroneousParamsPos
         )
 
-    print("len(camParamsPerType['pan_degrees'])", len(camParamsPerType["pan_degrees"]))
-
     if n_layers >= 2:
         camParamsPerType = outliers_remover(
             camParamsPerType, isErroneousParams, ErroneousParamsPos
         )
+
+    if n_layers >= 3:
+        camParamsPerType = camParamsSmoothing(camParamsPerType)
 
     camParamsPerImage = camParamsPerType_to_camParamsPerImage(camParamsPerType)
     with zipfile.ZipFile(os.path.join(zip_dir, zip_name_out), "w") as zipFile:

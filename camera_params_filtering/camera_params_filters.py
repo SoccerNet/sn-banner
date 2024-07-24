@@ -1,7 +1,7 @@
 # Description: Linear interpolation of missing camera parameters
 
 import numpy as np
-from scipy.signal import medfilt
+from scipy.signal import medfilt, savgol_filter
 
 
 def to_valid_cam_params(camParamsPerImage):
@@ -119,4 +119,13 @@ def outliers_remover(camParamsPerType, isErroneousParams, ErroneousParamsPos):
         camParamsPerType, isErroneousParams, ErroneousParamsPos
     )
 
+    return camParamsPerType
+
+
+def camParamsSmoothing(camParamsPerType):
+    for key in camParamsPerType.keys():
+        camParamsPerType[key] = savgol_filter(camParamsPerType[key], 25, 2, axis=0)
+    # clamp values of radial_distortion, tangential_distortion and thin_prism_distortion btw 0 and +inf
+    for key in ["radial_distortion", "tangential_distortion", "thin_prism_distortion"]:
+        camParamsPerType[key] = np.maximum(camParamsPerType[key], 0)
     return camParamsPerType
