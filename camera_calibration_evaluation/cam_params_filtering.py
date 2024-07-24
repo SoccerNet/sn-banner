@@ -14,11 +14,12 @@ from tqdm import tqdm
 sn_calibration_src_path = os.path.abspath("../camera_params_filtering/")
 sys.path.append(sn_calibration_src_path)
 
-from complete_camera_params_filtering import (  # type: ignore
+from camera_params_filters import (  # type: ignore
     linear_interpolation,
     to_valid_cam_params,
     camParamsPerImage_to_camParamsPerType,
     camParamsPerType_to_camParamsPerImage,
+    outliers_remover,
 )
 
 
@@ -50,6 +51,13 @@ def filter_zip_dir(zip_dir, zip_name_in, zip_name_out, length, n_layers):
 
     if n_layers >= 1:
         camParamsPerType = linear_interpolation(
+            camParamsPerType, isErroneousParams, ErroneousParamsPos
+        )
+
+    print("len(camParamsPerType['pan_degrees'])", len(camParamsPerType["pan_degrees"]))
+
+    if n_layers >= 2:
+        camParamsPerType = outliers_remover(
             camParamsPerType, isErroneousParams, ErroneousParamsPos
         )
 

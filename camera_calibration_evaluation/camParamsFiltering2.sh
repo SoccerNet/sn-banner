@@ -21,15 +21,15 @@ GT_ZIP_NAME="gt.zip"
 # Name of the predictions zip file (camera parameters predicted by the NBJW model)
 ZIP_NAME_IN="pred.zip"
 # Name of the output predictions zip file (camera parameters after filtering)
-ZIP_NAME_OUT="pred_final1.zip"
+ZIP_NAME_OUT="pred_final2.zip"
 # Number of filtering layers to apply
-N_LAYERS=1
+N_LAYERS=2
 # Length of the videos
 VIDEO_LENGTH=750
 # Number of concurrent processes to speed up the evaluation
 N_WORKERS=14
 # Set to True to inference and evaluate the 2 first videos only
-TEST="False"
+TEST="True"
 
 echo "Camera parameters filtering"
 

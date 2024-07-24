@@ -1,6 +1,7 @@
 # Description: Linear interpolation of missing camera parameters
 
 import numpy as np
+from scipy.signal import medfilt
 
 
 def to_valid_cam_params(camParamsPerImage):
@@ -85,4 +86,37 @@ def linear_interpolation(camParamsPerType, isErroneousParams, ErroneousParamsPos
                 camParamsPerType[key][ErroneousParamsPos, i] = np.interp(
                     ErroneousParamsPos, xp, value[xp, i]
                 )
+    return camParamsPerType
+
+
+def outliers_remover(camParamsPerType, isErroneousParams, ErroneousParamsPos):
+    """Removes outliers from camera parameters. Outliers are detected by
+    comparing the absolute difference between the camera parameters and their
+    median filtered version with the mean absolute difference. If the absolute
+    difference is more than twice the mean absolute difference, the camera
+    parameter is considered an outlier and is linearly interpolated.
+    """
+
+    camParamsLength = len(camParamsPerType["pan_degrees"])
+    for _, paramValues2d in camParamsPerType.items():
+        if len(paramValues2d.shape) == 1:
+            paramValues2d = np.array([paramValues2d])
+        else:
+            paramValues2d = paramValues2d.T
+
+        for paramValues1d in paramValues2d:
+            median_filtered_param_values = medfilt(paramValues1d, 25)
+            abs_diff_param_values = np.abs(paramValues1d - median_filtered_param_values)
+            mean_abs_diff_param_values = np.mean(abs_diff_param_values)
+            newErroneousParamsPos = np.where(
+                abs_diff_param_values > mean_abs_diff_param_values * 2
+            )[0]
+            ErroneousParamsPos = np.union1d(ErroneousParamsPos, newErroneousParamsPos)
+            isErroneousParams = np.zeros(camParamsLength, dtype=np.bool_)
+            isErroneousParams[ErroneousParamsPos] = True
+
+    camParamsPerType = linear_interpolation(
+        camParamsPerType, isErroneousParams, ErroneousParamsPos
+    )
+
     return camParamsPerType
