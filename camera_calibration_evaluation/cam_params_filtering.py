@@ -4,6 +4,7 @@
 #       for evaluation.
 
 import argparse
+from ast import parse
 import os
 import sys
 import json
@@ -24,7 +25,9 @@ from camera_params_filters import (  # type: ignore
 )
 
 
-def filter_zip_dir(zip_dir, zip_name_in, zip_name_out, length, n_layers):
+def filter_zip_dir(
+    zip_dir, zip_name_in, zip_name_out, length, n_layers, window_filter_length
+):
     zipArchive = zipfile.ZipFile(os.path.join(zip_dir, zip_name_in), "r")
     zipJsons = zipArchive.namelist()
     zipJsons.sort()
@@ -57,11 +60,14 @@ def filter_zip_dir(zip_dir, zip_name_in, zip_name_out, length, n_layers):
 
     if n_layers >= 2:
         camParamsPerType = outliers_remover(
-            camParamsPerType, isErroneousParams, ErroneousParamsPos
+            camParamsPerType,
+            isErroneousParams,
+            ErroneousParamsPos,
+            window_filter_length,
         )
 
     if n_layers >= 3:
-        camParamsPerType = camParamsSmoothing(camParamsPerType)
+        camParamsPerType = camParamsSmoothing(camParamsPerType, window_filter_length)
 
     camParamsPerImage = camParamsPerType_to_camParamsPerImage(camParamsPerType)
     with zipfile.ZipFile(os.path.join(zip_dir, zip_name_out), "w") as zipFile:
@@ -120,6 +126,7 @@ def parse_args():
     parser.add_argument("--workers", type=int, default=default_workers)
     parser.add_argument("-t", "--test", action="store_true")
     parser.add_argument("--split", type=str, required=True, help="Dataset split")
+    parser.add_argument("--window_filter_length", type=int, required=True)
 
     args = parser.parse_args()
     return args
@@ -149,4 +156,5 @@ if __name__ == "__main__":
             args.zip_name_out,
             args.length,
             args.n_layers,
+            args.window_filter_length,
         )
