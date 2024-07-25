@@ -26,7 +26,13 @@ from camera_params_filters import (  # type: ignore
 
 
 def filter_zip_dir(
-    zip_dir, zip_name_in, zip_name_out, length, n_layers, window_filter_length
+    zip_dir,
+    zip_name_in,
+    zip_name_out,
+    length,
+    n_layers,
+    outlier_filter_window_length,
+    smoothing_filter_window_length,
 ):
     zipArchive = zipfile.ZipFile(os.path.join(zip_dir, zip_name_in), "r")
     zipJsons = zipArchive.namelist()
@@ -63,11 +69,13 @@ def filter_zip_dir(
             camParamsPerType,
             isErroneousParams,
             ErroneousParamsPos,
-            window_filter_length,
+            outlier_filter_window_length,
         )
 
     if n_layers >= 3:
-        camParamsPerType = camParamsSmoothing(camParamsPerType, window_filter_length)
+        camParamsPerType = camParamsSmoothing(
+            camParamsPerType, smoothing_filter_window_length
+        )
 
     camParamsPerImage = camParamsPerType_to_camParamsPerImage(camParamsPerType)
     with zipfile.ZipFile(os.path.join(zip_dir, zip_name_out), "w") as zipFile:
@@ -126,7 +134,8 @@ def parse_args():
     parser.add_argument("--workers", type=int, default=default_workers)
     parser.add_argument("-t", "--test", action="store_true")
     parser.add_argument("--split", type=str, required=True, help="Dataset split")
-    parser.add_argument("--window_filter_length", type=int, required=True)
+    parser.add_argument("--outlier_filter_window_length", type=int, required=True)
+    parser.add_argument("--smoothing_filter_window_length", type=int, required=True)
 
     args = parser.parse_args()
     return args
@@ -156,5 +165,6 @@ if __name__ == "__main__":
             args.zip_name_out,
             args.length,
             args.n_layers,
-            args.window_filter_length,
+            args.outlier_filter_window_length,
+            args.smoothing_filter_window_length,
         )
