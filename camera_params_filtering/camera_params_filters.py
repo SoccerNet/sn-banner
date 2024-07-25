@@ -127,7 +127,7 @@ def outliers_remover(
 def camParamsSmoothing(camParamsPerType, windowLength):
     for key in camParamsPerType.keys():
         camParamsPerType[key] = savgol_filter(
-            camParamsPerType[key], windowLength, 2, axis=0
+            camParamsPerType[key], windowLength, 2, axis=0, mode="nearest"
         )
     # clamp values of radial_distortion, tangential_distortion and thin_prism_distortion btw 0 and +inf
     for key in ["radial_distortion", "tangential_distortion", "thin_prism_distortion"]:
