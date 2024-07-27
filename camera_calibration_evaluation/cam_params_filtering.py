@@ -134,8 +134,9 @@ def parse_args():
     parser.add_argument("--workers", type=int, default=default_workers)
     parser.add_argument("-t", "--test", action="store_true")
     parser.add_argument("--split", type=str, required=True, help="Dataset split")
-    parser.add_argument("--outlier_filter_window_length", type=int, required=True)
-    parser.add_argument("--smoothing_filter_window_length", type=int, required=True)
+    parser.add_argument("--outlier_filter_window_length", type=int, default=11)
+    parser.add_argument("--smoothing_filter_window_length", type=int, default=17)
+    parser.add_argument("--silent", action="store_true")
 
     args = parser.parse_args()
     return args
@@ -158,7 +159,7 @@ if __name__ == "__main__":
         os.path.join(args.source, args.split, directory) for directory in directories
     ]
 
-    for zip_dir in tqdm(zip_dirs, desc="Processing Dirs"):
+    for zip_dir in tqdm(zip_dirs, desc="Processing Dirs", disable=args.silent):
         filter_zip_dir(
             zip_dir,
             args.zip_name_in,

@@ -62,54 +62,6 @@ def evaluate_gt_pred_json(gt_pred_json_tuple):
     return accuracy
 
 
-def evaluate_zip_dir(
-    zip_dir, gt_zip_name, pred_zip_name, width=960, height=540, workers=1
-):
-    gt_zip = os.path.join(zip_dir, gt_zip_name)
-    prediction_zip = os.path.join(zip_dir, pred_zip_name)
-    gt_archive = zipfile.ZipFile(gt_zip, "r")
-    prediction_archive = zipfile.ZipFile(prediction_zip, "r")
-    gt_jsons = gt_archive.namelist()
-    prediction_jsons = prediction_archive.namelist()
-
-    # Filter out gt jsons that are not in the prediction jsons
-    accuracies = []
-    total_frames = 0
-    missed = 0
-    gt_pred_json_tuples = list()
-    for gt_json in gt_jsons:
-        pred_name = f"camera_{gt_json}"
-
-        total_frames += 1
-
-        if pred_name not in prediction_jsons:
-            missed += 1
-            continue
-
-        prediction = prediction_archive.read(pred_name)
-        prediction = json.loads(prediction.decode("utf-8"))
-        gt = gt_archive.read(gt_json)
-        gt = json.loads(gt.decode("utf-8"))
-        gt_pred_json_tuples.append((gt, prediction))
-
-    dir_name = os.path.basename(zip_dir)
-    tqdm_desc = f"Processing {dir_name}"
-    with Pool(workers) as p:
-        accuracies = list(
-            tqdm(
-                p.imap_unordered(evaluate_gt_pred_json, gt_pred_json_tuples),
-                total=len(gt_pred_json_tuples),
-                leave=False,
-                desc=tqdm_desc,
-            )
-        )
-
-    completeness = (total_frames - missed) / total_frames
-    mean_accuracies = np.mean(accuracies)
-    finalScore = completeness * mean_accuracies
-    return [completeness, mean_accuracies, finalScore]
-
-
 def cpu_count():
     tmp = os.cpu_count()
     if tmp is None:
@@ -145,6 +97,7 @@ if __name__ == "__main__":
     default_workers = cpu_count() - 2 if cpu_count() > 2 else 1
     parser.add_argument("--workers", type=int, default=default_workers)
     parser.add_argument("-t", "--test", action="store_true")
+    parser.add_argument("--silent", action="store_true")
 
     args = parser.parse_args()
 
@@ -153,27 +106,55 @@ if __name__ == "__main__":
     directories = os.listdir(os.path.join(args.source, args.split))
     if args.test:
         directories.sort()
-        directories = directories[:2]
 
     zip_dirs = [
         os.path.join(args.source, args.split, directory) for directory in directories
     ]
-    results = []
-    for zip_dir in tqdm(zip_dirs, desc="Processing Dirs"):
-        results.append(
-            evaluate_zip_dir(
-                zip_dir,
-                args.gt_zip_name,
-                args.pred_zip_name,
-                args.width,
-                args.height,
-                args.workers,
+
+    total_frames = 0
+    missed = 0
+    gt_pred_json_tuples = []
+    for zip_dir in zip_dirs:
+        gt_zip = os.path.join(zip_dir, args.gt_zip_name)
+        prediction_zip = os.path.join(zip_dir, args.pred_zip_name)
+        gt_archive = zipfile.ZipFile(gt_zip, "r")
+        prediction_archive = zipfile.ZipFile(prediction_zip, "r")
+        gt_jsons = gt_archive.namelist()
+        prediction_jsons = prediction_archive.namelist()
+        for gt_json in gt_jsons:
+            pred_name = f"camera_{gt_json}"
+
+            total_frames += 1
+
+            if pred_name not in prediction_jsons:
+                missed += 1
+                continue
+
+            prediction = prediction_archive.read(pred_name)
+            prediction = json.loads(prediction.decode("utf-8"))
+            gt = gt_archive.read(gt_json)
+            gt = json.loads(gt.decode("utf-8"))
+            gt_pred_json_tuples.append((gt, prediction))
+
+    if args.test:
+        gt_pred_json_tuples = gt_pred_json_tuples[:24]
+
+    accuracies = []
+    print("total_frames", total_frames)
+    with Pool(args.workers) as p:
+        accuracies = list(
+            tqdm(
+                p.imap_unordered(evaluate_gt_pred_json, gt_pred_json_tuples),
+                total=len(gt_pred_json_tuples),
+                desc="Processing Frames",
+                disable=args.silent,
             )
         )
 
-    results = np.array(results).T
-    results = np.mean(results, axis=1)
+    completeness = (total_frames - missed) / total_frames
+    mean_accuracies = np.mean(accuracies)
+    finalScore = completeness * mean_accuracies
     print(f"Results for {args.split}")
-    print(f"Completeness: {results[0]}")
-    print(f"Mean Accuracies: {results[1]}")
-    print(f"Final Score: {results[2]}")
+    print(f"Completeness: {completeness}")
+    print(f"Mean Accuracies: {mean_accuracies}")
+    print(f"Final Score: {finalScore}")
