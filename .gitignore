@@ -1,13 +1,17 @@
-soccernet-tracking/
-configs/
 *.pth
 **/*.png
-# What to test
-mmsegmentation/
-work_dirs/
+**/*.jpg
+**/*.mp4
+What to test
 __pycache__/
-example.py
-out.txt
-out/
-*.jpg
-*.mp4
+old/
+camera_calibration/No_Bells_Just_Whistles/SV_kp
+camera_calibration/No_Bells_Just_Whistles/SV_lines
+camera_calibration/evaluation/inferences*
+Dataset/
+SoccerNetGS/
+ffmep.txt
+!FRS-FNRS_BLACK_transp_resized.png
+!FRS-FNRS_rose_transp_resized.png
+!SoccerNet_resized.png
+!University_of_Liège_logo_resized.png

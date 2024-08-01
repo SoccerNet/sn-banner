@@ -1,3 +1,0 @@
-srun: job 2872805 queued and waiting for resources
-srun: Job has been cancelled
-srun: error: Unable to allocate resources: Job/step already completing or completed

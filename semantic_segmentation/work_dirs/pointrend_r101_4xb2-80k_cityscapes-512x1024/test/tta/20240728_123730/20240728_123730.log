@@ -1,0 +1,677 @@
+2024/07/28 12:37:31 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.11.7 (main, Dec 15 2023, 18:12:31) [GCC 11.2.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 664816580
+    GPU 0: Tesla V100-SXM2-32GB
+    CUDA_HOME: None
+    GCC: gcc (GCC) 8.3.1 20191121 (Red Hat 8.3.1-5)
+    PyTorch: 2.1.2
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX512
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.7
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-invalid-partial-specialization -Wno-unused-private-field -Wno-aligned-allocation-unavailable -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=ON, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2
+    OpenCV: 4.10.0
+    MMEngine: 0.10.3
+
+Runtime environment:
+    cudnn_benchmark: True
+    dist_cfg: {'backend': 'nccl'}
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    seed: 664816580
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2024/07/28 12:37:31 - mmengine - INFO - Config:
+ann_dir = 'Labels'
+crop_size = (
+    1080,
+    1920,
+)
+data_preprocessor = dict(
+    bgr_to_rgb=True,
+    mean=[
+        123.675,
+        116.28,
+        103.53,
+    ],
+    pad_val=0,
+    seg_pad_val=255,
+    size=(
+        1080,
+        1920,
+    ),
+    std=[
+        58.395,
+        57.12,
+        57.375,
+    ],
+    type='SegDataPreProcessor')
+data_root = '../Dataset'
+dataset_type = 'SoccerNet'
+default_hooks = dict(
+    checkpoint=dict(
+        by_epoch=False,
+        interval=135,
+        max_keep_ckpts=2,
+        save_best='mIoU',
+        type='CheckpointHook'),
+    logger=dict(interval=15, log_metric_by_epoch=False, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='SegVisualizationHook'))
+default_scope = 'mmseg'
+env_cfg = dict(
+    cudnn_benchmark=True,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_dir = 'Images'
+img_ratios = [
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    2.0,
+]
+iters = 40000
+launcher = 'none'
+load_from = 'work_dirs/pointrend_r101_4xb2-80k_cityscapes-512x1024/best_mIoU_iter_9450.pth'
+log_level = 'INFO'
+log_processor = dict(by_epoch=False)
+model = dict(
+    module=dict(
+        backbone=dict(
+            contract_dilation=True,
+            depth=101,
+            dilations=(
+                1,
+                1,
+                1,
+                1,
+            ),
+            norm_cfg=dict(requires_grad=True, type='BN'),
+            norm_eval=False,
+            num_stages=4,
+            out_indices=(
+                0,
+                1,
+                2,
+                3,
+            ),
+            strides=(
+                1,
+                2,
+                2,
+                2,
+            ),
+            style='pytorch',
+            type='ResNetV1c'),
+        data_preprocessor=dict(
+            bgr_to_rgb=True,
+            mean=[
+                123.675,
+                116.28,
+                103.53,
+            ],
+            pad_val=0,
+            seg_pad_val=255,
+            size=(
+                1080,
+                1920,
+            ),
+            std=[
+                58.395,
+                57.12,
+                57.375,
+            ],
+            type='SegDataPreProcessor'),
+        decode_head=[
+            dict(
+                align_corners=False,
+                channels=128,
+                dropout_ratio=-1,
+                feature_strides=[
+                    4,
+                    8,
+                    16,
+                    32,
+                ],
+                in_channels=[
+                    256,
+                    256,
+                    256,
+                    256,
+                ],
+                in_index=[
+                    0,
+                    1,
+                    2,
+                    3,
+                ],
+                loss_decode=dict(
+                    loss_weight=1.0,
+                    type='CrossEntropyLoss',
+                    use_sigmoid=False),
+                norm_cfg=dict(requires_grad=True, type='BN'),
+                num_classes=4,
+                type='FPNHead'),
+            dict(
+                align_corners=False,
+                channels=256,
+                coarse_pred_each_layer=True,
+                dropout_ratio=-1,
+                in_channels=[
+                    256,
+                ],
+                in_index=[
+                    0,
+                ],
+                loss_decode=dict(
+                    loss_weight=1.0,
+                    type='CrossEntropyLoss',
+                    use_sigmoid=False),
+                num_classes=4,
+                num_fcs=3,
+                type='PointHead'),
+        ],
+        neck=dict(
+            in_channels=[
+                256,
+                512,
+                1024,
+                2048,
+            ],
+            num_outs=4,
+            out_channels=256,
+            type='FPN'),
+        num_stages=2,
+        pretrained='open-mmlab://resnet101_v1c',
+        test_cfg=dict(
+            mode='whole',
+            scale_factor=2,
+            subdivision_num_points=8196,
+            subdivision_steps=2),
+        train_cfg=dict(
+            importance_sample_ratio=0.75, num_points=2048, oversample_ratio=3),
+        type='CascadeEncoderDecoder'),
+    type='SegTTAModel')
+norm_cfg = dict(requires_grad=True, type='BN')
+num_classes = 4
+optim_wrapper = dict(
+    clip_grad=None,
+    optimizer=dict(lr=0.01, momentum=0.9, type='SGD', weight_decay=0.0005),
+    type='OptimWrapper')
+optimizer = dict(lr=0.01, momentum=0.9, type='SGD', weight_decay=0.0005)
+param_scheduler = [
+    dict(begin=0, by_epoch=False, end=100, start_factor=0.1, type='LinearLR'),
+    dict(
+        begin=100,
+        by_epoch=False,
+        end=40000,
+        eta_min=0.0001,
+        power=0.9,
+        type='PolyLR'),
+]
+resume = False
+scale = (
+    1920,
+    1080,
+)
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='splits/test.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='../Dataset',
+        pipeline=[
+            dict(backend_args=None, type='LoadImageFromFile'),
+            dict(
+                transforms=[
+                    [
+                        dict(keep_ratio=True, scale_factor=0.5, type='Resize'),
+                        dict(
+                            keep_ratio=True, scale_factor=0.75, type='Resize'),
+                        dict(keep_ratio=True, scale_factor=1.0, type='Resize'),
+                        dict(
+                            keep_ratio=True, scale_factor=1.25, type='Resize'),
+                        dict(keep_ratio=True, scale_factor=1.5, type='Resize'),
+                        dict(
+                            keep_ratio=True, scale_factor=1.75, type='Resize'),
+                        dict(keep_ratio=True, scale_factor=2.0, type='Resize'),
+                    ],
+                    [
+                        dict(
+                            direction='horizontal',
+                            prob=0.0,
+                            type='RandomFlip'),
+                        dict(
+                            direction='horizontal',
+                            prob=1.0,
+                            type='RandomFlip'),
+                    ],
+                    [
+                        dict(type='LoadAnnotations'),
+                    ],
+                    [
+                        dict(type='PackSegInputs'),
+                    ],
+                ],
+                type='TestTimeAug'),
+        ],
+        type='SoccerNet'),
+    num_workers=1,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    iou_metrics=[
+        'mIoU',
+    ],
+    keep_results=True,
+    output_dir='inferences/pointrend/tta',
+    type='IoUMetric')
+train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=135)
+train_dataloader = dict(
+    batch_size=2,
+    dataset=dict(
+        ann_file='splits/train.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='../Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(type='LoadAnnotations'),
+            dict(
+                keep_ratio=True,
+                ratio_range=(
+                    0.5,
+                    2.0,
+                ),
+                scale=(
+                    1920,
+                    1080,
+                ),
+                type='RandomResize'),
+            dict(
+                cat_max_ratio=0.75,
+                crop_size=(
+                    1080,
+                    1920,
+                ),
+                type='RandomCrop'),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='InfiniteSampler'))
+train_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='LoadAnnotations'),
+    dict(
+        keep_ratio=True,
+        ratio_range=(
+            0.5,
+            2.0,
+        ),
+        scale=(
+            1920,
+            1080,
+        ),
+        type='RandomResize'),
+    dict(cat_max_ratio=0.75, crop_size=(
+        1080,
+        1920,
+    ), type='RandomCrop'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(type='PackSegInputs'),
+]
+tta_model = dict(
+    module=dict(
+        backbone=dict(
+            contract_dilation=True,
+            depth=101,
+            dilations=(
+                1,
+                1,
+                1,
+                1,
+            ),
+            norm_cfg=dict(requires_grad=True, type='BN'),
+            norm_eval=False,
+            num_stages=4,
+            out_indices=(
+                0,
+                1,
+                2,
+                3,
+            ),
+            strides=(
+                1,
+                2,
+                2,
+                2,
+            ),
+            style='pytorch',
+            type='ResNetV1c'),
+        data_preprocessor=dict(
+            bgr_to_rgb=True,
+            mean=[
+                123.675,
+                116.28,
+                103.53,
+            ],
+            pad_val=0,
+            seg_pad_val=255,
+            size=(
+                1080,
+                1920,
+            ),
+            std=[
+                58.395,
+                57.12,
+                57.375,
+            ],
+            type='SegDataPreProcessor'),
+        decode_head=[
+            dict(
+                align_corners=False,
+                channels=128,
+                dropout_ratio=-1,
+                feature_strides=[
+                    4,
+                    8,
+                    16,
+                    32,
+                ],
+                in_channels=[
+                    256,
+                    256,
+                    256,
+                    256,
+                ],
+                in_index=[
+                    0,
+                    1,
+                    2,
+                    3,
+                ],
+                loss_decode=dict(
+                    loss_weight=1.0,
+                    type='CrossEntropyLoss',
+                    use_sigmoid=False),
+                norm_cfg=dict(requires_grad=True, type='BN'),
+                num_classes=4,
+                type='FPNHead'),
+            dict(
+                align_corners=False,
+                channels=256,
+                coarse_pred_each_layer=True,
+                dropout_ratio=-1,
+                in_channels=[
+                    256,
+                ],
+                in_index=[
+                    0,
+                ],
+                loss_decode=dict(
+                    loss_weight=1.0,
+                    type='CrossEntropyLoss',
+                    use_sigmoid=False),
+                num_classes=4,
+                num_fcs=3,
+                type='PointHead'),
+        ],
+        neck=dict(
+            in_channels=[
+                256,
+                512,
+                1024,
+                2048,
+            ],
+            num_outs=4,
+            out_channels=256,
+            type='FPN'),
+        num_stages=2,
+        pretrained='open-mmlab://resnet101_v1c',
+        test_cfg=dict(
+            mode='whole',
+            scale_factor=2,
+            subdivision_num_points=8196,
+            subdivision_steps=2),
+        train_cfg=dict(
+            importance_sample_ratio=0.75, num_points=2048, oversample_ratio=3),
+        type='CascadeEncoderDecoder'),
+    type='SegTTAModel')
+tta_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        transforms=[
+            [
+                dict(keep_ratio=True, scale_factor=0.5, type='Resize'),
+                dict(keep_ratio=True, scale_factor=0.75, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.0, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.25, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.5, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.75, type='Resize'),
+                dict(keep_ratio=True, scale_factor=2.0, type='Resize'),
+            ],
+            [
+                dict(direction='horizontal', prob=0.0, type='RandomFlip'),
+                dict(direction='horizontal', prob=1.0, type='RandomFlip'),
+            ],
+            [
+                dict(type='LoadAnnotations'),
+            ],
+            [
+                dict(type='PackSegInputs'),
+            ],
+        ],
+        type='TestTimeAug'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=4,
+    dataset=dict(
+        ann_file='splits/val.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='../Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
+            dict(type='LoadAnnotations'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    iou_metrics=[
+        'mIoU',
+    ], type='IoUMetric')
+val_interval = 135
+val_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1920,
+        1080,
+    ), type='Resize'),
+    dict(type='LoadAnnotations'),
+    dict(type='PackSegInputs'),
+]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='SegLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = './work_dirs/config/test'
+
+2024/07/28 12:37:32 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2024/07/28 12:37:32 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2024/07/28 12:37:32 - mmengine - WARNING - The prefix is not set in metric class IoUMetric.
+2024/07/28 12:37:33 - mmengine - INFO - Load checkpoint from work_dirs/pointrend_r101_4xb2-80k_cityscapes-512x1024/best_mIoU_iter_9450.pth
+2024/07/28 12:38:34 - mmengine - INFO - Iter(test) [ 15/630]    eta: 0:41:29  time: 2.6368  data_time: 0.0452  memory: 18273  
+2024/07/28 12:39:13 - mmengine - INFO - Iter(test) [ 30/630]    eta: 0:33:26  time: 2.6403  data_time: 0.0462  memory: 3755  
+2024/07/28 12:39:53 - mmengine - INFO - Iter(test) [ 45/630]    eta: 0:30:20  time: 2.6493  data_time: 0.0518  memory: 3755  
+2024/07/28 12:40:33 - mmengine - INFO - Iter(test) [ 60/630]    eta: 0:28:27  time: 2.6476  data_time: 0.0493  memory: 3755  
+2024/07/28 12:41:12 - mmengine - INFO - Iter(test) [ 75/630]    eta: 0:27:04  time: 2.6503  data_time: 0.0476  memory: 3755  
+2024/07/28 12:41:52 - mmengine - INFO - Iter(test) [ 90/630]    eta: 0:25:55  time: 2.6450  data_time: 0.0468  memory: 3755  
+2024/07/28 12:42:32 - mmengine - INFO - Iter(test) [105/630]    eta: 0:24:54  time: 2.6428  data_time: 0.0465  memory: 3755  
+2024/07/28 12:43:12 - mmengine - INFO - Iter(test) [120/630]    eta: 0:23:58  time: 2.6484  data_time: 0.0469  memory: 3755  
+2024/07/28 12:43:51 - mmengine - INFO - Iter(test) [135/630]    eta: 0:23:06  time: 2.6389  data_time: 0.0468  memory: 3755  
+2024/07/28 12:44:31 - mmengine - INFO - Iter(test) [150/630]    eta: 0:22:16  time: 2.6405  data_time: 0.0468  memory: 3755  
+2024/07/28 12:45:10 - mmengine - INFO - Iter(test) [165/630]    eta: 0:21:29  time: 2.6416  data_time: 0.0466  memory: 3755  
+2024/07/28 12:45:50 - mmengine - INFO - Iter(test) [180/630]    eta: 0:20:42  time: 2.6388  data_time: 0.0460  memory: 3755  
+2024/07/28 12:46:30 - mmengine - INFO - Iter(test) [195/630]    eta: 0:19:57  time: 2.6440  data_time: 0.0463  memory: 3755  
+2024/07/28 12:47:09 - mmengine - INFO - Iter(test) [210/630]    eta: 0:19:12  time: 2.6382  data_time: 0.0458  memory: 3755  
+2024/07/28 12:47:49 - mmengine - INFO - Iter(test) [225/630]    eta: 0:18:28  time: 2.6456  data_time: 0.0459  memory: 3755  
+2024/07/28 12:48:29 - mmengine - INFO - Iter(test) [240/630]    eta: 0:17:45  time: 2.6447  data_time: 0.0460  memory: 3755  
+2024/07/28 12:49:08 - mmengine - INFO - Iter(test) [255/630]    eta: 0:17:02  time: 2.6450  data_time: 0.0460  memory: 3755  
+2024/07/28 12:49:48 - mmengine - INFO - Iter(test) [270/630]    eta: 0:16:19  time: 2.6438  data_time: 0.0463  memory: 3755  
+2024/07/28 12:50:28 - mmengine - INFO - Iter(test) [285/630]    eta: 0:15:37  time: 2.6455  data_time: 0.0462  memory: 3755  
+2024/07/28 12:51:07 - mmengine - INFO - Iter(test) [300/630]    eta: 0:14:55  time: 2.6462  data_time: 0.0467  memory: 3755  
+2024/07/28 12:51:47 - mmengine - INFO - Iter(test) [315/630]    eta: 0:14:13  time: 2.6416  data_time: 0.0466  memory: 3755  
+2024/07/28 12:52:27 - mmengine - INFO - Iter(test) [330/630]    eta: 0:13:32  time: 2.6529  data_time: 0.0470  memory: 3755  
+2024/07/28 12:53:06 - mmengine - INFO - Iter(test) [345/630]    eta: 0:12:51  time: 2.6484  data_time: 0.0469  memory: 3755  
+2024/07/28 12:53:46 - mmengine - INFO - Iter(test) [360/630]    eta: 0:12:09  time: 2.6468  data_time: 0.0466  memory: 3755  
+2024/07/28 12:54:26 - mmengine - INFO - Iter(test) [375/630]    eta: 0:11:28  time: 2.6435  data_time: 0.0469  memory: 3755  
+2024/07/28 12:55:06 - mmengine - INFO - Iter(test) [390/630]    eta: 0:10:47  time: 2.6463  data_time: 0.0467  memory: 3755  
+2024/07/28 12:55:45 - mmengine - INFO - Iter(test) [405/630]    eta: 0:10:06  time: 2.6409  data_time: 0.0467  memory: 3755  
+2024/07/28 12:56:25 - mmengine - INFO - Iter(test) [420/630]    eta: 0:09:25  time: 2.6421  data_time: 0.0468  memory: 3755  
+2024/07/28 12:57:04 - mmengine - INFO - Iter(test) [435/630]    eta: 0:08:45  time: 2.6395  data_time: 0.0451  memory: 3755  
+2024/07/28 12:57:44 - mmengine - INFO - Iter(test) [450/630]    eta: 0:08:04  time: 2.6396  data_time: 0.0465  memory: 3755  
+2024/07/28 12:58:24 - mmengine - INFO - Iter(test) [465/630]    eta: 0:07:23  time: 2.6436  data_time: 0.0454  memory: 3755  
+2024/07/28 12:59:03 - mmengine - INFO - Iter(test) [480/630]    eta: 0:06:43  time: 2.6495  data_time: 0.0484  memory: 3755  
+2024/07/28 12:59:43 - mmengine - INFO - Iter(test) [495/630]    eta: 0:06:02  time: 2.6501  data_time: 0.0520  memory: 3755  
+2024/07/28 13:00:23 - mmengine - INFO - Iter(test) [510/630]    eta: 0:05:22  time: 2.6456  data_time: 0.0474  memory: 3755  
+2024/07/28 13:01:02 - mmengine - INFO - Iter(test) [525/630]    eta: 0:04:41  time: 2.6420  data_time: 0.0466  memory: 3755  
+2024/07/28 13:01:42 - mmengine - INFO - Iter(test) [540/630]    eta: 0:04:01  time: 2.6475  data_time: 0.0468  memory: 3755  
+2024/07/28 13:02:22 - mmengine - INFO - Iter(test) [555/630]    eta: 0:03:21  time: 2.6463  data_time: 0.0470  memory: 3755  
+2024/07/28 13:03:02 - mmengine - INFO - Iter(test) [570/630]    eta: 0:02:40  time: 2.6532  data_time: 0.0526  memory: 3755  
+2024/07/28 13:03:41 - mmengine - INFO - Iter(test) [585/630]    eta: 0:02:00  time: 2.6451  data_time: 0.0467  memory: 3755  
+2024/07/28 13:04:21 - mmengine - INFO - Iter(test) [600/630]    eta: 0:01:20  time: 2.6518  data_time: 0.0490  memory: 3755  
+2024/07/28 13:05:01 - mmengine - INFO - Iter(test) [615/630]    eta: 0:00:40  time: 2.6424  data_time: 0.0463  memory: 3755  
+2024/07/28 13:05:40 - mmengine - INFO - Iter(test) [630/630]    eta: 0:00:00  time: 2.6416  data_time: 0.0468  memory: 3755  
+2024/07/28 13:05:40 - mmengine - INFO - per class results:
+2024/07/28 13:05:40 - mmengine - INFO - 
++--------------------+-------+-------+
+|       Class        |  IoU  |  Acc  |
++--------------------+-------+-------+
+| Outside billboards | 99.58 | 99.83 |
+|     Billboard      | 91.37 | 94.58 |
+|      Goal net      | 66.65 | 84.43 |
+|     Occlusion      | 50.05 | 55.16 |
++--------------------+-------+-------+
+2024/07/28 13:05:40 - mmengine - INFO - Iter(test) [630/630]    aAcc: 99.4900  mIoU: 76.9100  mAcc: 83.5000  data_time: 0.0489  time: 2.6784

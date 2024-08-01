@@ -1,0 +1,567 @@
+2024/07/28 14:22:44 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: linux
+    Python: 3.11.7 (main, Dec 15 2023, 18:12:31) [GCC 11.2.0]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 926563014
+    GPU 0: NVIDIA RTX A5000
+    CUDA_HOME: None
+    GCC: gcc (GCC) 8.5.0 20210514 (Red Hat 8.5.0-18)
+    PyTorch: 2.1.2
+    PyTorch compiling details: PyTorch built with:
+  - GCC 9.3
+  - C++ Version: 201703
+  - Intel(R) oneAPI Math Kernel Library Version 2023.1-Product Build 20230303 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - LAPACK is enabled (usually provided by MKL)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.8
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_90,code=sm_90;-gencode;arch=compute_37,code=compute_37
+  - CuDNN 8.7
+  - Magma 2.6.1
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.8, CUDNN_VERSION=8.7.0, CXX_COMPILER=/opt/rh/devtoolset-9/root/usr/bin/c++, CXX_FLAGS= -D_GLIBCXX_USE_CXX11_ABI=0 -fabi-version=11 -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE -O2 -fPIC -Wall -Wextra -Werror=return-type -Werror=non-virtual-dtor -Werror=bool-operation -Wnarrowing -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-function -Wno-unused-result -Wno-strict-overflow -Wno-strict-aliasing -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=old-style-cast -Wno-invalid-partial-specialization -Wno-unused-private-field -Wno-aligned-allocation-unavailable -Wno-missing-braces -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Werror=cast-function-type -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=ON, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2
+    OpenCV: 4.10.0
+    MMEngine: 0.10.3
+
+Runtime environment:
+    cudnn_benchmark: True
+    dist_cfg: {'backend': 'nccl'}
+    mp_cfg: {'mp_start_method': 'fork', 'opencv_num_threads': 0}
+    seed: 926563014
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2024/07/28 14:22:45 - mmengine - INFO - Config:
+ann_dir = 'Labels'
+checkpoint_file = 'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220308-d5bdebaf.pth'
+conv_kernel_size = 1
+crop_size = (
+    1080,
+    1920,
+)
+data_preprocessor = dict(
+    bgr_to_rgb=True,
+    mean=[
+        123.675,
+        116.28,
+        103.53,
+    ],
+    pad_val=0,
+    seg_pad_val=255,
+    size=(
+        1080,
+        1920,
+    ),
+    std=[
+        58.395,
+        57.12,
+        57.375,
+    ],
+    type='SegDataPreProcessor')
+data_root = '../Dataset'
+dataset_type = 'SoccerNet'
+default_hooks = dict(
+    checkpoint=dict(
+        by_epoch=False,
+        interval=135,
+        max_keep_ckpts=2,
+        save_best='mIoU',
+        type='CheckpointHook'),
+    logger=dict(interval=15, log_metric_by_epoch=False, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='SegVisualizationHook'))
+default_scope = 'mmseg'
+env_cfg = dict(
+    cudnn_benchmark=True,
+    dist_cfg=dict(backend='nccl'),
+    mp_cfg=dict(mp_start_method='fork', opencv_num_threads=0))
+img_dir = 'Images'
+img_ratios = [
+    0.5,
+    0.75,
+    1.0,
+    1.25,
+    1.5,
+    1.75,
+    2.0,
+]
+iters = 40000
+launcher = 'none'
+load_from = 'work_dirs/knet-s3_swin-l_upernet_8xb2-adamw-80k_ade20k-512x512/best_mIoU_iter_19710.pth'
+log_level = 'INFO'
+log_processor = dict(by_epoch=False)
+model = dict(
+    auxiliary_head=dict(
+        align_corners=False,
+        channels=256,
+        concat_input=False,
+        dropout_ratio=0.1,
+        in_channels=768,
+        in_index=2,
+        loss_decode=dict(
+            loss_weight=0.4, type='CrossEntropyLoss', use_sigmoid=False),
+        norm_cfg=dict(num_groups=32, type='GN'),
+        num_classes=4,
+        num_convs=1,
+        type='FCNHead'),
+    backbone=dict(
+        attn_drop_rate=0.0,
+        depths=[
+            2,
+            2,
+            18,
+            2,
+        ],
+        drop_path_rate=0.3,
+        drop_rate=0.0,
+        embed_dims=192,
+        mlp_ratio=4,
+        num_heads=[
+            6,
+            12,
+            24,
+            48,
+        ],
+        out_indices=(
+            0,
+            1,
+            2,
+            3,
+        ),
+        patch_norm=True,
+        qk_scale=None,
+        qkv_bias=True,
+        type='SwinTransformer',
+        use_abs_pos_embed=False,
+        window_size=7),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_val=0,
+        seg_pad_val=255,
+        size=(
+            1080,
+            1920,
+        ),
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='SegDataPreProcessor'),
+    decode_head=dict(
+        kernel_generate_head=dict(
+            align_corners=False,
+            channels=512,
+            dropout_ratio=0.1,
+            in_channels=[
+                192,
+                384,
+                768,
+                1536,
+            ],
+            in_index=[
+                0,
+                1,
+                2,
+                3,
+            ],
+            loss_decode=dict(
+                loss_weight=1.0, type='CrossEntropyLoss', use_sigmoid=False),
+            norm_cfg=dict(num_groups=32, type='GN'),
+            num_classes=4,
+            pool_scales=(
+                1,
+                2,
+                3,
+                6,
+            ),
+            type='UPerHead'),
+        kernel_update_head=[
+            dict(
+                conv_kernel_size=1,
+                dropout=0.0,
+                feat_transform_cfg=dict(
+                    act_cfg=None, conv_cfg=dict(type='Conv2d')),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=512,
+                kernel_updator_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=256,
+                    in_channels=256,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='KernelUpdator'),
+                num_classes=4,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_mask_fcs=1,
+                out_channels=512,
+                type='KernelUpdateHead',
+                with_ffn=True),
+            dict(
+                conv_kernel_size=1,
+                dropout=0.0,
+                feat_transform_cfg=dict(
+                    act_cfg=None, conv_cfg=dict(type='Conv2d')),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=512,
+                kernel_updator_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=256,
+                    in_channels=256,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='KernelUpdator'),
+                num_classes=4,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_mask_fcs=1,
+                out_channels=512,
+                type='KernelUpdateHead',
+                with_ffn=True),
+            dict(
+                conv_kernel_size=1,
+                dropout=0.0,
+                feat_transform_cfg=dict(
+                    act_cfg=None, conv_cfg=dict(type='Conv2d')),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=512,
+                kernel_updator_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=256,
+                    in_channels=256,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='KernelUpdator'),
+                num_classes=4,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_mask_fcs=1,
+                out_channels=512,
+                type='KernelUpdateHead',
+                with_ffn=True),
+        ],
+        num_stages=3,
+        type='IterativeDecodeHead'),
+    pretrained=
+    'https://download.openmmlab.com/mmsegmentation/v0.5/pretrain/swin/swin_large_patch4_window7_224_22k_20220308-d5bdebaf.pth',
+    test_cfg=dict(mode='whole'),
+    train_cfg=dict(),
+    type='EncoderDecoder')
+norm_cfg = dict(num_groups=32, type='GN')
+num_classes = 4
+num_stages = 3
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=1, norm_type=2),
+    optimizer=dict(
+        betas=(
+            0.9,
+            0.999,
+        ), lr=6e-05, type='AdamW', weight_decay=0.0005),
+    paramwise_cfg=dict(
+        custom_keys=dict(
+            absolute_pos_embed=dict(decay_mult=0.0),
+            norm=dict(decay_mult=0.0),
+            relative_position_bias_table=dict(decay_mult=0.0))),
+    type='OptimWrapper')
+optimizer = dict(lr=0.01, momentum=0.9, type='SGD', weight_decay=0.0005)
+param_scheduler = [
+    dict(
+        begin=0, by_epoch=False, end=500, start_factor=0.001, type='LinearLR'),
+    dict(
+        begin=500,
+        by_epoch=False,
+        end=40000,
+        milestones=[
+            30000,
+            36000,
+        ],
+        type='MultiStepLR'),
+]
+resume = False
+scale = (
+    1920,
+    1080,
+)
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=4,
+    dataset=dict(
+        ann_file='splits/test.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='../Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
+            dict(type='LoadAnnotations'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=4,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    iou_metrics=[
+        'mIoU',
+    ],
+    keep_results=True,
+    output_dir='inferences/knet/non-tta',
+    type='IoUMetric')
+train_cfg = dict(max_iters=40000, type='IterBasedTrainLoop', val_interval=135)
+train_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file='splits/train.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='../Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(type='LoadAnnotations'),
+            dict(
+                keep_ratio=True,
+                ratio_range=(
+                    0.5,
+                    2.0,
+                ),
+                scale=(
+                    1920,
+                    1080,
+                ),
+                type='RandomResize'),
+            dict(
+                cat_max_ratio=0.75,
+                crop_size=(
+                    1080,
+                    1920,
+                ),
+                type='RandomCrop'),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=True, type='InfiniteSampler'))
+train_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(type='LoadAnnotations'),
+    dict(
+        keep_ratio=True,
+        ratio_range=(
+            0.5,
+            2.0,
+        ),
+        scale=(
+            1920,
+            1080,
+        ),
+        type='RandomResize'),
+    dict(cat_max_ratio=0.75, crop_size=(
+        1080,
+        1920,
+    ), type='RandomCrop'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(type='PackSegInputs'),
+]
+tta_model = dict(type='SegTTAModel')
+tta_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(
+        transforms=[
+            [
+                dict(keep_ratio=True, scale_factor=0.5, type='Resize'),
+                dict(keep_ratio=True, scale_factor=0.75, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.0, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.25, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.5, type='Resize'),
+                dict(keep_ratio=True, scale_factor=1.75, type='Resize'),
+                dict(keep_ratio=True, scale_factor=2.0, type='Resize'),
+            ],
+            [
+                dict(direction='horizontal', prob=0.0, type='RandomFlip'),
+                dict(direction='horizontal', prob=1.0, type='RandomFlip'),
+            ],
+            [
+                dict(type='LoadAnnotations'),
+            ],
+            [
+                dict(type='PackSegInputs'),
+            ],
+        ],
+        type='TestTimeAug'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=2,
+    dataset=dict(
+        ann_file='splits/val.txt',
+        data_prefix=dict(img_path='Images', seg_map_path='Labels'),
+        data_root='../Dataset',
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1920,
+                1080,
+            ), type='Resize'),
+            dict(type='LoadAnnotations'),
+            dict(type='PackSegInputs'),
+        ],
+        type='SoccerNet'),
+    num_workers=2,
+    persistent_workers=True,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    iou_metrics=[
+        'mIoU',
+    ], type='IoUMetric')
+val_interval = 135
+val_pipeline = [
+    dict(type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1920,
+        1080,
+    ), type='Resize'),
+    dict(type='LoadAnnotations'),
+    dict(type='PackSegInputs'),
+]
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='visualizer',
+    type='SegLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = './work_dirs/knet-s3_swin-l_upernet_8xb2-adamw-80k_ade20k-512x512/test/non-tta'
+
+2024/07/28 14:22:48 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2024/07/28 14:22:48 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) SegVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2024/07/28 14:22:48 - mmengine - WARNING - The prefix is not set in metric class IoUMetric.
+2024/07/28 14:22:51 - mmengine - INFO - Load checkpoint from work_dirs/knet-s3_swin-l_upernet_8xb2-adamw-80k_ade20k-512x512/best_mIoU_iter_19710.pth
+2024/07/28 14:23:30 - mmengine - INFO - Iter(test) [ 15/158]    eta: 0:06:11  time: 1.8638  data_time: 0.0107  memory: 13334  
+2024/07/28 14:23:58 - mmengine - INFO - Iter(test) [ 30/158]    eta: 0:04:45  time: 1.8641  data_time: 0.0118  memory: 13332  
+2024/07/28 14:24:26 - mmengine - INFO - Iter(test) [ 45/158]    eta: 0:03:58  time: 1.8719  data_time: 0.0115  memory: 13332  
+2024/07/28 14:24:54 - mmengine - INFO - Iter(test) [ 60/158]    eta: 0:03:21  time: 1.8737  data_time: 0.0109  memory: 13332  
+2024/07/28 14:25:22 - mmengine - INFO - Iter(test) [ 75/158]    eta: 0:02:47  time: 1.8799  data_time: 0.0119  memory: 13332  
+2024/07/28 14:25:50 - mmengine - INFO - Iter(test) [ 90/158]    eta: 0:02:15  time: 1.8789  data_time: 0.0116  memory: 13332  
+2024/07/28 14:26:18 - mmengine - INFO - Iter(test) [105/158]    eta: 0:01:44  time: 1.8790  data_time: 0.0114  memory: 13332  
+2024/07/28 14:26:46 - mmengine - INFO - Iter(test) [120/158]    eta: 0:01:14  time: 1.8810  data_time: 0.0118  memory: 13332  
+2024/07/28 14:27:15 - mmengine - INFO - Iter(test) [135/158]    eta: 0:00:44  time: 1.8796  data_time: 0.0108  memory: 13332  
+2024/07/28 14:27:43 - mmengine - INFO - Iter(test) [150/158]    eta: 0:00:15  time: 1.8798  data_time: 0.0109  memory: 13332  
+2024/07/28 14:28:01 - mmengine - INFO - per class results:
+2024/07/28 14:28:01 - mmengine - INFO - 
++--------------------+-------+-------+
+|       Class        |  IoU  |  Acc  |
++--------------------+-------+-------+
+| Outside billboards | 99.65 | 99.88 |
+|     Billboard      | 95.04 | 96.88 |
+|      Goal net      | 72.15 | 83.22 |
+|     Occlusion      |  53.3 | 61.59 |
++--------------------+-------+-------+
+2024/07/28 14:28:01 - mmengine - INFO - Iter(test) [158/158]    aAcc: 99.6200  mIoU: 80.0300  mAcc: 85.3900  data_time: 0.0200  time: 1.9650

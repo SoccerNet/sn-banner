@@ -1,9 +1,0 @@
-srun: job 2885784 queued and waiting for resources
-srun: job 2885784 has been allocated resources
-Traceback (most recent call last):
-  File "/scratch/users/vgaspar/train.py", line 187, in <module>
-    main()
-  File "/scratch/users/vgaspar/train.py", line 171, in main
-    os.rename(osp.join(cfg.work_dir, f), osp.join(cfg.work_dir, lastDir, f))
-OSError: [Errno 16] Device or resource busy: 'work_dir/split_models/ddrnet/ddrnet_23_in1k-pre_2xb6-120k_cityscapes-1024x1024.py/train.log' -> 'work_dir/split_models/ddrnet/ddrnet_23_in1k-pre_2xb6-120k_cityscapes-1024x1024.py/20240130_224955/train.log'
-srun: error: compute-05: task 0: Exited with exit code 1
