@@ -15,3 +15,6 @@ ffmep.txt
 !FRS-FNRS_rose_transp_resized.png
 !SoccerNet_resized.png
 !University_of_Liège_logo_resized.png
+.vscode
+video/
+*.zip
