@@ -132,7 +132,7 @@ python inference.py path/to/SoccerNetGS/test/SNGS-142/img1/ path/to/logo.png --s
 
 Optional arguments:
 - ```--n_workers```: Number of workers to speed up some steps of the pipeline. Default is 1. Attention it may use a lot of memory.
-- ```--tta```: Whether to use test-time augmentation. Default is False. A GPU with at least 28GB of memory is required.
+- ```--tta```: Whether to use test-time augmentation. Default is False. A GPU with at least 24GB of memory is required.
 
 <hr>
 
