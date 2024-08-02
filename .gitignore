@@ -19,3 +19,6 @@ ffmep.txt
 video/
 *.zip
 *.ipynb
+*.sbatch
+*.log
+!semantic_segmentation/work_dirs/**/*.log
