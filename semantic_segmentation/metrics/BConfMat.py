@@ -1,28 +1,26 @@
 import os
-import pandas as pd
 import torch
 import numpy as np
 from cv2 import distanceTransform, DIST_L2, DIST_MASK_PRECISE
 from tqdm import tqdm
 from PIL import Image
-import torch.utils.data as data
 from sklearn.metrics import confusion_matrix
 from multiprocessing import Pool
 import argparse
 
 
 def computeBConfMat(pred, gt, nClasses, distances):
-    confMatPerDist = np.zeros(
+    boundaryConfusionMatrix = np.zeros(
         (len(distances), nClasses + 1, nClasses + 1), dtype=np.int64
     )
     if np.any(np.isinf(distances)):
-        confMatPerDist[-1] += confusion_matrix(
+        boundaryConfusionMatrix[-1] += confusion_matrix(
             gt.flatten(), pred.flatten(), labels=np.arange(nClasses + 1)
         )
 
     distances = [int(d) for d in distances if not np.isinf(d)]
     if len(distances) == 0:
-        return confMatPerDist
+        return boundaryConfusionMatrix
 
     predOneHot = (
         torch.nn.functional.one_hot(pred, 4).permute(2, 0, 1).numpy().astype(np.uint8)
@@ -51,11 +49,11 @@ def computeBConfMat(pred, gt, nClasses, distances):
         boundaryPred = np.argmax(boundaryPredOneHot, axis=0)
         boundaryGt = np.argmax(boundaryGtOneHot, axis=0)
 
-        confMatPerDist[i] += confusion_matrix(
+        boundaryConfusionMatrix[i] += confusion_matrix(
             boundaryGt.flatten(), boundaryPred.flatten(), labels=np.arange(nClasses + 1)
         )
 
-    return confMatPerDist
+    return boundaryConfusionMatrix
 
 
 def parse_args():
@@ -82,13 +80,18 @@ def parse_args():
         "--distances",
         type=str,
         default="1,3,5,10,inf",
-        help="Distances to compute the boundary confusion matrix. Inf is equivalent to a regular confusion matrix computation.",
+        help='Distances to compute the boundary confusion matrix. \
+            Accepted distance values are single values (e.g. "1"), \
+            ranges (e.g. "5-10") and infinity (e.g. "inf"). \
+            Distance values should be integers greater than 0, separated by commas. \
+            Inf is equivalent to a regular confusion matrix computation.',
     )
     parser.add_argument(
         "--n_workers",
         type=int,
         default=1,
-        help="Number of workers to speed up the computation. Should be equal to the number of available cores since each process will use two threads.",
+        help="Number of workers to speed up the computation. \
+            Should be equal to the number of available cores since each process will use two threads.",
     )
 
     args = parser.parse_args()
@@ -106,19 +109,41 @@ if __name__ == "__main__":
 
     predPath = args.pred_path
     gtPath = args.gt_path
-    distances = [float(d) for d in args.distances.split(",")]
+    # check that there are both directories
+    if not os.path.isdir(predPath) or not os.path.isdir(gtPath):
+        raise ValueError("The specified paths are not valid directories")
+    if predPath[-1] != "/":
+        predPath += "/"
+    if gtPath[-1] != "/":
+        gtPath += "/"
+
+    distances = []
+    for d in args.distances.split(","):
+        if "-" in d:
+            start, end = d.split("-")
+            distances.extend(range(int(start), int(end) + 1))
+        else:
+            floatDist = float(d)
+            if np.isinf(floatDist):
+                distances.append(floatDist)
+            else:
+                distances.append(int(floatDist))
+
     nWorkers = args.n_workers
 
     nClasses = 4
     imgFileNames = os.listdir(predPath)
 
+    totalBConfMat = np.zeros(
+        (len(distances), nClasses + 1, nClasses + 1), dtype=np.int64
+    )
     with Pool(nWorkers) as p:
-        confMatPerDist = list(
-            tqdm(
-                p.imap_unordered(computeBConfMatWrapper, imgFileNames),
-                total=len(imgFileNames),
-            )
-        )
+        iterator = p.imap(computeBConfMatWrapper, imgFileNames)
+        for bConfMat in tqdm(
+            iterator,
+            total=len(imgFileNames),
+            desc="Computing boundary confusion matrix",
+        ):
+            totalBConfMat += bConfMat
 
-    confMatPerDist = np.sum(confMatPerDist, axis=0)
-    np.save(args.output_name, confMatPerDist)
+    np.save(args.output_name, totalBConfMat)
