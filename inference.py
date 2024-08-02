@@ -71,9 +71,9 @@ if __name__ == "__main__":
         imgFileNames.sort()
         nFrames = len(imgFileNames)
         # All files are names "str(i+1).zfill(6).jpg" for i in range(nFrames), convert and rename them to "str(i).zfill(6).png"
-        # for i, imgFileName in enumerate(tqdm(imgFileNames, desc="Renaming images")):
-        #     img = cv2.imread(os.path.join(videoPath, imgFileName))
-        #     cv2.imwrite("work_dir/images/" + str(i).zfill(6) + ".png", img)
+        for i, imgFileName in enumerate(tqdm(imgFileNames, desc="Renaming images")):
+            img = cv2.imread(os.path.join(videoPath, imgFileName))
+            cv2.imwrite("work_dir/images/" + str(i).zfill(6) + ".png", img)
         frameSample = cv2.imread("work_dir/images/000000.png")
         imgWidth = frameSample.shape[1]
         imgHeight = frameSample.shape[0]
@@ -103,7 +103,6 @@ if __name__ == "__main__":
         f.seek(f.tell() - 1)
 
     # Run the semantic segmentation model
-    # mask2former_inference(args.tta)
     if args.tta:
         os.system("conda run -n mmseg python semantic_segmentation/inference.py --tta")
     else:
@@ -132,7 +131,7 @@ if __name__ == "__main__":
 
     with open("work_dir/cam_params.json", "r") as f:
         camParamsPerImage = json.load(f)
-    len(camParamsPerImage)
+
     camParamsPerImage = np.array(camParamsPerImage)
     camParamsPerImage, isErroneousParams, ErroneousParamsPos = to_valid_cam_params(
         camParamsPerImage
