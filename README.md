@@ -62,7 +62,9 @@ source env/bin/activate
 pip install -r requirements.txt
 ``` -->
 
-Two independent conda environment are needed: One for MMsegmentation and another for the rest of the project. 
+Though [MMSegmentation](https://github.com/open-mmlab/mmsegmentation) and [No-Bells-Just-Whistles](https://github.com/mguti97/No-Bells-Just-Whistles) (or NBJW) could share the same conda environment, the installation of mmcv, a requirement for mmsegmentation, is not straightforward for pytorch versions more recent than 2.1.2, and NBJW has shown improved accuracy with more recent pytorch versions. Therefore, this project works with two independent conda environments: one for MMsegmentation (``mmseg``) and another for the rest of the project (``banner-replacement``).
+
+The environnement `banner-replacement` is the default one, except for the files `train.py`, `test.py` and `inference.py`, in the directory `semantic_segmentation`, which must be run in the `mmseg` environment.
 
 ### mmseg
 
@@ -119,6 +121,8 @@ pip install scikit-learn==1.5.1 opencv-python==4.10.0.84 tqdm==4.66.4 matplotlib
 <hr>
 
 ## Inference
+
+Don't forget to activate `banner-replacement` conda environment before running the following commands.
 
 On video:
 ``` shell
