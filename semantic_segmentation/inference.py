@@ -12,6 +12,7 @@ from mmengine.runner import Runner
 from mmseg.registry import DATASETS
 from mmseg.datasets import BaseSegDataset
 from tqdm import tqdm
+import argparse
 
 classes = ["Outside billboards", "Billboard", "Goal net", "Occlusion"]
 palette = [[0, 0, 0], [255, 255, 255], [0, 255, 0], [255, 0, 0]]
@@ -76,4 +77,14 @@ def mask2former_inference(use_tta=False):
 
 
 if __name__ == "__main__":
-    mask2former_inference()
+    # add argument parser for optional TTA
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--tta",
+        action="store_true",
+        help="Use test-time augmentation",
+    )
+
+    args = parser.parse_args()
+    mask2former_inference(args.tta)

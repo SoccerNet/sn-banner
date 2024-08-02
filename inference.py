@@ -1,5 +1,3 @@
-import sys
-from semantic_segmentation.inference import mask2former_inference
 import os, json
 import numpy as np
 from camera_calibration.filters import (
@@ -9,7 +7,6 @@ from camera_calibration.filters import (
     camParamsPerType_to_camParamsPerImage,
     outliers_remover,
     camParamsSmoothing,
-    smoothing_using_banner_corners,
 )
 from semantic_segmentation.filter import keep_biggest_blob
 from tqdm import tqdm
@@ -18,8 +15,6 @@ from compositing.utils import compute_banner_model_params, composite_logo_into_v
 from camera_calibration.No_Bells_Just_Whistles.inference import process_image_sequence
 from copy import deepcopy
 import argparse
-
-from matplotlib import pyplot as plt
 
 
 def parse_args():
@@ -44,7 +39,7 @@ def parse_args():
         "--n_workers",
         type=int,
         default=1,
-        help="Number of workers to speed up the inference",
+        help="Number of workers to speed up the inference. Can consumme a lot of memory",
     )
     parser.add_argument(
         "--speed",
@@ -107,10 +102,24 @@ if __name__ == "__main__":
         # remove the last newline character
         f.seek(f.tell() - 1)
 
-    mask2former_inference(args.tta)
+    # Run the semantic segmentation model
+    # mask2former_inference(args.tta)
+    if args.tta:
+        os.system("conda run -n mmseg python semantic_segmentation/inference.py --tta")
+    else:
+        os.system("conda run -n mmseg python semantic_segmentation/inference.py")
 
     imgPath = "work_dir/images/"
     maskPath = "work_dir/masks/"
+
+    if not os.path.exists("work_dir"):
+        os.mkdir("work_dir")
+    if not os.path.exists(imgPath):
+        os.mkdir(imgPath)
+    if not os.path.exists(maskPath):
+        os.mkdir(maskPath)
+    if not os.path.exists("work_dir/output"):
+        os.mkdir("work_dir/output")
 
     # Camera calibration
     process_image_sequence(
@@ -132,19 +141,13 @@ if __name__ == "__main__":
     camParamsPerType = linear_interpolation(
         camParamsPerType, isErroneousParams, ErroneousParamsPos
     )
-    plt.plot(camParamsPerType["pan_degrees"])
-    plt.show()
     camParamsPerType = outliers_remover(
         camParamsPerType,
         isErroneousParams,
         ErroneousParamsPos,
     )
-    plt.plot(camParamsPerType["pan_degrees"])
-    plt.show()
     basicCamParamsPerType = deepcopy(camParamsPerType)
     camParamsPerType = camParamsSmoothing(camParamsPerType)
-    plt.plot(camParamsPerType["pan_degrees"])
-    plt.show()
     camParamsPerImage = camParamsPerType_to_camParamsPerImage(camParamsPerType)
 
     masksFileNames = os.listdir(maskPath)
@@ -173,7 +176,7 @@ if __name__ == "__main__":
         camParamsPerImage,
         imgWidth,
         imgHeight,
-        nWorkers,  #! Consumes a lot of memory so less workers might be better, add a second arg
+        nWorkers,
         nFrames,
         fps,
         speed,

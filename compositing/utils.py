@@ -1,4 +1,3 @@
-import scipy as sp
 from camera_calibration.No_Bells_Just_Whistles.sn_calibration.src.camera import (
     Camera,
 )

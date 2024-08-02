@@ -11,7 +11,6 @@ import torchvision.transforms.functional as f
 
 from tqdm import tqdm
 from PIL import Image
-from matplotlib.patches import Polygon
 
 from .model.cls_hrnet import get_cls_net
 from .model.cls_hrnet_l import get_cls_net as get_cls_net_l
