@@ -1,4 +1,4 @@
-# Soccer game perimeter banners superimposition
+# Banner replacement
 
 <div align="center">
 
@@ -64,7 +64,7 @@ pip install -r requirements.txt
 
 Two independent conda environment are needed: One for MMsegmentation and another for the rest of the project. 
 
-### MMsegmentation
+### mmseg
 
 The conda environment for MMsegmentation can be created by running the following command:
 ```shell
@@ -104,15 +104,15 @@ pip install regex==2024.7.24 ftfy==6.2.0 mmsegmentation==1.2.2
 
 The conda environment for the rest of the project can be created by running the following commands:
 ```shell
-conda env create -n banner-replacement python=3.11 -y
+conda create -n banner-replacement python=3.11 -y
 conda activate banner-replacement
 ```
 
-Then, install the latest pytorch version from the [official website](https://pytorch.org/get-started/locally/) or a [previous version](https://pytorch.org/get-started/previous-versions/). No-Bells-Just-Whistles, the camera calibration model, has shown improved accuracy with more recent versions. The recommended and most recent pytorch version tested is 2.4.0.
+Then, install pytorch from the [official website](https://pytorch.org/get-started/locally/) or a [previous version](https://pytorch.org/get-started/previous-versions/). No-Bells-Just-Whistles, the camera calibration model, has shown improved accuracy with more recent versions. The recommended and most recent pytorch version tested is 2.4.0.
 
 Finally, install the rest of the requirements:
 ```shell
-pip install scikit-learn==1.5.1 opencv-python==4.10.0.84
+pip install scikit-learn==1.5.1 opencv-python==4.10.0.84 tqdm==4.66.4 matplotlib==3.8.4 PyYAML==6.0.1 pandas==2.2.2
 ```
 
 
@@ -122,8 +122,17 @@ pip install scikit-learn==1.5.1 opencv-python==4.10.0.84
 
 On video:
 ``` shell
-python inference.py --weights_kp "SV_kp" --weights_line "SV_lines" --input_path "examples/iniesta_sample.mp4" --input_type "video" --display
+python inference.py path/to/video.mp4 path/to/logo.png
 ```
+
+On image sequence from SN-GameState, or any directory with N images named "%06d.jpg" and beginning with "000001.jpg":
+``` shell
+python inference.py path/to/SoccerNetGS/test/SNGS-142/img1/ path/to/logo.png --sequence
+```
+
+Optional arguments:
+- ```--n_workers```: Number of workers to speed up some steps of the pipeline. Default is 1. Attention it may use a lot of memory.
+- ```--tta```: Whether to use test-time augmentation. Default is False. A GPU with at least 28GB of memory is required.
 
 <hr>
 
