@@ -66,6 +66,18 @@ if __name__ == "__main__":
     speed = args.speed
     isSequence = args.sequence
 
+    imgPath = "work_dir/images/"
+    maskPath = "work_dir/masks/"
+
+    if not os.path.exists("work_dir"):
+        os.mkdir("work_dir")
+    if not os.path.exists(imgPath):
+        os.mkdir(imgPath)
+    if not os.path.exists(maskPath):
+        os.mkdir(maskPath)
+    if not os.path.exists("work_dir/output"):
+        os.mkdir("work_dir/output")
+
     if isSequence:
         imgFileNames = os.listdir(videoPath)
         imgFileNames.sort()
@@ -73,8 +85,8 @@ if __name__ == "__main__":
         # All files are names "str(i+1).zfill(6).jpg" for i in range(nFrames), convert and rename them to "str(i).zfill(6).png"
         for i, imgFileName in enumerate(tqdm(imgFileNames, desc="Renaming images")):
             img = cv2.imread(os.path.join(videoPath, imgFileName))
-            cv2.imwrite("work_dir/images/" + str(i).zfill(6) + ".png", img)
-        frameSample = cv2.imread("work_dir/images/000000.png")
+            cv2.imwrite(imgPath + str(i).zfill(6) + ".png", img)
+        frameSample = cv2.imread(imgPath + "000000.png")
         imgWidth = frameSample.shape[1]
         imgHeight = frameSample.shape[0]
         fps = 25
@@ -94,7 +106,7 @@ if __name__ == "__main__":
             ret, frame = cap.read()
             if not ret:
                 raise ValueError("Error reading video file")
-            cv2.imwrite("work_dir/images/" + str(i).zfill(6) + ".png", frame)
+            cv2.imwrite(imgPath + str(i).zfill(6) + ".png", frame)
 
     with open("work_dir/ann_file.txt", "w") as f:
         for i in range(nFrames):
@@ -107,18 +119,6 @@ if __name__ == "__main__":
         os.system("conda run -n mmseg python semantic_segmentation/inference.py --tta")
     else:
         os.system("conda run -n mmseg python semantic_segmentation/inference.py")
-
-    imgPath = "work_dir/images/"
-    maskPath = "work_dir/masks/"
-
-    if not os.path.exists("work_dir"):
-        os.mkdir("work_dir")
-    if not os.path.exists(imgPath):
-        os.mkdir(imgPath)
-    if not os.path.exists(maskPath):
-        os.mkdir(maskPath)
-    if not os.path.exists("work_dir/output"):
-        os.mkdir("work_dir/output")
 
     # Camera calibration
     process_image_sequence(
@@ -162,6 +162,9 @@ if __name__ == "__main__":
 
     # get video name from videoPath
     if isSequence:
+        # If not already there, add a "/" to the video path
+        if videoPath[-1] != "/":
+            videoPath += "/"
         videoName = videoPath.split("/")[-3]
     else:
         videoName = videoPath.split("/")[-1].split(".")[0]
