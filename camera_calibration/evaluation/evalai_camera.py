@@ -30,8 +30,6 @@ np.seterr(divide="ignore", invalid="ignore")
 
 
 def evaluate_gt_pred_json(gt_pred_json_tuple):
-    width = 1920
-    height = 1080
     gt, prediction = gt_pred_json_tuple
 
     line_annotations = scale_points(gt, width, height)
@@ -40,10 +38,12 @@ def evaluate_gt_pred_json(gt_pred_json_tuple):
 
     img_prediction = get_polylines(prediction, width, height, sampling_factor=0.9)
 
-    confusion1, _, _ = evaluate_camera_prediction(img_prediction, img_groundtruth, 5)
+    confusion1, _, _ = evaluate_camera_prediction(
+        img_prediction, img_groundtruth, threshold
+    )
 
     confusion2, _, _ = evaluate_camera_prediction(
-        img_prediction, mirror_labels(img_groundtruth), 5
+        img_prediction, mirror_labels(img_groundtruth), threshold
     )
 
     accuracy1, accuracy2 = 0.0, 0.0
@@ -91,8 +91,9 @@ if __name__ == "__main__":
         required=True,
     )
     parser.add_argument("--split", type=str, required=True, help="Dataset split")
-    parser.add_argument("--width", type=int, default=960)
-    parser.add_argument("--height", type=int, default=540)
+    parser.add_argument("--width", type=int, required=True)
+    parser.add_argument("--height", type=int, required=True)
+    parser.add_argument("--threshold", type=int, required=True)
     default_workers = cpu_count() - 2 if cpu_count() > 2 else 1
     parser.add_argument("--workers", type=int, default=default_workers)
     parser.add_argument("-t", "--test", action="store_true")
@@ -101,10 +102,14 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     print("Number of workers:", args.workers)
+    width = args.width
+    height = args.height
+    threshold = args.threshold
 
     directories = os.listdir(os.path.join(args.source, args.split))
     if args.test:
         directories.sort()
+        directories = directories[:2]
 
     zip_dirs = [
         os.path.join(args.source, args.split, directory) for directory in directories

@@ -76,7 +76,6 @@ def parse_args():
     # will pass the `--local-rank` parameter to `tools/train.py` instead
     # of `--local_rank`.
     parser.add_argument("--local_rank", "--local-rank", type=int, default=0)
-    parser.add_argument("--video", action="store_true", help="Inference on video")
     parser.add_argument("--batch_size", type=int, default=None, help="Batch size")
     parser.add_argument(
         "--challenge", action="store_true", help="Challenge split evaluation"
@@ -117,12 +116,8 @@ def main():
     cfg = Config.fromfile(args.config)
     print("cfg.work_dir", cfg.work_dir)
     cfg.launcher = args.launcher
-    cfg.default_hooks.logger.interval = 1
-    if args.video:
-        cfg.test_dataloader.dataset.ann_file = "test.txt"
-        cfg.test_dataloader.dataset.type = "Video3"
-        cfg.test_dataloader.dataset.data_root = "video"
-        cfg.test_dataloader.dataset.data_prefix.img_path = "Images/360"
+    cfg.default_hooks.logger.interval = 15
+
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
 

@@ -5,7 +5,7 @@ from scipy.signal import medfilt, savgol_filter
 import cv2
 from multiprocessing import Pool
 
-from camera_calibration.No_Bells_Just_Whistles.sn_calibration.src.camera import (
+from No_Bells_Just_Whistles.sn_calibration.src.camera import (
     Camera,
     pan_tilt_roll_to_orientation,
     rotation_matrix_to_pan_tilt_roll,

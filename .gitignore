@@ -22,3 +22,4 @@ video/
 *.sbatch
 *.log
 !semantic_segmentation/work_dirs/**/*.log
+camera_calibration/evaluation/data

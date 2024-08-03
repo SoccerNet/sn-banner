@@ -3,7 +3,7 @@ from typing import Tuple
 import cv2 as cv
 import numpy as np
 
-from .soccerpitch import SoccerPitch
+from soccerpitch import SoccerPitch
 
 
 def pan_tilt_roll_to_orientation(pan, tilt, roll):

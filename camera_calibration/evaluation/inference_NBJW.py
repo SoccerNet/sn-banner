@@ -36,9 +36,9 @@ from No_Bells_Just_Whistles.utils.utils_calib3 import (
     FramebyFrameCalib as FramebyFrameCalib3,
 )
 
-# warnings.filterwarnings("ignore", category=RuntimeWarning)
-# warnings.filterwarnings("ignore", category=np.RankWarning)
-# warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+warnings.filterwarnings("ignore", category=np.RankWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 
 def per_dir_inference(
@@ -62,14 +62,14 @@ def per_dir_inference(
     with zipfile.ZipFile(zip_name_pred, "w") as zip_file:
         directory_name = source_dir.split("/")[-2]
         tqdm_desc = f"Processing Images from {directory_name}"
-        for file in tqdm(files, desc=tqdm_desc, leave=False, disable=False):
+        for file in tqdm(files, desc=tqdm_desc, leave=False, disable=True):
             image = Image.open(file)
             file_name = file.split("/")[-1].split(".")[0]
 
             with torch.no_grad():
                 image = f.to_tensor(image).float().to(device).unsqueeze(0)
                 image = image if image.size()[-1] == 960 else transform(image)
-                b, c, h, w = image.size()
+                _, _, h, w = image.size()
                 heatmaps = model(image)
                 heatmaps_l = model_l(image)
 
@@ -93,12 +93,6 @@ def per_dir_inference(
                     cam_params = final_params_dict["cam_params"]
                     json_data = json.dumps(cam_params)
                     zip_file.writestr(f"camera_{file_name}.json", json_data)
-                else:
-                    print(
-                        f"Reprojection error of {final_params_dict['rep_err']} > {args.max_reproj_err} for {file_name}"
-                    )
-            else:
-                print(f"No valid camera parameters found for {file_name}")
 
     labelsGamestateJson = json.load(
         open(os.path.join(source_dir, "../Labels-GameState.json"))
@@ -148,6 +142,9 @@ def parse_args():
     )
     parser.add_argument("--line_th", type=float, default=0.388, help="Line threshold")
     parser.add_argument("--max_reproj_err", type=float, default="25")
+    parser.add_argument("--width", type=int, required=True)
+    parser.add_argument("--height", type=int, required=True)
+    parser.add_argument("--array_index", type=int, default=-1)
     parser.add_argument(
         "-v", "--version", type=int, required=True, help="Version of NBJW"
     )
@@ -172,10 +169,18 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
 
+    width = args.width
+    height = args.height
+
     directories = os.listdir(os.path.join(args.root_dir, args.split))
     # remove "sequences_info.json" from the list
     directories = [x for x in directories if x != "sequences_info.json"]
     directories.sort()
+    # split in 4
+
+    if args.array_index != -1:
+        directories = np.array_split(directories, 4)[args.array_index]
+
     if args.test:
         directories = directories[:2]
 
@@ -208,11 +213,11 @@ if __name__ == "__main__":
 
     transform = T.Resize((540, 960))
     if args.version == 1:
-        cam = FramebyFrameCalib(1920, 1080, denormalize=True)
+        cam = FramebyFrameCalib(width, height, denormalize=True)
     elif args.version == 2:
-        cam = FramebyFrameCalib2(1920, 1080, denormalize=True)
+        cam = FramebyFrameCalib2(width, height, denormalize=True)
     elif args.version == 3:
-        cam = FramebyFrameCalib3(1920, 1080, denormalize=True)
+        cam = FramebyFrameCalib3(width, height, denormalize=True)
     else:
         raise ValueError("Invalid version number, must be 1, 2 or 3")
 
