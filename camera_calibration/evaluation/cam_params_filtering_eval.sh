@@ -10,13 +10,17 @@ pwd
 NBJW_VERSION=3
 WIDTH=1920
 HEIGHT=1080
-THRESHOLD=20 #5, 10 or 20 pixels are the most common thresholds
+THRESHOLD=5 #5, 10 or 20 pixels are the most common thresholds
 # Number of filtering layers to apply
-N_LAYERS=3  # 1, 2 or 3
+N_LAYERS=3 # 1, 2 or 3
 # Split to evaluate
 SPLIT="test"
+# Number of concurrent processes to speed up the evaluation
+N_WORKERS=2
+# Set to True to inference and evaluate the 2 first videos only
+TEST="True"
 # Directory to save the inferences (ground truth and predictions)
-SOURCE_DIR="inferences_${NBJW_VERSION}_${HEIGHT}_${WIDTH}/"
+SOURCE_DIR="inferences_tmp_${NBJW_VERSION}_${HEIGHT}_${WIDTH}/"
 # Name of the ground truth zip file (pitch annotations from sn-gamestate dataset)
 GT_ZIP_NAME="gt.zip"
 # Name of the predictions zip file (camera parameters predicted by the NBJW model)
@@ -25,10 +29,6 @@ ZIP_NAME_IN="pred.zip"
 ZIP_NAME_OUT="pred_filtered_${N_LAYERS}_layers.zip"
 # Length of the videos
 VIDEO_LENGTH=750
-# Number of concurrent processes to speed up the evaluation
-N_WORKERS=220
-# Set to True to inference and evaluate the 2 first videos only
-TEST="False"
 
 # print all parameters
 echo "NBJW_VERSION: $NBJW_VERSION"

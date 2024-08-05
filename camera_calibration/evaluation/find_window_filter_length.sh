@@ -1,6 +1,5 @@
 #!/bin/bash
 
-conda activate banner-replacement
 echo "Starting job at $(date)"
 pwd
 
@@ -9,10 +8,14 @@ NBJW_VERSION=3
 WIDTH=1920
 HEIGHT=1080
 THRESHOLD=5
-# Directory to save the inferences (ground truth and predictions)
-SOURCE_DIR="inferences_${NBJW_VERSION}_${HEIGHT}_${WIDTH}/"
+# Number of concurrent processes to speed up the evaluation
+N_WORKERS=2
+# Set to True to inference and evaluate the 2 first videos only
+TEST="False"
 # Split to evaluate
-SPLIT="valid"
+SPLIT="test"
+# Directory to save the inferences (ground truth and predictions)
+SOURCE_DIR="inferences_tmp_${NBJW_VERSION}_${HEIGHT}_${WIDTH}/"
 # Name of the ground truth zip file (pitch annotations from sn-gamestate dataset)
 GT_ZIP_NAME="gt.zip"
 # Name of the predictions zip file (camera parameters predicted by the NBJW model)
@@ -23,10 +26,6 @@ ZIP_NAME_OUT="pred_wl.zip"
 N_LAYERS=3
 # Length of the videos
 VIDEO_LENGTH=750
-# Number of concurrent processes to speed up the evaluation
-N_WORKERS=220
-# Set to True to inference and evaluate the 2 first videos only
-TEST="False"
 
 # print all parameters
 echo "NBJW_VERSION: $NBJW_VERSION"
@@ -39,7 +38,7 @@ echo "TEST: $TEST"
 
 # For window filter length in {3, 5, ..., 73, 75}
 for OUTLIER_FILTER_WINDOW_LENGTH in {11..15..2}; do
-    for SMOOTHING_FILTER_WINDOW_LENGTH in {19..27..2}; do
+    for SMOOTHING_FILTER_WINDOW_LENGTH in {21..25..2}; do
         echo "Camera parameters filtering"
         echo "Window filter length: $OUTLIER_FILTER_WINDOW_LENGTH"
         echo "Smoothing filter length: $SMOOTHING_FILTER_WINDOW_LENGTH"

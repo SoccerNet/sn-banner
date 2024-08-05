@@ -1,14 +1,12 @@
 #!/bin/bash
 
-conda activate banner-replacement
-
 echo "Starting job at $(date)"
 pwd
 
 # Set parameters
 
 # Directory to the sn-gamestate dataset
-ROOT_DIR="data/sn-gamestate/"
+ROOT_DIR="data/SoccerNetGS/"
 # Split to evaluate
 SPLIT="test"
 # Version of the NBJW model
@@ -16,7 +14,7 @@ NBJW_VERSION=3
 WIDTH=1920
 HEIGHT=1080
 # Set to True to inference and evaluate the 2 first videos only
-TEST="False"
+TEST="True"
 # Path to the configuration file for the keypoint detection model
 CFG="../No_Bells_Just_Whistles/config/hrnetv2_w48.yaml"
 # Path to the configuration file for the line detection model

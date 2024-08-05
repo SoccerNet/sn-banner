@@ -1,29 +1,25 @@
 #!/bin/bash
 
-conda activate banner-replacement
-
 echo "Starting job at $(date)"
 pwd
 
 # Version of the NBJW model
-NBJW_VERSION=1
-WIDTH=960
-HEIGHT=540
+NBJW_VERSION=3
+WIDTH=1920
+HEIGHT=1080
 THRESHOLD=5
-# Directory to save the inferences (ground truth and predictions)
-SOURCE_DIR="inferences_${NBJW_VERSION}_${HEIGHT}_${WIDTH}/"
+# Number of concurrent processes to speed up the evaluation
+N_WORKERS=2
+# Set to True to inference and evaluate the 2 first videos only
+TEST="True"
 # Split to evaluate
 SPLIT="test"
+# Directory to save the inferences (ground truth and predictions)
+SOURCE_DIR="inferences_${NBJW_VERSION}_${HEIGHT}_${WIDTH}/"
 # Name of the ground truth zip file (pitch annotations from sn-gamestate dataset)
 GT_ZIP_NAME="gt.zip"
 # Name of the output predictions zip file (camera parameters after filtering)
 PRED_ZIP_NAME="pred.zip"
-# Length of the videos
-VIDEO_LENGTH=750
-# Number of concurrent processes to speed up the evaluation
-N_WORKERS=220
-# Set to True to inference and evaluate the 2 first videos only
-TEST="False"
 
 # print all parameters
 echo "NBJW_VERSION: $NBJW_VERSION"
