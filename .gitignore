@@ -24,4 +24,4 @@ video/
 *.log
 !semantic_segmentation/work_dirs/**/*.log
 camera_calibration/evaluation/data
-work_dir/
+work_dir*

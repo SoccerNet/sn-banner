@@ -319,6 +319,7 @@ def composite_logo_into_video(
     bannersObjPts_,
     bannerHeight_,
     videoName: str,
+    outputDir_: str,
 ):
     global camParamsPerImage, maskPath, imgWidth, imgHeight, nFrames
     camParamsPerImage = cam_params_per_image
@@ -332,6 +333,8 @@ def composite_logo_into_video(
     bannersObjPts = bannersObjPts_
     logoWidthInMeters = bannerHeight_ * (logo.shape[1] / logo.shape[0])
     speed = speed_ * logo.shape[1] / fps / logoWidthInMeters
+    global outputDir
+    outputDir = outputDir_
 
     hsv_logo = cv2.cvtColor(logo, cv2.COLOR_BGR2HSV)
     h, s, v = cv2.split(hsv_logo)
@@ -356,10 +359,10 @@ def composite_logo_into_video(
             )
         )
     out = cv2.VideoWriter(
-        f"work_dir/{videoName}", cv2.VideoWriter_fourcc(*"mp4v"), fps, (imgWidth, imgHeight)  # type: ignore
+        videoName, cv2.VideoWriter_fourcc(*"mp4v"), fps, (imgWidth, imgHeight)  # type: ignore
     )
     for i in tqdm(range(nFrames), desc="Saving video"):
-        img = cv2.imread("work_dir/output/" + str(i).zfill(6) + ".png")
+        img = cv2.imread(outputDir + str(i).zfill(6) + ".png")
         out.write(img)
     out.release()
 
@@ -487,4 +490,4 @@ def compositing_worker(i):
     # cam.draw_pitch(img3)
     # cam.draw_corners(img3)
 
-    cv2.imwrite("work_dir/output/" + str(i).zfill(6) + ".png", img3)
+    cv2.imwrite(outputDir + str(i).zfill(6) + ".png", img3)

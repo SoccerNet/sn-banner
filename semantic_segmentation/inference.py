@@ -52,20 +52,20 @@ def mask2former_inference(use_tta=False):
         cfg.tta_model.module = cfg.model
         cfg.model = cfg.tta_model
 
-    out = relativePathFromThisFile("../work_dir/masks")
+    out = relativePathFromThisFile("../" + args.work_dir + "/masks")
     cfg.test_evaluator["output_dir"] = out
 
-    cfg.data_root = relativePathFromThisFile("../work_dir")
+    cfg.data_root = relativePathFromThisFile("../" + args.work_dir)
     cfg.img_dir = "images"
     cfg.test_dataloader.dataset.data_prefix = dict(
         img_path=cfg.img_dir, seg_map_path=cfg.img_dir
     )
     cfg.test_dataloader.dataset.ann_file = relativePathFromThisFile(
-        "../work_dir/ann_file.txt"
+        "../" + args.work_dir + "/ann_file.txt"
     )
     cfg.test_dataloader.dataset.data_root = cfg.data_root
     cfg.test_evaluator.format_only = True
-    cfg.work_dir = relativePathFromThisFile("../work_dir/logs/")
+    cfg.work_dir = relativePathFromThisFile("../" + args.work_dir + "/logs/")
 
     # build the runner from config
     runner = Runner.from_cfg(cfg)
@@ -80,6 +80,11 @@ if __name__ == "__main__":
     # add argument parser for optional TTA
     parser = argparse.ArgumentParser()
 
+    parser.add_argument(
+        "work_dir",
+        type=str,
+        help="Path to the work directory",
+    )
     parser.add_argument(
         "--tta",
         action="store_true",
