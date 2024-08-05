@@ -5,7 +5,7 @@ from scipy.signal import medfilt, savgol_filter
 import cv2
 from multiprocessing import Pool
 
-from No_Bells_Just_Whistles.sn_calibration.src.camera import (
+from .No_Bells_Just_Whistles.sn_calibration.src.camera import (
     Camera,
     pan_tilt_roll_to_orientation,
     rotation_matrix_to_pan_tilt_roll,
@@ -98,7 +98,7 @@ def linear_interpolation(camParamsPerType, isErroneousParams, ErroneousParamsPos
 
 
 def outliers_remover(
-    camParamsPerType, isErroneousParams, ErroneousParamsPos, windowLength=11
+    camParamsPerType, isErroneousParams, ErroneousParamsPos, windowLength=13
 ):
     """Removes outliers from camera parameters. Outliers are detected by
     comparing the absolute difference between the camera parameters and their
@@ -132,7 +132,7 @@ def outliers_remover(
     return camParamsPerType
 
 
-def camParamsSmoothing(camParamsPerType, windowLength=17):
+def camParamsSmoothing(camParamsPerType, windowLength=23):
     for key in camParamsPerType.keys():
         camParamsPerType[key] = savgol_filter(
             camParamsPerType[key], windowLength, 2, axis=0

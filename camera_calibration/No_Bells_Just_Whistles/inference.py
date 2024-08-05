@@ -15,8 +15,8 @@ from PIL import Image
 from .model.cls_hrnet import get_cls_net
 from .model.cls_hrnet_l import get_cls_net as get_cls_net_l
 
-# use utils.utils_calib2, a slight upgrade of utils.utils_calib
-from .utils.utils_calib2 import FramebyFrameCalib, pan_tilt_roll_to_orientation
+# use utils.utils_calib3, a slight upgrade of utils.utils_calib
+from .utils.utils_calib3 import FramebyFrameCalib, pan_tilt_roll_to_orientation
 from .utils.utils_heatmap import (
     get_keypoints_from_heatmap_batch_maxpool,
     get_keypoints_from_heatmap_batch_maxpool_l,

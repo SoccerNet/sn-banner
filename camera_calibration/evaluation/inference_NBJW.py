@@ -18,27 +18,32 @@ import torchvision.transforms.functional as f
 from tqdm import tqdm
 from PIL import Image
 
-sys.path.insert(1, os.path.join(sys.path[0], ".."))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from No_Bells_Just_Whistles.model.cls_hrnet import get_cls_net
-from No_Bells_Just_Whistles.model.cls_hrnet_l import get_cls_net as get_cls_net_l
-from No_Bells_Just_Whistles.utils.utils_heatmap import (
+from camera_calibration.No_Bells_Just_Whistles.model.cls_hrnet_l import (
+    get_cls_net as get_cls_net_l,
+)
+from camera_calibration.No_Bells_Just_Whistles.model.cls_hrnet import get_cls_net
+from camera_calibration.No_Bells_Just_Whistles.utils.utils_heatmap import (
     get_keypoints_from_heatmap_batch_maxpool,
     get_keypoints_from_heatmap_batch_maxpool_l,
     complete_keypoints,
     coords_to_dict,
 )
-from No_Bells_Just_Whistles.utils.utils_calib import FramebyFrameCalib
-from No_Bells_Just_Whistles.utils.utils_calib2 import (
+from camera_calibration.No_Bells_Just_Whistles.utils.utils_calib import (
+    FramebyFrameCalib,
+)
+from camera_calibration.No_Bells_Just_Whistles.utils.utils_calib2 import (
     FramebyFrameCalib as FramebyFrameCalib2,
 )
-from No_Bells_Just_Whistles.utils.utils_calib3 import (
+from camera_calibration.No_Bells_Just_Whistles.utils.utils_calib3 import (
     FramebyFrameCalib as FramebyFrameCalib3,
 )
 
+
 warnings.filterwarnings("ignore", category=RuntimeWarning)
-warnings.filterwarnings("ignore", category=np.RankWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 def per_dir_inference(
@@ -54,6 +59,8 @@ def per_dir_inference(
 ):
     files = glob.glob(os.path.join(source_dir, "*.jpg"))
     files.sort()  #! NOT Optional
+    if test:
+        files = files[:20]
 
     zip_name_gt = os.path.join(inference_dir, gt_zip_name)
 
@@ -62,7 +69,7 @@ def per_dir_inference(
     with zipfile.ZipFile(zip_name_pred, "w") as zip_file:
         directory_name = source_dir.split("/")[-2]
         tqdm_desc = f"Processing Images from {directory_name}"
-        for file in tqdm(files, desc=tqdm_desc, leave=False, disable=True):
+        for file in tqdm(files, desc=tqdm_desc, leave=False, disable=False):
             image = Image.open(file)
             file_name = file.split("/")[-1].split(".")[0]
 
@@ -171,6 +178,7 @@ if __name__ == "__main__":
 
     width = args.width
     height = args.height
+    test = args.test
 
     directories = os.listdir(os.path.join(args.root_dir, args.split))
     # remove "sequences_info.json" from the list
@@ -181,7 +189,7 @@ if __name__ == "__main__":
     if args.array_index != -1:
         directories = np.array_split(directories, 4)[args.array_index]
 
-    if args.test:
+    if test:
         directories = directories[:2]
 
     source_dirs = [

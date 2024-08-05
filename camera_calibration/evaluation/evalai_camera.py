@@ -12,17 +12,14 @@ import sys
 import os
 from multiprocessing import Pool
 
-sn_calibration_src_path = os.path.abspath(
-    "../No_Bells_Just_Whistles/sn_calibration/src/"
-)
-sys.path.append(sn_calibration_src_path)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from evaluate_camera import (  # type: ignore
+from camera_calibration.No_Bells_Just_Whistles.sn_calibration.src.evaluate_camera import (
     get_polylines,
     scale_points,
     evaluate_camera_prediction,
 )
-from evaluate_extremities import (  # type: ignore
+from camera_calibration.No_Bells_Just_Whistles.sn_calibration.src.evaluate_extremities import (
     mirror_labels,
 )
 
@@ -139,9 +136,6 @@ if __name__ == "__main__":
             gt = gt_archive.read(gt_json)
             gt = json.loads(gt.decode("utf-8"))
             gt_pred_json_tuples.append((gt, prediction))
-
-    if args.test:
-        gt_pred_json_tuples = gt_pred_json_tuples[:24]
 
     accuracies = []
     print("total_frames", total_frames)

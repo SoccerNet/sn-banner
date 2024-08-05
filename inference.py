@@ -149,6 +149,7 @@ if __name__ == "__main__":
     camParamsPerType = camParamsSmoothing(camParamsPerType)
     camParamsPerImage = camParamsPerType_to_camParamsPerImage(camParamsPerType)
 
+    # Filter the semantic segmentation masks by keeping the biggest blob
     masksFileNames = os.listdir(maskPath)
     for maskFileName in tqdm(
         masksFileNames, desc="Filtering semantic segmentation masks"

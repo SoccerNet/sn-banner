@@ -13,15 +13,9 @@ import numpy as np
 from tqdm import tqdm
 from multiprocessing import Pool
 
-filters_src_path = os.path.abspath("../")
-sys.path.append(filters_src_path)
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-sn_calibration_src_path = os.path.abspath(
-    "../No_Bells_Just_Whistles/sn_calibration/src/"
-)
-sys.path.append(sn_calibration_src_path)
-
-from filters import (
+from camera_calibration.filters import (
     linear_interpolation,
     to_valid_cam_params,
     camParamsPerImage_to_camParamsPerType,

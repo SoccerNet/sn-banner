@@ -2,21 +2,16 @@ import zipfile
 import argparse
 import numpy as np
 import json
-import sys
 
 from tqdm import tqdm
 
-sys.path.append("sn_calibration")
-sys.path.append("sn_calibration/src")
-
-from evaluate_camera import get_polylines, scale_points, evaluate_camera_prediction
-from evaluate_extremities import mirror_labels
-
+from .evaluate_camera import get_polylines, scale_points, evaluate_camera_prediction
+from .evaluate_extremities import mirror_labels
 
 
 def evaluate(gt_zip, prediction_zip, width=960, height=540):
-    gt_archive = zipfile.ZipFile(gt_zip, 'r')
-    prediction_archive = zipfile.ZipFile(prediction_zip, 'r')
+    gt_archive = zipfile.ZipFile(gt_zip, "r")
+    prediction_archive = zipfile.ZipFile(prediction_zip, "r")
     gt_jsons = gt_archive.namelist()
 
     accuracies = []
@@ -28,8 +23,8 @@ def evaluate(gt_zip, prediction_zip, width=960, height=540):
     missed = 0
     for gt_json in tqdm(gt_jsons):
 
-        #split, name = gt_json.split("/")
-        #pred_name = f"{split}/camera_{name}"
+        # split, name = gt_json.split("/")
+        # pred_name = f"{split}/camera_{name}"
         pred_name = f"camera_{gt_json}"
 
         total_frames += 1
@@ -41,24 +36,23 @@ def evaluate(gt_zip, prediction_zip, width=960, height=540):
         prediction = prediction_archive.read(pred_name)
         prediction = json.loads(prediction.decode("utf-8"))
         gt = gt_archive.read(gt_json)
-        gt = json.loads(gt.decode('utf-8'))
+        gt = json.loads(gt.decode("utf-8"))
 
         line_annotations = scale_points(gt, width, height)
 
         img_groundtruth = line_annotations
 
-        img_prediction = get_polylines(prediction, width, height,
-                                       sampling_factor=0.9)
+        img_prediction = get_polylines(prediction, width, height, sampling_factor=0.9)
 
-        confusion1, per_class_conf1, reproj_errors1 = evaluate_camera_prediction(img_prediction,
-                                                                                 img_groundtruth,
-                                                                                 5)
+        confusion1, per_class_conf1, reproj_errors1 = evaluate_camera_prediction(
+            img_prediction, img_groundtruth, 5
+        )
 
-        confusion2, per_class_conf2, reproj_errors2 = evaluate_camera_prediction(img_prediction,
-                                                                                 mirror_labels(img_groundtruth),
-                                                                                 5)
+        confusion2, per_class_conf2, reproj_errors2 = evaluate_camera_prediction(
+            img_prediction, mirror_labels(img_groundtruth), 5
+        )
 
-        accuracy1, accuracy2 = 0., 0.
+        accuracy1, accuracy2 = 0.0, 0.0
         if confusion1.sum() > 0:
             accuracy1 = confusion1[0, 0] / confusion1.sum()
 
@@ -96,7 +90,6 @@ def evaluate(gt_zip, prediction_zip, width=960, height=540):
             else:
                 per_class_confusion_dict[line_class] = confusion_mat
 
-
     results = {}
     results["completeness"] = (total_frames - missed) / total_frames
     results["meanRecall"] = np.mean(recalls)
@@ -104,11 +97,12 @@ def evaluate(gt_zip, prediction_zip, width=960, height=540):
     results["meanAccuracies"] = np.mean(accuracies)
     results["finalScore"] = results["completeness"] * results["meanAccuracies"]
 
-
     for line_class, confusion_mat in per_class_confusion_dict.items():
         class_accuracy = confusion_mat[0, 0] / confusion_mat.sum()
         class_recall = confusion_mat[0, 0] / (confusion_mat[0, 0] + confusion_mat[1, 0])
-        class_precision = confusion_mat[0, 0] / (confusion_mat[0, 0] + confusion_mat[0, 1])
+        class_precision = confusion_mat[0, 0] / (
+            confusion_mat[0, 0] + confusion_mat[0, 1]
+        )
         results[f"{line_class}Precision"] = class_precision
         results[f"{line_class}Recall"] = class_recall
         results[f"{line_class}Accuracy"] = class_accuracy
@@ -116,15 +110,25 @@ def evaluate(gt_zip, prediction_zip, width=960, height=540):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Evaluation camera calibration task')
+    parser = argparse.ArgumentParser(description="Evaluation camera calibration task")
 
-    parser.add_argument('-s', '--soccernet', default="/home/fmg/data/SN23/calibration-2023/test_secret.zip", type=str,
-                        help='Path to the zip groundtruth folder')
-    parser.add_argument('-p', '--prediction', default="/home/fmg/results/SN23-tests/test.zip",
-                        required=False, type=str,
-                        help="Path to the  zip prediction folder")
-    parser.add_argument('--width', type=int, default=960)
-    parser.add_argument('--height', type=int, default=540)
+    parser.add_argument(
+        "-s",
+        "--soccernet",
+        default="/home/fmg/data/SN23/calibration-2023/test_secret.zip",
+        type=str,
+        help="Path to the zip groundtruth folder",
+    )
+    parser.add_argument(
+        "-p",
+        "--prediction",
+        default="/home/fmg/results/SN23-tests/test.zip",
+        required=False,
+        type=str,
+        help="Path to the  zip prediction folder",
+    )
+    parser.add_argument("--width", type=int, default=960)
+    parser.add_argument("--height", type=int, default=540)
 
     args = parser.parse_args()
 
