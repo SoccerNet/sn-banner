@@ -2,6 +2,7 @@
 **/*.png
 **/*.jpg
 **/*.mp4
+**/*.pdf
 What to test
 __pycache__/
 old/
@@ -23,3 +24,4 @@ video/
 *.log
 !semantic_segmentation/work_dirs/**/*.log
 camera_calibration/evaluation/data
+work_dir/
