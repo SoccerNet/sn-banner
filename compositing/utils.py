@@ -330,7 +330,7 @@ def composite_logo_into_video(
     imgPath = img_path
     logo = cv2.imread(logo_path)
     bannersObjPts = bannersObjPts_
-    logoWidthInMeters = bannerHeight_ * logo.shape[1] / imgHeight
+    logoWidthInMeters = bannerHeight_ * (logo.shape[1] / logo.shape[0])
     speed = speed_ * logo.shape[1] / fps / logoWidthInMeters
 
     hsv_logo = cv2.cvtColor(logo, cv2.COLOR_BGR2HSV)
@@ -466,10 +466,23 @@ def compositing_worker(i):
 
     binMask = np.bitwise_and(mask > 0, mask < 3)  # type: ignore
     projectedBanners[np.where((projectedBanners == [0, 0, 0]).all(axis=2))] = logo[0, 0]
+
+    # upsample then downsample "projectedBanners" to remove aliasing
+    projectedBanners = cv2.resize(
+        projectedBanners,
+        (projectedBanners.shape[1] * 2, projectedBanners.shape[0] * 2),
+        interpolation=cv2.INTER_CUBIC,
+    )
+    projectedBanners = cv2.resize(
+        projectedBanners,
+        (projectedBanners.shape[1] // 2, projectedBanners.shape[0] // 2),
+        interpolation=cv2.INTER_AREA,
+    )
+
     img[binMask] = projectedBanners[binMask]
     img2 = deepcopy(img)
     img2[binMask] = cv2.GaussianBlur(img, (3, 3), 0)[binMask]
-    alpha = 0.3
+    alpha = 0.2
     img3 = cv2.addWeighted(img, alpha, img2, 1.0 - alpha, 0)
     # cam.draw_pitch(img3)
     # cam.draw_corners(img3)
