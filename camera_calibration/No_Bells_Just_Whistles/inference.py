@@ -24,6 +24,10 @@ from .utils.utils_heatmap import (
     coords_to_dict,
 )
 
+import warnings
+
+warnings.filterwarnings("ignore", category=FutureWarning)
+
 transform2 = T.Resize((540, 960))
 
 lines_coords = [
