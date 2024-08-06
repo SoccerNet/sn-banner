@@ -36,6 +36,8 @@ def compute_banner_model_params_worker(i):
     flippedLastNonZeroIdx = flippedLastNonZeroIdx[colsWithNonZero]
     lastNonZeroIdx = imgHeight - flippedLastNonZeroIdx - 1
     imgPts = np.array([[x, y] for x, y in zip(colsWithNonZero, lastNonZeroIdx)])
+    if len(imgPts) == 0:
+        return np.nan, np.nan, np.nan, np.nan
     objPts = np.array(
         [cam.unproject_point_on_planeZ0(p, undistort=False) for p in imgPts]
     )
