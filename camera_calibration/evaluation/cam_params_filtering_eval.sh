@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Activate your Anaconda environment
-conda activate banner-replacement
-
 echo "Starting job at $(date)"
 pwd
 
@@ -14,13 +11,13 @@ THRESHOLD=5 #5, 10 or 20 pixels are the most common thresholds
 # Number of filtering layers to apply
 N_LAYERS=3 # 1, 2 or 3
 # Split to evaluate
-SPLIT="test"
+SPLIT="valid"
 # Number of concurrent processes to speed up the evaluation
-N_WORKERS=2
+N_WORKERS=16
 # Set to True to inference and evaluate the 2 first videos only
 TEST="True"
 # Directory to save the inferences (ground truth and predictions)
-SOURCE_DIR="inferences_tmp_${NBJW_VERSION}_${HEIGHT}_${WIDTH}/"
+SOURCE_DIR="inferences_${NBJW_VERSION}_${HEIGHT}_${WIDTH}/"
 # Name of the ground truth zip file (pitch annotations from sn-gamestate dataset)
 GT_ZIP_NAME="gt.zip"
 # Name of the predictions zip file (camera parameters predicted by the NBJW model)
@@ -48,12 +45,12 @@ else
     python cam_params_filtering.py -s $SOURCE_DIR --zip_name_in $ZIP_NAME_IN --zip_name_out $ZIP_NAME_OUT --workers $N_WORKERS -n $N_LAYERS -l $VIDEO_LENGTH --split $SPLIT
 fi
 
-echo "Evaluation"
+# echo "Evaluation"
 
-if [ $TEST = "True" ]; then
-    python evalai_camera.py -t -s $SOURCE_DIR --split $SPLIT --gt_zip_name $GT_ZIP_NAME --pred_zip_name $ZIP_NAME_OUT --workers $N_WORKERS --threshold $THRESHOLD --width $WIDTH --height $HEIGHT
-else
-    python evalai_camera.py -s $SOURCE_DIR --split $SPLIT --gt_zip_name $GT_ZIP_NAME --pred_zip_name $ZIP_NAME_OUT --workers $N_WORKERS --threshold $THRESHOLD --width $WIDTH --height $HEIGHT
-fi
+# if [ $TEST = "True" ]; then
+#     python evalai_camera.py -t -s $SOURCE_DIR --split $SPLIT --gt_zip_name $GT_ZIP_NAME --pred_zip_name $ZIP_NAME_OUT --workers $N_WORKERS --threshold $THRESHOLD --width $WIDTH --height $HEIGHT
+# else
+#     python evalai_camera.py -s $SOURCE_DIR --split $SPLIT --gt_zip_name $GT_ZIP_NAME --pred_zip_name $ZIP_NAME_OUT --workers $N_WORKERS --threshold $THRESHOLD --width $WIDTH --height $HEIGHT
+# fi
 
 echo "Job finished at $(date)"

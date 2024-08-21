@@ -1,0 +1,186 @@
+# Credits:
+#
+#   -   https://github.com/SoccerNet/sn-calibration/blob/main/src/evalai_camera.py
+#   -   https://github.com/mguti97/No-Bells-Just-Whistles/blob/main/sn_calibration/src/evalai_camera.py
+
+import zipfile
+import argparse
+import numpy as np
+import json
+from tqdm import tqdm
+import sys
+import os
+from multiprocessing import Pool
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+
+from camera_calibration.No_Bells_Just_Whistles.sn_calibration.src.evaluate_camera import (
+    get_polylines,
+    scale_points,
+    evaluate_camera_prediction,
+)
+from camera_calibration.No_Bells_Just_Whistles.sn_calibration.src.evaluate_extremities import (
+    mirror_labels,
+)
+
+
+def evaluate_gt_pred_json(gt_pred_json_tuple):
+    gt, prediction = gt_pred_json_tuple
+
+    line_annotations = scale_points(gt, width, height)
+
+    img_groundtruth = line_annotations
+
+    img_prediction = get_polylines(prediction, width, height, sampling_factor=0.9)
+
+    confusion1, _, _ = evaluate_camera_prediction(
+        img_prediction, img_groundtruth, threshold
+    )
+
+    confusion2, _, _ = evaluate_camera_prediction(
+        img_prediction, mirror_labels(img_groundtruth), threshold
+    )
+
+    accuracy1, accuracy2 = 0.0, 0.0
+    if confusion1.sum() > 0:
+        accuracy1 = confusion1[0, 0] / confusion1.sum()
+
+    if confusion2.sum() > 0:
+        accuracy2 = confusion2[0, 0] / confusion2.sum()
+
+    if accuracy1 > accuracy2:
+        accuracy = accuracy1
+    else:
+        accuracy = accuracy2
+
+    return accuracy
+
+
+def evaluate_zip_dir(zip_dir, gt_zip_name, pred_zip_name):
+    gt_zip = os.path.join(zip_dir, gt_zip_name)
+    prediction_zip = os.path.join(zip_dir, pred_zip_name)
+    gt_archive = zipfile.ZipFile(gt_zip, "r")
+    prediction_archive = zipfile.ZipFile(prediction_zip, "r")
+    gt_jsons = gt_archive.namelist()
+    if args.test:
+        gt_jsons.sort()
+        gt_jsons = gt_jsons[: 16 * 5]
+    prediction_jsons = prediction_archive.namelist()
+
+    # Filter out gt jsons that are not in the prediction jsons
+    accuracies = []
+    total_frames = 0
+    missed = 0
+    gt_pred_json_tuples = list()
+    for gt_json in gt_jsons:
+        pred_name = f"camera_{gt_json}"
+
+        total_frames += 1
+
+        if pred_name not in prediction_jsons:
+            missed += 1
+            continue
+
+        prediction = prediction_archive.read(pred_name)
+        prediction = json.loads(prediction.decode("utf-8"))
+        gt = gt_archive.read(gt_json)
+        gt = json.loads(gt.decode("utf-8"))
+        gt_pred_json_tuples.append((gt, prediction))
+
+    dir_name = os.path.basename(zip_dir)
+    tqdm_desc = f"Processing {dir_name}"
+    with Pool(workers) as p:
+        accuracies = list(
+            tqdm(
+                p.imap_unordered(evaluate_gt_pred_json, gt_pred_json_tuples),
+                total=len(gt_pred_json_tuples),
+                leave=False,
+                desc=tqdm_desc,
+                disable=args.silent,
+            )
+        )
+
+    completeness = (total_frames - missed) / total_frames
+    mean_accuracies = np.mean(accuracies)
+    finalScore = completeness * mean_accuracies
+    return finalScore
+
+
+def cpu_count():
+    tmp = os.cpu_count()
+    if tmp is None:
+        return 1
+    return tmp
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Evaluation camera calibration task")
+
+    parser.add_argument(
+        "-s",
+        "--source",
+        type=str,
+        help="Path to the inference folder containing the groundtruth and the predictions per video/sequence",
+        required=True,
+    )
+    parser.add_argument(
+        "--gt_zip_name",
+        type=str,
+        help="Groundtruth zip file name",
+        required=True,
+    )
+    parser.add_argument(
+        "--pred_zip_name",
+        type=str,
+        help="Prediction zip file name",
+        required=True,
+    )
+    parser.add_argument(
+        "--pred_filtered_zip_name",
+        type=str,
+        help="Prediction zip file name",
+        required=True,
+    )
+    parser.add_argument("--split", type=str, required=True, help="Dataset split")
+    parser.add_argument("--width", type=int, default=960)
+    parser.add_argument("--height", type=int, default=540)
+    parser.add_argument("--threshold", type=int, required=True)
+    default_workers = cpu_count() - 2 if cpu_count() > 2 else 1
+    parser.add_argument("--workers", type=int, default=default_workers)
+    parser.add_argument("-t", "--test", action="store_true")
+    parser.add_argument("--silent", action="store_true")
+
+    args = parser.parse_args()
+
+    width = args.width
+    height = args.height
+    threshold = args.threshold
+    workers = args.workers
+    print("Number of workers:", args.workers)
+
+    directories = os.listdir(os.path.join(args.source, args.split))
+    if args.test:
+        directories.sort()
+        directories = directories[:2]
+
+    zip_dirs = [
+        os.path.join(args.source, args.split, directory) for directory in directories
+    ]
+    results = {}
+    for zip_dir in tqdm(zip_dirs, desc="Processing Dirs", disable=args.silent):
+        dir_name = os.path.basename(zip_dir)
+        nonFilteredScore = evaluate_zip_dir(
+            zip_dir, args.gt_zip_name, args.pred_zip_name
+        )
+        filteredScore = evaluate_zip_dir(
+            zip_dir, args.gt_zip_name, args.pred_filtered_zip_name
+        )
+        diff = nonFilteredScore - filteredScore
+        print(f"{dir_name}: {nonFilteredScore}, {filteredScore}, {diff}")
+        results[dir_name] = (nonFilteredScore, filteredScore, diff)
+
+    print("Sorted results:")
+    # sort results by the difference between the two scores and print
+    sorted_results = sorted(results.items(), key=lambda x: x[1][2], reverse=True)
+    for key, value in sorted_results:
+        print(f"{key}: {value[0]}, {value[1]}, {value[2]}")

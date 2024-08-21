@@ -420,7 +420,7 @@ def compositing_worker(i):
         tmpHeight, tmpWidth = logoBanners[side].shape[:2]
         dstPts = np.array(imgPts, dtype=np.float32)
 
-        increase = 50  # ! Maybe try with smg like int(tmpHeight * 0.12)
+        increase = 100  # ! Maybe try with smg like int(tmpHeight * 0.12)
         srcPts = np.array(
             [
                 [0, tmpHeight - 1 + increase],

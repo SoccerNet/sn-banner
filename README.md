@@ -42,7 +42,7 @@ Download the keypoints and line detection model weights for No-Bells-Just-Whistl
 | :-- | :-: | :-- |
 |Keypoints| [**SV_kp**](https://github.com/mguti97/No-Bells-Just-Whistles/releases/download/v1.0.0/SV_kp) | camera_calibration/No-Bells-Just-Whistles/SV_kp |
 |Lines| [**SV_lines**](https://github.com/mguti97/No-Bells-Just-Whistles/releases/download/v1.0.0/SV_lines) | camera_calibration/No-Bells-Just-Whistles/SV_lines |
-|challenge_mask2former| [**best_mIoU_iter_10935.pth**](https://we.tl/t-X9l7u13wd0) | semantic_segmentation/models/challenge_mask2former/best_mIoU_iter_10935.pth |
+|challenge_mask2former| [**best_mIoU_iter_10935.pth**](https://filesender.belnet.be/?s=download&token=46eb6ad3-8db0-436a-abaf-a1ad21212a00) | semantic_segmentation/models/challenge_mask2former/best_mIoU_iter_10935.pth |
 
 
 

@@ -9,7 +9,9 @@ old/
 camera_calibration/No_Bells_Just_Whistles/SV_kp
 camera_calibration/No_Bells_Just_Whistles/SV_lines
 camera_calibration/evaluation/inferences*
-Dataset/
+Dataset/Images/
+Dataset/Labels/
+Dataset/Labels_source/
 SoccerNetGS/
 ffmep.txt
 !FRS-FNRS_BLACK_transp_resized.png
@@ -20,8 +22,14 @@ ffmep.txt
 video/
 *.zip
 *.ipynb
+!Dataset/*.ipynb
 *.sbatch
 *.log
+*.JPG
+*.jpeg
+*.webm
+semantic_segmentation/metrics/*.txt
 !semantic_segmentation/work_dirs/**/*.log
 camera_calibration/evaluation/data
 work_dir*
+!semantic_segmentation/work_dirs
