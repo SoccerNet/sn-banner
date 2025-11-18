@@ -112,7 +112,7 @@ if __name__ == "__main__":
             raise ValueError(f"File is not a video file: {videoPath}")
         imgWidth = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         imgHeight = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        nFrames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        nFrames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
         fps = int(cap.get(cv2.CAP_PROP_FPS))
 
         for i in tqdm(range(nFrames), desc="Extracting frames from video"):

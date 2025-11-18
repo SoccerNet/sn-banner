@@ -23,6 +23,7 @@ video/
 *.zip
 *.ipynb
 !Dataset/*.ipynb
+!semantic_segmentation/metrics/BConfMat.ipynb
 *.sbatch
 *.log
 *.JPG
@@ -33,3 +34,5 @@ semantic_segmentation/metrics/*.txt
 camera_calibration/evaluation/data
 work_dir*
 !semantic_segmentation/work_dirs
+*.tar
+*.svg
