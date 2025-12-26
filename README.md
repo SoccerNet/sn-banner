@@ -20,6 +20,10 @@ Though [MMSegmentation](https://github.com/open-mmlab/mmsegmentation) and [No-Be
 
 The environnement `banner-replacement` is the default one, except for the files `train.py`, `test.py` and `inference.py`, in the directory `semantic_segmentation`, which must be run in the `mmseg` environment.
 
+How to download the dataset
+
+The public version of the dataset is available on Hugging Face: [SoccerNet-Banner-public](https://huggingface.co/datasets/SoccerNet/BannerReplacement).
+
 ### mmseg
 
 The conda environment for MMsegmentation can be created by running the following command:
